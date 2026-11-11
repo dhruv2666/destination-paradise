@@ -1,0 +1,1 @@
+ALTER SEQUENCE public.booking_doc_seq RESTART WITH 1001;

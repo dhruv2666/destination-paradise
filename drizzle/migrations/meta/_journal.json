@@ -8,6 +8,13 @@
       "when": 1794382034317,
       "tag": "0000_init_remix_baseline",
       "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "7",
+      "when": 1794382384774,
+      "tag": "0001_reset_trial_invoice_counter",
+      "breakpoints": true
     }
   ]
 }

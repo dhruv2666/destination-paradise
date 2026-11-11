@@ -49,3 +49,4 @@ use the editor.
 - Settings writes use the singleton upsert/read-back helper in `src/lib/settings.ts`; missing-row reads return an unsaved form so admins can recreate row 1 through RLS.
 - Invoice numbers are allocated once by the booking column default; the preparation trigger must not advance the same sequence again, so public and owner bookings start at the reset counter without skipped numbers.
 - Public SEO pages share `src/lib/seo/*` content and `src/components/seo/*` shells; English routes have `/fr/...` twins with hreflang, the business JSON-LD lives in the root head, and every route declares `staticData.sitemap` for the router-derived sitemap.
+- English and French home routes render the shared HomePage with a language prop so their layouts, car queries and image delivery cannot drift apart.

@@ -1,0 +1,30 @@
+# Victoria Car rental rebrand and cleanup
+- [x] Refresh the app with a colourful Mauritius-inspired palette and coastal imagery; verify phone/desktop pages, signed-in owner navigation and 21 booking/routing tests without changing rental workflows.
+- [x] Apply Victoria identity, supplied logo, icons and logo-derived theme without redesign.
+- [x] Reset company settings; confirm no old rental/account/files, user secrets or scheduled callbacks remain.
+- [x] Verify first invoice INV-1001, unchanged booking tests, public pages and invoice branding.
+- [x] Fix Safari photo compression fallback, orientation and matching upload formats; verify two-photo saving and reload in mobile WebKit with WebP unavailable (physical iPhone not available).
+- [x] Fix Settings save visibility, singleton upsert permissions, error feedback and database reload; verify signed-in mobile saving.
+- [x] Replace company identity, logo, favicon, home-screen icons and colors.
+- [x] Initialize clean company settings and verify empty rental/account/storage data.
+- [x] Delete previous CDN assets; verify no user-supplied secrets, email domains or HTTP schedules.
+- [x] Verify unchanged booking tests, PDF appearance and desktop/mobile public pages.
+- [x] Guarantee first saved invoice INV-1001: remove duplicate counter advancement only; verify a real temporary booking receives 1001, delete test records and restore the clean counter.
+- [ ] Verify remote-only functions and hosted email callbacks: complete remote inventory unavailable through current inspection tools.
+- [x] Add secure owner management and last-owner protection.
+- [x] Add four daily pricing tiers, booking calculation and saved invoice totals.
+- [x] Test pricing rules, last-owner UI rule, navigation and public desktop/mobile pages.
+- [x] Approve the user's requested first owner account and verify dashboard access.
+- [x] Fix phone pickup/return fields and verify their layout.
+- [x] Add single Rs/euro currency selection and saved booking/invoice currency; test the signed-in flow.
+- [x] Add car, settings gear and team icons in More.
+- [x] Let approved owners delete pending sign-ups securely with confirmation.
+- [x] Add confirmed car deletion and verify removal.
+- [x] Protect cars with booking history using the existing booking reference safeguard.
+- [x] Enable swiping and arrow navigation through car photos.
+- [x] Remove Confirmed this month from Home.
+- [x] Add live EUR-to-MUR converter under More and verify it.
+- [x] Add strict upload compression, long caching and existing-photo optimization.
+- [x] Verify thumbnail-only lists and phone/desktop responsive detail sources.
+- [x] Audit stored photos and optimize logo/static images.
+- [x] Verify saved photo reprocessing; uploads request one-year caching (browser cannot expose the storage header).

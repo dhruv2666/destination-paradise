@@ -1,0 +1,9 @@
+{
+  "name": "Victoria Car rental",
+  "short_name": "Victoria Car rental",
+  "start_url": "/admin",
+  "display": "standalone",
+  "background_color": "#171717",
+  "theme_color": "#160d0e",
+  "icons": [{ "src": "/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any maskable" }]
+}

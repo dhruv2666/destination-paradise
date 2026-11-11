@@ -14,7 +14,7 @@ export const LOCATIONS: LocationEntry[] = [
       sections: [
         { h: "Renting a car for Grand Baie", p: [
           "Grand Baie is the busiest seaside town in the north of Mauritius. Its wide, sheltered bay is lined with restaurants, bars, supermarkets and boat operators, and the Sunset Boulevard shopping street sits right on the waterfront. Many visitors stay here because everything is close, yet the best beaches of the north are a short drive away rather than a short walk.",
-          "Our base on Royal road in Grand Baie is along the same northwest coast, so Grand Baie is an easy run up the road. Having your own car means you can leave early for the quiet public beaches at Pereybère or Cap Malheureux, come back for lunch in town and still be on the sand for the sunset at Trou aux Biches.",
+          "Our base is on Royal road in Grand Baie. Having your own car means you can leave early for the quiet public beaches at Pereybère or Cap Malheureux, come back for lunch in town and still be on the sand for the sunset at Trou aux Biches.",
         ]},
         { h: "Things worth driving to from Grand Baie", p: [
           "Boat trips to the northern islets such as Coin de Mire and Île Plate leave from the bay, but the land around it is just as rewarding. The red-roofed church at Cap Malheureux, the Pamplemousses botanical garden and the fishing villages on the northeast coast all make relaxed half-day drives. Parking in the town centre fills up at weekends and in the evening, so plan a little extra time when you head out to dinner.",
@@ -31,7 +31,7 @@ export const LOCATIONS: LocationEntry[] = [
       sections: [
         { h: "Louer une voiture pour Grand Baie", p: [
           "Grand Baie est la station balnéaire la plus animée du nord de l'île Maurice. Sa grande baie abritée est bordée de restaurants, de bars, de supermarchés et de prestataires d'excursions en bateau, et la rue commerçante Sunset Boulevard donne directement sur l'eau. Beaucoup de visiteurs logent ici parce que tout est proche, mais les plus belles plages du nord se rejoignent en voiture plutôt qu'à pied.",
-          "Notre agence sur Royal road à Grand Baie se trouve sur la même côte nord-ouest : Grand Baie n'est qu'à quelques kilomètres. Avec votre propre voiture, vous pouvez partir tôt vers les plages tranquilles de Pereybère ou de Cap Malheureux, revenir déjeuner en ville et profiter du coucher de soleil à Trou aux Biches.",
+          "Notre agence se trouve sur Royal road à Grand Baie. Avec votre propre voiture, vous pouvez partir tôt vers les plages tranquilles de Pereybère ou de Cap Malheureux, revenir déjeuner en ville et profiter du coucher de soleil à Trou aux Biches.",
         ]},
         { h: "Où aller en voiture depuis Grand Baie", p: [
           "Les sorties en bateau vers les îlots du nord comme le Coin de Mire et l'île Plate partent de la baie, mais l'intérieur des terres vaut aussi le détour. L'église au toit rouge de Cap Malheureux, le jardin botanique de Pamplemousses et les villages de pêcheurs de la côte nord-est sont de belles demi-journées en voiture. Le stationnement au centre-ville est vite complet le soir et le week-end : prévoyez un peu de marge pour aller dîner.",
@@ -165,7 +165,7 @@ export const LOCATIONS: LocationEntry[] = [
           "Being this close means we know the area well. Many guests in Trou aux Biches stay in villas and apartments set back from the beach road, where supermarkets and restaurants are a drive rather than a stroll away. A car makes daily shopping and evening meals in Grand Baie much easier.",
         ]},
         { h: "Day trips from Trou aux Biches", p: [
-          "From here you are well placed for the whole north and west. Port Louis is a short trip down the motorway, the Pamplemousses garden is inland to the east, and the northern beaches at Pereybère and Cap Malheureux are a short hop up the coast. The Mauritius Aquarium in Grand Baie is also nearby, which is handy with children.",
+          "From here you are well placed for the whole north and west. Port Louis is a short trip down the motorway, the Pamplemousses garden is inland to the east, and the northern beaches at Pereybère and Cap Malheureux are a short hop up the coast.",
         ]},
         { h: "From the airport to Trou aux Biches", p: [
           "Allow about an hour and ten minutes from SSR International Airport, depending on traffic. You can pick up your car at the airport and drive north, or ask for a pickup close to your accommodation when you book.",
@@ -182,7 +182,7 @@ export const LOCATIONS: LocationEntry[] = [
           "Cette proximité nous permet de bien connaître le secteur. Beaucoup de vacanciers logent dans des villas et appartements en retrait de la route côtière, où supermarchés et restaurants se rejoignent plutôt en voiture. Une voiture facilite les courses et les dîners à Grand Baie.",
         ]},
         { h: "Excursions depuis Trou aux Biches", p: [
-          "Vous êtes ici bien placé pour tout le nord et l'ouest. Port-Louis est à un court trajet par l'autoroute, le jardin de Pamplemousses se trouve à l'intérieur des terres et les plages de Pereybère et Cap Malheureux sont un peu plus haut sur la côte. L'aquarium de Grand Baie est également tout proche, pratique avec des enfants.",
+          "Vous êtes ici bien placé pour tout le nord et l'ouest. Port-Louis est à un court trajet par l'autoroute, le jardin de Pamplemousses se trouve à l'intérieur des terres et les plages de Pereybère et Cap Malheureux sont un peu plus haut sur la côte.",
         ]},
         { h: "De l'aéroport à Trou aux Biches", p: [
           "Comptez environ une heure dix depuis l'aéroport international SSR selon la circulation. Vous pouvez récupérer la voiture à l'aéroport ou demander une remise près de votre logement lors de la réservation.",

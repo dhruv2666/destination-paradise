@@ -19,8 +19,9 @@ export const Route = createFileRoute("/")({
 });
 
 function Index() {
+  const initialCars = Route.useLoaderData();
   const settings = useQuery({ queryKey: qk.publicSettings, queryFn: fetchPublicSettings });
-  const cars = useQuery({ queryKey: qk.activeCars, queryFn: fetchActiveCars });
+  const cars = useQuery({ queryKey: qk.activeCars, queryFn: fetchActiveCars, initialData: initialCars });
   const s = settings.data;
   return (
     <div className="min-h-screen">

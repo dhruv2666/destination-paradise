@@ -19,4 +19,4 @@ Allow: /
 Disallow: /admin
 Disallow: /auth
 
-Sitemap: https://anytimes-rental-desk.lovable.app/sitemap.xml
+Sitemap: https://id-preview--b404dc99-3b56-49ff-ac53-e87249741055.lovable.app/sitemap.xml

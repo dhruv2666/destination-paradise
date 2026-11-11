@@ -38,7 +38,7 @@ function BookCta({ lang }: { lang: Lang }) {
   return (
     <div className="mt-8 flex flex-wrap gap-3 rounded-lg bg-secondary p-4">
       <Button asChild variant="coral"><Link to="/book" search={{}}>{fr ? "Réserver une voiture" : "Book a car"}</Link></Button>
-      <Button asChild variant="outline"><a href={whatsappUrl(BUSINESS_PHONE, "Hello Victoria Car rental, I would like to rent a car.")} target="_blank" rel="noopener noreferrer"><MessageCircle />WhatsApp</a></Button>
+      <Button asChild variant="outline"><a href={whatsappUrl(BUSINESS_PHONE, "Hello Destination Paradise Mauritius Car Rental, I would like to rent a car.")} target="_blank" rel="noopener noreferrer"><MessageCircle />WhatsApp</a></Button>
     </div>
   );
 }
@@ -107,21 +107,22 @@ export function FaqPage({ lang }: { lang: Lang }) {
 export function ContactPage({ lang }: { lang: Lang }) {
   const fr = lang === "fr";
   const h1 = fr ? "Contact" : "Contact us";
-  const wa = whatsappUrl(BUSINESS_PHONE, "Hello Victoria Car rental, I would like to rent a car.");
+  const wa = whatsappUrl(BUSINESS_PHONE, "Hello Destination Paradise Mauritius Car Rental, I would like to rent a car.");
   return (
     <SiteShell lang={lang} altPath={fr ? "/contact" : "/fr/contact"} crumbs={[{ name: fr ? "Accueil" : "Home", path: home(lang) }, { name: h1, path: `${pre(lang)}/contact` }]}>
       <h1 className="text-3xl font-bold sm:text-4xl">{h1}</h1>
       <p className="mt-3 text-lg text-muted-foreground">{fr
-        ? "Victoria Car rental est une agence de location de voitures familiale installée sur la côte nord-ouest de l'île Maurice. Pour réserver, poser une question sur une voiture ou organiser une remise à l'aéroport, contactez-nous directement : nous répondons nous-mêmes, sans centre d'appels."
-        : "Victoria Car rental is a local car hire business on the northwest coast of Mauritius. To book, ask about a car or arrange an airport pickup, contact us directly: you talk to us, not to a call centre."}</p>
+        ? "Destination Paradise Mauritius Car Rental est une agence de location de voitures familiale installée sur la côte nord-ouest de l'île Maurice. Pour réserver, poser une question sur une voiture ou organiser une remise à l'aéroport, contactez-nous directement : nous répondons nous-mêmes, sans centre d'appels."
+        : "Destination Paradise Mauritius Car Rental is a local car hire business on the northwest coast of Mauritius. To book, ask about a car or arrange an airport pickup, contact us directly: you talk to us, not to a call centre."}</p>
       <div className="mt-6 grid gap-4 sm:grid-cols-2">
         <div className="rounded-lg border border-border bg-card p-4">
           <h2 className="font-bold">{fr ? "Adresse" : "Address"}</h2>
-          <address className="mt-1 not-italic">Coastal Road, Pointe Aux Piment<br />Grande Pointe aux Piments 21304<br />Mauritius</address>
+          <address className="mt-1 not-italic">Royal road, Grand baie<br />Port Louis<br />Mauritius</address>
         </div>
         <div className="rounded-lg border border-border bg-card p-4">
           <h2 className="font-bold">{fr ? "Téléphone et WhatsApp" : "Phone and WhatsApp"}</h2>
           <p className="mt-1"><a href={`tel:${BUSINESS_PHONE.replace(/\s/g, "")}`} className="inline-flex items-center gap-1 text-primary"><Phone className="h-4 w-4" />{BUSINESS_PHONE}</a></p>
+          <p><a href="mailto:ravishnarrainen@gmail.com" className="text-primary">ravishnarrainen@gmail.com</a></p>
           <p><a href={wa} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1 text-primary"><MessageCircle className="h-4 w-4" />WhatsApp</a></p>
         </div>
         <div className="rounded-lg border border-border bg-card p-4 sm:col-span-2">
@@ -132,8 +133,8 @@ export function ContactPage({ lang }: { lang: Lang }) {
       <section className="mt-8 space-y-3">
         <h2 className="text-xl font-bold">{fr ? "Nous trouver" : "Finding us"}</h2>
         <p className="leading-relaxed">{fr
-          ? "Nous sommes sur la route côtière de Pointe aux Piments, le village situé entre Trou aux Biches au nord et Balaclava au sud. Depuis Port-Louis, suivez l'autoroute vers le nord puis la route de la côte nord-ouest. Depuis Grand Baie, descendez la côte en passant Mont Choisy et Trou aux Biches."
-          : "We are on the coast road through Pointe aux Piments, the village between Trou aux Biches to the north and Balaclava to the south. From Port Louis, follow the motorway north and then the northwest coast road. From Grand Baie, head down the coast past Mont Choisy and Trou aux Biches."}</p>
+          ? "Notre adresse : Royal road, Grand baie , Port Louis, Mauritius. Contactez-nous pour convenir du lieu de remise de votre voiture."
+          : "Our address is Royal road, Grand baie , Port Louis, Mauritius. Contact us to agree where to collect your car."}</p>
         <p className="leading-relaxed">{fr
           ? "La plupart de nos clients ne passent pas à l'agence : nous remettons la voiture à l'aéroport international SSR ou à l'endroit convenu lors de la réservation. Indiquez simplement votre lieu de prise en charge dans le formulaire et nous confirmons l'heure et le lieu sur WhatsApp avec votre facture."
           : "Most customers never need to visit us: we hand over the car at SSR International Airport or at the place agreed when you book. Just choose your pickup point in the booking form and we confirm the time and place on WhatsApp along with your invoice."}</p>
@@ -205,8 +206,8 @@ export function CarPage({ lang, car }: { lang: Lang; car: Car }) {
           ? `Vous pouvez récupérer la ${car.name} à l'aéroport international SSR dès votre arrivée ou à un autre endroit que vous indiquez dans le formulaire. Choisissez la date et l'heure de prise en charge et de retour : le calendrier vérifie immédiatement que la voiture est libre. Nous validons ensuite la réservation et vous envoyons la facture sur WhatsApp, avec l'éventuelle caution.`
           : `You can collect the ${car.name} at SSR International Airport when you land or at another place you name in the form. Choose your pickup and return date and time and the calendar checks straight away that the car is free. We then approve the booking and send your invoice on WhatsApp, including any deposit.`}</p>
         <p>{fr
-          ? "Nous sommes basés à Pointe aux Piments, sur la côte nord-ouest : idéal pour Trou aux Biches, Grand Baie et Pereybère, mais la voiture vous emmène partout, de Port-Louis à Le Morne."
-          : "We are based in Pointe aux Piments on the northwest coast, handy for Trou aux Biches, Grand Baie and Pereybère, but the car will take you anywhere on the island, from Port Louis to Le Morne."}</p>
+          ? "Nous sommes basés à Grand Baie, sur la côte nord-ouest : idéal pour Trou aux Biches, Grand Baie et Pereybère, mais la voiture vous emmène partout, de Port-Louis à Le Morne."
+          : "We are based in Grand Baie on the northwest coast, handy for Trou aux Biches, Grand Baie and Pereybère, but the car will take you anywhere on the island, from Port Louis to Le Morne."}</p>
       </section>
       <h2 className="mt-8 text-xl font-bold">{fr ? "Où conduire" : "Where to drive"}</h2>
       <LocationList lang={lang} />

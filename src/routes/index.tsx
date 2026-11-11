@@ -14,7 +14,7 @@ import { formatMoney, lowestRate } from "@/lib/booking-math";
 export const Route = createFileRoute("/")({
   staticData: { sitemap: true },
   loader: ({ context }) => context.queryClient.ensureQueryData({ queryKey: qk.activeCars, queryFn: fetchActiveCars }).catch(() => []),
-  head: () => seoHead({ lang: "en", path: "/", altPath: "/fr", title: "Victoria Car rental — Car hire in Mauritius with airport pickup", description: "Rent a car in Mauritius from Victoria Car rental in Pointe aux Piments. Airport pickup at SSR, online booking and confirmation on WhatsApp." }),
+  head: () => seoHead({ lang: "en", path: "/", altPath: "/fr", title: "Destination Paradise Mauritius Car Rental — Car hire in Mauritius with airport pickup", description: "Rent a car in Mauritius from Destination Paradise Mauritius Car Rental in Grand Baie. Airport pickup at SSR, online booking and confirmation on WhatsApp." }),
   component: Index,
 });
 
@@ -26,7 +26,7 @@ function Index() {
     <div className="min-h-screen">
       <header className="border-b border-border bg-card py-3 pr-4">
         <div className="flex w-full items-center justify-between gap-4">
-          <img src={brandLogo(s?.logo_url)} alt="Victoria Car rental logo" width={144} height={49} loading="eager" decoding="async" className="h-12 w-36 shrink-0 object-contain object-left" />
+          <img src={brandLogo(s?.logo_url)} alt="Destination Paradise Mauritius Car Rental logo" width={144} height={49} loading="eager" decoding="async" className="h-12 w-36 shrink-0 object-contain object-left" />
           <nav className="flex flex-wrap items-center gap-x-3 text-sm font-semibold"><Link to="/car-rental" className="hidden hover:text-primary sm:inline">Car rental</Link><Link to="/airport-transfers" className="hidden hover:text-primary sm:inline">Airport</Link><Link to="/faq" className="hidden hover:text-primary sm:inline">FAQ</Link><Link to="/contact" className="hidden hover:text-primary sm:inline">Contact</Link><a href="/fr" hrefLang="fr" className="text-primary">FR</a></nav>
           <Button asChild variant="ghost" size="sm"><Link to="/auth">Owner <ArrowUpRight className="h-4 w-4" /></Link></Button>
         </div>
@@ -35,12 +35,12 @@ function Index() {
         <img src={coast} alt="Turquoise lagoon and palm-lined beach in Mauritius" width={1920} height={1024} loading="eager" fetchPriority="high" decoding="async" className="absolute inset-0 -z-20 h-full w-full object-cover object-center" />
         <div className="coastal-shade absolute inset-0 -z-10" />
         <div className="coastal-content mx-auto max-w-5xl">
-          <p className="flex items-center gap-2 text-sm font-semibold"><MapPin className="h-4 w-4" />Pointe aux Piments · Mauritius</p>
-          <h1 className="mt-5 max-w-xl text-4xl font-bold leading-tight sm:text-5xl">Victoria Car rental</h1>
+          <p className="flex items-center gap-2 text-sm font-semibold"><MapPin className="h-4 w-4" />Grand Baie · Mauritius</p>
+          <h1 className="mt-5 max-w-xl text-4xl font-bold leading-tight sm:text-5xl">Destination Paradise Mauritius Car Rental</h1>
           <p className="mt-4 max-w-md text-base leading-relaxed sm:text-lg">Pick a car and dates. We confirm on WhatsApp with your invoice.</p>
           <div className="mt-7 flex flex-wrap gap-3">
             <Button asChild variant="coral" size="lg"><Link to="/book" search={{}}>Book a car <ArrowUpRight /></Link></Button>
-            <Button asChild variant="coastal" size="lg"><a href={whatsappUrl(BUSINESS_PHONE, "Hello Victoria Car rental, I would like to rent a car.")} target="_blank" rel="noopener noreferrer"><MessageCircle />WhatsApp</a></Button>
+            <Button asChild variant="coastal" size="lg"><a href={whatsappUrl(BUSINESS_PHONE, "Hello Destination Paradise Mauritius Car Rental, I would like to rent a car.")} target="_blank" rel="noopener noreferrer"><MessageCircle />WhatsApp</a></Button>
           </div>
         </div>
       </section>
@@ -75,7 +75,7 @@ function Index() {
         )}
         <section className="mt-10 space-y-3 leading-relaxed">
           <h2 className="text-xl font-bold">Local car hire on the northwest coast</h2>
-          <p>Victoria Car rental is based on the Coastal Road in Pointe aux Piments, between Trou aux Biches and Balaclava. Tap any car above to open the booking form with that car already selected, choose your dates and where to collect it — SSR International Airport or another place you name — and send your request. We check availability, approve the booking and send your invoice on WhatsApp.</p>
+          <p>Destination Paradise Mauritius Car Rental is based on Royal road in Grand Baie, Mauritius. Tap any car above to open the booking form with that car already selected, choose your dates and where to collect it — SSR International Airport or another place you name — and send your request. We check availability, approve the booking and send your invoice on WhatsApp.</p>
           <p>Mauritius drives on the left, and the motorway links the airport with Port Louis and the north. Read how renting works, see airport pickup details, or browse the areas below for ideas on where to drive.</p>
         </section>
         <section className="mt-10 grid gap-6 sm:grid-cols-2">

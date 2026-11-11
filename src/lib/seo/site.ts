@@ -1,12 +1,12 @@
 import { BRAND_LOGO, BRAND_NAME, BUSINESS_PHONE } from "@/lib/brand";
 
-export const SITE_URL = "https://anytimes-rental-desk.lovable.app";
+export const SITE_URL = "https://id-preview--b404dc99-3b56-49ff-ac53-e87249741055.lovable.app";
 export type Lang = "en" | "fr";
 export const ADDRESS = {
-  street: "Coastal Road, Pointe Aux Piment",
-  locality: "Grande Pointe aux Piments",
+  street: "Royal road",
+  locality: "Grand baie",
   country: "MU",
-  postal: "21304",
+  region: "Port Louis",
 };
 
 export function slugify(s: string) {
@@ -25,7 +25,7 @@ export function businessJsonLd() {
     image: BRAND_LOGO,
     telephone: BUSINESS_PHONE,
     priceRange: "Rs",
-    address: { "@type": "PostalAddress", streetAddress: ADDRESS.street, addressLocality: ADDRESS.locality, postalCode: ADDRESS.postal, addressCountry: ADDRESS.country },
+    address: { "@type": "PostalAddress", streetAddress: ADDRESS.street, addressLocality: ADDRESS.locality, addressRegion: ADDRESS.region, addressCountry: ADDRESS.country },
     areaServed: { "@type": "Country", name: "Mauritius" },
   };
 }

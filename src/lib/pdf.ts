@@ -94,13 +94,14 @@ export function buildBookingPdf(company: PdfCompany, b: PdfBooking): Blob {
   const nameX = logoW ? M + logoW + 5 : M;
   pdf.setTextColor(...INK);
   pdf.setFont("helvetica", "bold");
-  pdf.setFontSize(15);
-  pdf.text(company.company_name || "Victoria Car rental", nameX, 18);
+  pdf.setFontSize(9);
+  const nameWidth = W - M - 65 - nameX;
+  pdf.text(pdf.splitTextToSize(company.company_name || "Destination Paradise Mauritius Car Rental", nameWidth), nameX, 17);
   pdf.setFont("helvetica", "normal");
-  pdf.setFontSize(8.5);
+  pdf.setFontSize(7);
   pdf.setTextColor(...MUTED);
   const contact = [company.address, company.phone, company.company_email].filter(Boolean);
-  pdf.text(pdf.splitTextToSize(contact.join("  |  "), 105), nameX, 23.5);
+  pdf.text(pdf.splitTextToSize(contact.join("  |  "), nameWidth), nameX, 25);
 
   // Document title (right)
   pdf.setTextColor(...BRAND);

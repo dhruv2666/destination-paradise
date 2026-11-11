@@ -72,21 +72,21 @@
 
 :root {
   --radius: 0.5rem;
-  --background: oklch(0.985 0.007 185);
-  --foreground: oklch(0.27 0.035 185);
+  --background: #fafbfe;
+  --foreground: #20263b;
   --card: oklch(1 0 0);
   --card-foreground: var(--foreground);
   --popover: var(--card);
   --popover-foreground: var(--foreground);
-  --primary: oklch(0.46 0.095 185);
+  --primary: #1F2A5C;
   --primary-foreground: oklch(1 0 0);
-  --secondary: oklch(0.94 0.026 185);
+  --secondary: #eef0f8;
   --photo-placeholder: oklch(0.88 0 0);
   --secondary-foreground: var(--foreground);
-  --muted: oklch(0.95 0.012 185);
-  --muted-foreground: oklch(0.47 0.025 185);
-  --accent: oklch(0.93 0.05 175);
-  --accent-foreground: oklch(0.34 0.08 185);
+  --muted: #f1f2f6;
+  --muted-foreground: #535b70;
+  --accent: #E8641B;
+  --accent-foreground: #1b2033;
   --destructive: oklch(0.53 0.19 27);
   --destructive-foreground: oklch(1 0 0);
   --success: oklch(0.9 0.065 155);
@@ -102,8 +102,8 @@
   --load-2: oklch(0.8 0.09 25);
   --load-3: oklch(0.56 0.17 25);
   --load-4: oklch(0.47 0.19 25);
-  --border: oklch(0.87 0.024 185);
-  --input: oklch(0.77 0.03 185);
+  --border: #d8dce8;
+  --input: #aeb5ca;
   --ring: var(--primary);
   --chart-1: var(--primary);
   --chart-2: var(--accent);
@@ -118,16 +118,16 @@
   --sidebar-accent-foreground: var(--foreground);
   --sidebar-border: var(--border);
   --sidebar-ring: var(--ring);
-  --shadow-card: 0 4px 20px oklch(0.35 0.07 185 / 8%);
-  --hero-background: oklch(0.94 0.035 185);
+  --shadow-card: 0 4px 20px rgb(31 42 92 / 8%);
+  --hero-background: #edf0f8;
   --on-photo: oklch(1 0 0);
-  --coral: oklch(0.58 0.18 28);
-  --coral-foreground: oklch(1 0 0);
-  --lagoon-soft: oklch(0.93 0.05 190);
-  --palm-soft: oklch(0.94 0.05 155);
-  --sunshine-soft: oklch(0.96 0.09 95);
-  --coral-soft: oklch(0.94 0.035 30);
-  --photo-shade: linear-gradient(90deg, oklch(0.22 0.065 195 / 78%), oklch(0.22 0.065 195 / 35%) 58%, oklch(0.22 0.065 195 / 5%));
+  --coral: var(--accent);
+  --coral-foreground: var(--accent-foreground);
+  --lagoon-soft: #e8ebf5;
+  --palm-soft: #eef0f7;
+  --sunshine-soft: #fff0e5;
+  --coral-soft: #fbeadd;
+  --photo-shade: linear-gradient(90deg, rgb(31 42 92 / 88%), rgb(31 42 92 / 60%) 58%, rgb(31 42 92 / 25%));
 }
 
 @layer base {

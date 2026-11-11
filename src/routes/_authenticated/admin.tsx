@@ -23,10 +23,10 @@ export const Route = createFileRoute("/_authenticated/admin")({
     meta: [
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
-      { title: "Owners — Victoria Car rental" },
-      { name: "description", content: "Manage Victoria Car rental bookings, calendar, cars and documents." },
-      { property: "og:title", content: "Owners — Victoria Car rental" },
-      { property: "og:description", content: "Manage Victoria Car rental bookings, calendar, cars and documents." },
+      { title: "Owners — Destination Paradise Mauritius Car Rental" },
+      { name: "description", content: "Manage Destination Paradise Mauritius Car Rental bookings, calendar, cars and documents." },
+      { property: "og:title", content: "Owners — Destination Paradise Mauritius Car Rental" },
+      { property: "og:description", content: "Manage Destination Paradise Mauritius Car Rental bookings, calendar, cars and documents." },
       { name: "robots", content: "noindex" },
     ],
   }),
@@ -79,7 +79,7 @@ function Admin() {
       <header className="sticky top-0 z-30 border-b border-border bg-card/95 backdrop-blur">
         <div className="flex w-full items-center justify-between gap-3 py-3 pr-4">
           <Link to="/" className="flex min-w-0 items-center gap-3" aria-label="Back to the car list">
-            <img src={brandLogo(s.logo_url)} alt="Victoria Car rental logo" width={144} height={49} loading="eager" fetchPriority="high" decoding="async" className="h-12 w-36 shrink-0 object-contain object-left" />
+            <img src={brandLogo(s.logo_url)} alt="Destination Paradise Mauritius Car Rental logo" width={144} height={49} loading="eager" fetchPriority="high" decoding="async" className="h-12 w-36 shrink-0 object-contain object-left" />
             <span className="hidden font-display text-base font-bold sm:inline">{s.company_name}</span>
           </Link>
           <div className="flex items-center gap-2">

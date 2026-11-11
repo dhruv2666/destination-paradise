@@ -6,9 +6,9 @@ vi.mock("@/integrations/supabase/client", () => ({ supabase: { from: mocks.from 
 import { saveSettings } from "./settings";
 
 const fields: Settings = {
-  id: 1, company_name: "Victoria Car rental", logo_url: null,
-  address: "Coastal Road, Pointe Aux Piment, Grande Pointe aux Piments, Mauritius, 21304", phone: "+230 5920 6432",
-  company_email: "", currency: "Rs", owner_email: "",
+  id: 1, company_name: "Destination Paradise Mauritius Car Rental", logo_url: null,
+  address: "Royal road, Grand baie , Port Louis, Mauritius", phone: "+230 5922 4353",
+  company_email: "ravishnarrainen@gmail.com", currency: "Rs", owner_email: "",
   terms_html: "<p>Test terms</p>", whatsapp_template: "Hello {name}", updated_at: "2026-11-09T00:00:00Z",
 };
 beforeEach(() => {

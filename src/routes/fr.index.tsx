@@ -10,7 +10,7 @@ import { Button } from "@/components/ui/button";
 export const Route = createFileRoute("/fr/")({
   staticData: { sitemap: true },
   loader: ({ context }) => context.queryClient.ensureQueryData(carsQuery).catch(() => []),
-  head: () => seoHead({ lang: "fr", path: "/fr", altPath: "/", title: "Victoria Car rental — Location de voiture à l'île Maurice", description: "Louez une voiture à l'île Maurice avec Victoria Car rental, à Pointe aux Piments. Remise à l'aéroport SSR, réservation en ligne et confirmation sur WhatsApp." }),
+  head: () => seoHead({ lang: "fr", path: "/fr", altPath: "/", title: "Destination Paradise Mauritius Car Rental — Location de voiture à l'île Maurice", description: "Louez une voiture à l'île Maurice avec Destination Paradise Mauritius Car Rental, à Grand Baie. Remise à l'aéroport SSR, réservation en ligne et confirmation sur WhatsApp." }),
   component: FrHome,
 });
 
@@ -19,7 +19,7 @@ function FrHome() {
   return (
     <SiteShell lang="fr" altPath="/">
       <h1 className="text-3xl font-bold sm:text-4xl">Location de voiture à l'île Maurice</h1>
-      <p className="mt-3 text-lg leading-relaxed text-muted-foreground">Victoria Car rental est une agence locale située sur la Coastal Road à Pointe aux Piments. Choisissez une voiture et vos dates, indiquez où vous souhaitez la récupérer — à l'aéroport international SSR ou ailleurs — et nous confirmons sur WhatsApp avec votre facture.</p>
+      <p className="mt-3 text-lg leading-relaxed text-muted-foreground">Destination Paradise Mauritius Car Rental est une agence locale située sur Royal road à Grand Baie. Choisissez une voiture et vos dates, indiquez où vous souhaitez la récupérer — à l'aéroport international SSR ou ailleurs — et nous confirmons sur WhatsApp avec votre facture.</p>
       <Button asChild variant="coral" size="lg" className="mt-5"><Link to="/book" search={{}}>Réserver une voiture</Link></Button>
       <h2 className="mt-10 text-2xl font-bold">Nos voitures</h2>
       {cars.data?.length ? (

@@ -56,10 +56,11 @@ export function SiteShell({ lang, altPath, crumbs, children }: { lang: Lang; alt
         <div className="mx-auto grid max-w-3xl gap-6 sm:grid-cols-2">
           <div>
             <p className="font-semibold">{BRAND_NAME}</p>
-            <p className="mt-1 text-muted-foreground">Coastal Road, Pointe Aux Piment, Grande Pointe aux Piments, Mauritius, 21304</p>
+            <p className="mt-1 text-muted-foreground">Royal road, Grand baie , Port Louis, Mauritius</p>
+            <p className="mt-1"><a href="mailto:ravishnarrainen@gmail.com" className="text-primary">ravishnarrainen@gmail.com</a></p>
             <p className="mt-2 flex flex-wrap gap-3">
               <a href={`tel:${BUSINESS_PHONE.replace(/\s/g, "")}`} className="inline-flex items-center gap-1 text-primary"><Phone className="h-4 w-4" />{BUSINESS_PHONE}</a>
-              <a href={whatsappUrl(BUSINESS_PHONE, "Hello Victoria Car rental, I would like to rent a car.")} className="inline-flex items-center gap-1 text-primary" target="_blank" rel="noopener noreferrer"><MessageCircle className="h-4 w-4" />WhatsApp</a>
+              <a href={whatsappUrl(BUSINESS_PHONE, "Hello Destination Paradise Mauritius Car Rental, I would like to rent a car.")} className="inline-flex items-center gap-1 text-primary" target="_blank" rel="noopener noreferrer"><MessageCircle className="h-4 w-4" />WhatsApp</a>
             </p>
           </div>
           <div>

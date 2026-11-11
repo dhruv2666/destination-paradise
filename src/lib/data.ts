@@ -24,11 +24,11 @@ export async function fetchPublicSettings(): Promise<PublicSettings> {
   const row = (data as PublicSettings[] | null)?.[0];
   return (
     row ?? {
-      company_name: "Victoria Car rental",
+      company_name: "Destination Paradise Mauritius Car Rental",
       logo_url: null,
-      address: "Coastal Road, Pointe Aux Piment, Grande Pointe aux Piments, Mauritius, 21304",
-      phone: "+230 5920 6432",
-      company_email: "",
+      address: "Royal road, Grand baie , Port Louis, Mauritius",
+      phone: "+230 5922 4353",
+      company_email: "ravishnarrainen@gmail.com",
       currency: "Rs",
       terms_html: "",
     }
@@ -39,9 +39,9 @@ export async function fetchSettings(): Promise<Settings> {
   const { data, error } = await supabase.from("settings").select("*").eq("id", 1).maybeSingle();
   if (error) throw error;
   return data ?? {
-    id: 1, company_name: "Victoria Car rental", logo_url: null,
-    address: "Coastal Road, Pointe Aux Piment, Grande Pointe aux Piments, Mauritius, 21304", phone: "+230 5920 6432",
-    company_email: "", currency: "Rs", owner_email: "", terms_html: "",
+    id: 1, company_name: "Destination Paradise Mauritius Car Rental", logo_url: null,
+    address: "Royal road, Grand baie , Port Louis, Mauritius", phone: "+230 5922 4353",
+    company_email: "ravishnarrainen@gmail.com", currency: "Rs", owner_email: "", terms_html: "",
     whatsapp_template: "Hello {name}, your booking for {car} from {from} to {to} is confirmed. Total: {total}. Invoice and terms: {link}",
     updated_at: new Date().toISOString(),
   };

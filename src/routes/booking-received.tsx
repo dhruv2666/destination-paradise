@@ -17,7 +17,7 @@ function ordinal(n: number) {
 
 function bookedMessage(car?: string, at?: string, loc?: string) {
   const d = at ? new Date(at) : null;
-  if (!d || isNaN(d.getTime())) return `Hello Victoria Car rental, I just booked ${car ? `the ${car}` : "a car"} on your website.`;
+  if (!d || isNaN(d.getTime())) return `Hello Destination Paradise Mauritius Car Rental, I just booked ${car ? `the ${car}` : "a car"} on your website.`;
   const day = Number(d.toLocaleString("en-GB", { day: "numeric", timeZone: "Indian/Mauritius" }));
   const month = d.toLocaleString("en-GB", { month: "long", timeZone: "Indian/Mauritius" });
   const time = d.toLocaleTimeString("en-GB", { hour: "2-digit", minute: "2-digit", timeZone: "Indian/Mauritius" });
@@ -31,10 +31,10 @@ export const Route = createFileRoute("/booking-received")({
     meta: [
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
-      { title: "Request received — Victoria Car rental" },
-      { name: "description", content: "Your Victoria Car rental booking request has been received." },
-      { property: "og:title", content: "Request received — Victoria Car rental" },
-      { property: "og:description", content: "Your Victoria Car rental booking request has been received." },
+      { title: "Request received — Destination Paradise Mauritius Car Rental" },
+      { name: "description", content: "Your Destination Paradise Mauritius Car Rental booking request has been received." },
+      { property: "og:title", content: "Request received — Destination Paradise Mauritius Car Rental" },
+      { property: "og:description", content: "Your Destination Paradise Mauritius Car Rental booking request has been received." },
       { name: "robots", content: "noindex" },
     ],
   }),
@@ -49,8 +49,8 @@ function Received() {
   return (
     <div className="flex min-h-screen flex-col p-4">
       <div className="flex w-full items-center gap-2 font-display text-base font-bold">
-        <img src={brandLogo(s?.logo_url)} alt="Victoria Car rental logo" width={144} height={49} loading="eager" fetchPriority="high" decoding="async" className="h-12 w-36 shrink-0 rounded-md object-contain shadow-card" />
-        {s?.company_name ?? "Victoria Car rental"}
+        <img src={brandLogo(s?.logo_url)} alt="Destination Paradise Mauritius Car Rental logo" width={144} height={49} loading="eager" fetchPriority="high" decoding="async" className="h-12 w-36 shrink-0 rounded-md object-contain shadow-card" />
+        {s?.company_name ?? "Destination Paradise Mauritius Car Rental"}
       </div>
       <div className="flex flex-1 items-center justify-center">
         <div className="w-full max-w-md rounded-2xl bg-card p-8 text-center shadow-card">

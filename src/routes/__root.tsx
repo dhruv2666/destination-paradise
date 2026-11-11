@@ -82,9 +82,9 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "Victoria Car rental" },
+      { title: "Destination Paradise Mauritius Car Rental" },
       { name: "description", content: "Book a rental car online." },
-      { name: "theme-color", content: "#edf8f6" },
+      { name: "theme-color", content: "#1F2A5C" },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
     ],

@@ -19,7 +19,7 @@ export const Route = createFileRoute("/cars/$slug")({
     const path = `/cars/${slug}`;
     return seoHead({
       lang: "en", path, altPath: `/fr/cars/${slug}`, type: "product",
-      title: `${car.name} for rent in Mauritius — Victoria Car rental`,
+      title: `${car.name} for rent in Mauritius — Destination Paradise Mauritius Car Rental`,
       description: `Rent the ${car.name} in Mauritius: ${car.seats} seats, ${car.transmission} gearbox, from ${car.daily_price} ${currencyCode(car.currency)} per day. Airport pickup available.`,
       crumbs: [{ name: "Home", path: "/" }, { name: "Car rental", path: "/car-rental" }, { name: car.name, path }],
       extra: [{

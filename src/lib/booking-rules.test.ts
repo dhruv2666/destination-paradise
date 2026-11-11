@@ -63,7 +63,7 @@ describe("pickup location", () => {
 
 describe("whatsapp", () => {
   it("contacts the new company at its supplied international number", () => {
-    expect(whatsappUrl(BUSINESS_PHONE, "Hello")).toBe("https://wa.me/23059206432?text=Hello");
+    expect(whatsappUrl(BUSINESS_PHONE, "Hello")).toBe("https://wa.me/23059224353?text=Hello");
   });
   it("strips +, spaces and leading 00 from the phone", () => {
     expect(whatsappNumber("+230 5712 3456")).toBe("23057123456");

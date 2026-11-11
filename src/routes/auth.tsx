@@ -17,10 +17,10 @@ export const Route = createFileRoute("/auth")({
       { name: "robots", content: "noindex" },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
-      { title: "Owner sign in — Victoria Car rental" },
-      { name: "description", content: "Sign in to manage Victoria Car rental rental bookings." },
-      { property: "og:title", content: "Owner sign in — Victoria Car rental" },
-      { property: "og:description", content: "Sign in to manage Victoria Car rental rental bookings." },
+      { title: "Owner sign in — Destination Paradise Mauritius Car Rental" },
+      { name: "description", content: "Sign in to manage Destination Paradise Mauritius Car Rental rental bookings." },
+      { property: "og:title", content: "Owner sign in — Destination Paradise Mauritius Car Rental" },
+      { property: "og:description", content: "Sign in to manage Destination Paradise Mauritius Car Rental rental bookings." },
     ],
   }),
   component: AuthPage,
@@ -93,8 +93,8 @@ function AuthPage() {
   return (
     <div className="flex min-h-screen flex-col bg-hero p-4">
       <Link to="/" className="flex w-full items-center gap-2 font-display text-base font-bold text-foreground" aria-label="Back to the car list">
-        <img src={brandLogo(s?.logo_url)} alt="Victoria Car rental logo" width={144} height={49} loading="eager" fetchPriority="high" decoding="async" className="h-12 w-36 shrink-0 rounded-md object-contain" />
-        {s?.company_name ?? "Victoria Car rental"}
+        <img src={brandLogo(s?.logo_url)} alt="Destination Paradise Mauritius Car Rental logo" width={144} height={49} loading="eager" fetchPriority="high" decoding="async" className="h-12 w-36 shrink-0 rounded-md object-contain" />
+        {s?.company_name ?? "Destination Paradise Mauritius Car Rental"}
       </Link>
       <div className="flex flex-1 items-center justify-center py-6">
         <div className="w-full max-w-sm rounded-2xl bg-card p-6 shadow-card">

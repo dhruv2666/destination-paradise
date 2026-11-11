@@ -1,8 +1,8 @@
-import logo from "@/assets/victoria-car-rental-logo.png.asset.json";
+import logo from "@/assets/destination-paradise-logo.png.asset.json";
 
-export const BRAND_NAME = "Victoria Car rental";
+export const BRAND_NAME = "Destination Paradise Mauritius Car Rental";
 export const BRAND_LOGO = logo.url;
-export const BUSINESS_PHONE = "+230 5920 6432";
+export const BUSINESS_PHONE = "+230 5922 4353";
 export function brandLogo(source?: string | null): string {
   return source || BRAND_LOGO;
 }

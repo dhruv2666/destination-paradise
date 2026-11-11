@@ -1,9 +1,9 @@
 {
-  "name": "Victoria Car rental",
-  "short_name": "Victoria Car rental",
+  "name": "Destination Paradise Mauritius Car Rental",
+  "short_name": "Destination Paradise Mauritius Car Rental",
   "start_url": "/admin",
   "display": "standalone",
-  "background_color": "#171717",
-  "theme_color": "#160d0e",
+  "background_color": "#ffffff",
+  "theme_color": "#1F2A5C",
   "icons": [{ "src": "/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any maskable" }]
 }

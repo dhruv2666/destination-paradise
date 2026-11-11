@@ -16,10 +16,10 @@ export const Route = createFileRoute("/book")({
     meta: [
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
-      { title: "Book a car — Victoria Car rental" },
-      { name: "description", content: "Request your Victoria Car rental rental car in Mauritius online." },
-      { property: "og:title", content: "Book a car — Victoria Car rental" },
-      { property: "og:description", content: "Request your Victoria Car rental rental car in Mauritius online." },
+      { title: "Book a car — Destination Paradise Mauritius Car Rental" },
+      { name: "description", content: "Request your Destination Paradise Mauritius Car Rental rental car in Mauritius online." },
+      { property: "og:title", content: "Book a car — Destination Paradise Mauritius Car Rental" },
+      { property: "og:description", content: "Request your Destination Paradise Mauritius Car Rental rental car in Mauritius online." },
     ],
   }),
   component: BookPage,
@@ -36,8 +36,8 @@ function BookPage() {
       <header className="bg-hero px-4 pb-16 pt-6 text-foreground">
         <div className="mx-auto max-w-2xl">
           <Link to="/" className="flex items-center gap-2 font-display text-base font-bold">
-            <img src={brandLogo(settings.data?.logo_url)} alt="Victoria Car rental logo" width={144} height={49} loading="eager" fetchPriority="high" decoding="async" className="h-12 w-36 shrink-0 rounded-md object-contain" />
-            {settings.data?.company_name ?? "Victoria Car rental"}
+            <img src={brandLogo(settings.data?.logo_url)} alt="Destination Paradise Mauritius Car Rental logo" width={144} height={49} loading="eager" fetchPriority="high" decoding="async" className="h-12 w-36 shrink-0 rounded-md object-contain" />
+            {settings.data?.company_name ?? "Destination Paradise Mauritius Car Rental"}
           </Link>
           <h1 className="mt-6 text-3xl font-bold sm:text-4xl">Book your car</h1>
           <p className="mt-1 opacity-85">Send a request — we confirm and send your invoice on WhatsApp.</p>

@@ -1,15 +1,15 @@
 import { useState } from "react";
 import { format } from "date-fns";
 import { toast } from "sonner";
-import { Check, Loader2, Pencil, X } from "lucide-react";
+import { Check, Loader2, Pencil, Trash2, X } from "lucide-react";
 import { useQueryClient } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { Dialog, DialogContent, DialogFooter, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { friendlyError, qk, type Booking, type BookingWithCar, type Car, type Settings } from "@/lib/data";
-import { docNumberLabel, formatMoney, locationLabel } from "@/lib/booking-math";
-import { generateDocument } from "@/lib/documents";
+import { canDeleteBooking, docNumberLabel, formatMoney, locationLabel } from "@/lib/booking-math";
+import { deleteBookingDocuments, generateDocument } from "@/lib/documents";
 import { DocumentActions } from "./DocumentActions";
 import { BookingDialog } from "./BookingDialog";
 import { StatusBadge } from "./StatusBadge";
@@ -32,6 +32,22 @@ export function BookingCard({ booking, settings, cars }: { booking: BookingWithC
         await generateDocument(data, booking.cars, settings);
         toast.success("Approved — document generated. You can now send it on WhatsApp.");
       } else toast.success(`Booking ${status}`);
+      await refresh();
+    } catch (e) {
+      toast.error(friendlyError(e));
+    } finally {
+      setBusy(false);
+    }
+  }
+
+  async function remove() {
+    if (!confirm(`Permanently delete ${docNumberLabel(booking.doc_number)} (${booking.full_name})? This cannot be undone.`)) return;
+    setBusy(true);
+    try {
+      await deleteBookingDocuments([booking.id]);
+      const { error } = await supabase.from("bookings").delete().eq("id", booking.id);
+      if (error) throw error;
+      toast.success("Booking deleted");
       await refresh();
     } catch (e) {
       toast.error(friendlyError(e));
@@ -92,6 +108,11 @@ export function BookingCard({ booking, settings, cars }: { booking: BookingWithC
           {booking.status === "approved" && (
             <Button variant="ghost" size="tap" onClick={() => confirm("Cancel this booking?") && setStatus("cancelled")} disabled={busy}>
               Cancel booking
+            </Button>
+          )}
+          {canDeleteBooking(booking.status) && (
+            <Button variant="ghost" size="tap" className="text-destructive" onClick={remove} disabled={busy}>
+              <Trash2 /> Delete
             </Button>
           )}
         </div>

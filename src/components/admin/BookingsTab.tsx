@@ -1,11 +1,15 @@
 import { useMemo, useState } from "react";
-import { ChevronDown, ChevronUp, Layers, Search } from "lucide-react";
+import { ChevronDown, ChevronUp, Layers, Loader2, Search, Trash2 } from "lucide-react";
+import { useQueryClient } from "@tanstack/react-query";
+import { toast } from "sonner";
+import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import type { BookingWithCar, Car, Settings } from "@/lib/data";
+import { friendlyError, qk, type BookingWithCar, type Car, type Settings } from "@/lib/data";
 import { docNumberLabel } from "@/lib/booking-math";
+import { deleteBookingDocuments } from "@/lib/documents";
 import { BookingCard } from "./BookingCard";
 
 export function BookingsTab({ bookings, cars, settings }: { bookings: BookingWithCar[]; cars: Car[]; settings: Settings }) {
@@ -15,6 +19,25 @@ export function BookingsTab({ bookings, cars, settings }: { bookings: BookingWit
   const [from, setFrom] = useState("");
   const [to, setTo] = useState("");
   const [openPiles, setOpenPiles] = useState<Record<string, boolean>>({});
+  const [deleting, setDeleting] = useState<string | null>(null);
+  const qc = useQueryClient();
+
+  async function deletePile(value: string, pile: BookingWithCar[]) {
+    if (!confirm(`Permanently delete all ${pile.length} ${value} booking${pile.length === 1 ? "" : "s"}? This cannot be undone.`)) return;
+    setDeleting(value);
+    try {
+      const ids = pile.map((b) => b.id);
+      await deleteBookingDocuments(ids);
+      const { error } = await supabase.from("bookings").delete().in("id", ids);
+      if (error) throw error;
+      toast.success(`Deleted ${pile.length} booking${pile.length === 1 ? "" : "s"}`);
+      await qc.invalidateQueries({ queryKey: qk.bookings });
+    } catch (e) {
+      toast.error(friendlyError(e));
+    } finally {
+      setDeleting(null);
+    }
+  }
 
   const list = useMemo(() => {
     const s = q.trim().toLowerCase();
@@ -64,10 +87,16 @@ export function BookingsTab({ bookings, cars, settings }: { bookings: BookingWit
         const open = openPiles[value] === true;
         return (
           <section key={value} className="space-y-3">
-            <Button variant="outline" size="tap" className="h-auto w-full justify-between gap-3 py-4" aria-expanded={open} aria-controls={`booking-pile-${value}`} onClick={() => setOpenPiles((current) => ({ ...current, [value]: !current[value] }))}>
-              <span className="flex min-w-0 items-center gap-2 text-left"><Layers className="shrink-0" /><span className="whitespace-normal">{label} ({pile.length})</span></span>
-              <span className="flex shrink-0 items-center gap-2 text-xs text-muted-foreground">{open ? 'Close' : 'Tap to open'}{open ? <ChevronUp /> : <ChevronDown />}</span>
-            </Button>
+            <div className="flex items-stretch gap-2">
+              <Button variant="outline" size="tap" className="h-auto min-w-0 flex-1 justify-between gap-3 py-4" aria-expanded={open} aria-controls={`booking-pile-${value}`} onClick={() => setOpenPiles((current) => ({ ...current, [value]: !current[value] }))}>
+                <span className="flex min-w-0 items-center gap-2 text-left"><Layers className="shrink-0" /><span className="whitespace-normal">{label} ({pile.length})</span></span>
+                <span className="flex shrink-0 items-center gap-2 text-xs text-muted-foreground">{open ? 'Close' : 'Tap to open'}{open ? <ChevronUp /> : <ChevronDown />}</span>
+              </Button>
+              <Button variant="destructive" size="tap" className="h-auto shrink-0 px-4" disabled={deleting !== null} onClick={() => deletePile(value, pile)}>
+                {deleting === value ? <Loader2 className="animate-spin" /> : <Trash2 />}
+                Delete all
+              </Button>
+            </div>
             <div id={`booking-pile-${value}`} className="space-y-3" hidden={!open}>
               {open && pile.map((b) => <BookingCard key={b.id} booking={b} settings={settings} cars={cars} />)}
             </div>

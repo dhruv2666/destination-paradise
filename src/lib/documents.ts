@@ -67,6 +67,12 @@ async function defaultLogo(source: string): Promise<string | null> {
   }
 }
 
+/** Remove the stored PDFs of bookings being deleted. Missing files are ignored. */
+export async function deleteBookingDocuments(ids: string[]): Promise<void> {
+  if (ids.length === 0) return;
+  await supabase.storage.from("documents").remove(ids.map((id) => docPath({ id })));
+}
+
 export async function documentLink(path: string): Promise<string> {
   const { data, error } = await supabase.storage.from("documents").createSignedUrl(path, LINK_TTL);
   if (error) throw error;

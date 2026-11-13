@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { bookingDailyPrice, currencyCode, currencyTotals, docNumberLabel, tierDailyPrice, locationLabel, locationProblem, rentalDays, rentalTotal, rangesOverlap } from "./booking-math";
+import { bookingDailyPrice, canDeleteBooking, currencyCode, currencyTotals, docNumberLabel, tierDailyPrice, locationLabel, locationProblem, rentalDays, rentalTotal, rangesOverlap } from "./booking-math";
 import { fillTemplate, whatsappNumber, whatsappUrl } from "./whatsapp";
 import { BUSINESS_PHONE } from "./brand";
 
@@ -42,6 +42,15 @@ describe("rental pricing", () => {
     const a = [new Date("2026-11-10"), new Date("2026-11-13")] as const;
     expect(rangesOverlap(a[0], a[1], new Date("2026-11-12"), new Date("2026-11-15"))).toBe(true);
     expect(rangesOverlap(a[0], a[1], new Date("2026-11-13"), new Date("2026-11-15"))).toBe(false);
+  });
+});
+
+describe("booking deletion", () => {
+  it("allows deleting only rejected or cancelled bookings", () => {
+    expect(canDeleteBooking("rejected")).toBe(true);
+    expect(canDeleteBooking("cancelled")).toBe(true);
+    expect(canDeleteBooking("pending")).toBe(false);
+    expect(canDeleteBooking("approved")).toBe(false);
   });
 });
 

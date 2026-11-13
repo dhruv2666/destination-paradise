@@ -77,10 +77,6 @@ export function docNumberLabel(n: number): string {
   return `INV-${n}`;
 }
 
-/** Only closed bookings (rejected or cancelled) may be permanently deleted. */
-export function canDeleteBooking(status: string): boolean {
-  return status === "rejected" || status === "cancelled";
-}
 
 /** Mirrors the bookings_prepare trigger: the client must pick airport or other, and "other" needs a place. */
 export function locationProblem(loc: string, details: string): string | null {

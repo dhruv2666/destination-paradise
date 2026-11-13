@@ -8,7 +8,7 @@ import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { Dialog, DialogContent, DialogFooter, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { friendlyError, qk, type Booking, type BookingWithCar, type Car, type Settings } from "@/lib/data";
-import { canDeleteBooking, docNumberLabel, formatMoney, locationLabel } from "@/lib/booking-math";
+import { docNumberLabel, formatMoney, locationLabel } from "@/lib/booking-math";
 import { deleteBookingDocuments, generateDocument } from "@/lib/documents";
 import { DocumentActions } from "./DocumentActions";
 import { BookingDialog } from "./BookingDialog";
@@ -41,7 +41,7 @@ export function BookingCard({ booking, settings, cars }: { booking: BookingWithC
   }
 
   async function remove() {
-    if (!confirm(`Permanently delete ${docNumberLabel(booking.doc_number)} (${booking.full_name})? This cannot be undone.`)) return;
+    if (!confirm(`Permanently delete ${docNumberLabel(booking.doc_number)} (${booking.full_name})? Its document will be removed too. This cannot be undone.`)) return;
     setBusy(true);
     try {
       await deleteBookingDocuments([booking.id]);
@@ -110,11 +110,9 @@ export function BookingCard({ booking, settings, cars }: { booking: BookingWithC
               Cancel booking
             </Button>
           )}
-          {canDeleteBooking(booking.status) && (
-            <Button variant="ghost" size="tap" className="text-destructive" onClick={remove} disabled={busy}>
-              <Trash2 /> Delete
-            </Button>
-          )}
+          <Button variant="ghost" size="tap" className="text-destructive" onClick={remove} disabled={busy}>
+            <Trash2 /> Delete
+          </Button>
         </div>
         <DocumentActions booking={booking} settings={settings} />
         {booking.pdf_generated_at && (

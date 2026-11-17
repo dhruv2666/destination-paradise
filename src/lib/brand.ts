@@ -1,4 +1,4 @@
-import logo from "@/assets/destination-paradise-logo.png.asset.json";
+import logo from "@/assets/destination-paradise-actual-logo.png.asset.json";
 
 export const BRAND_NAME = "Destination Paradise Mauritius Car Rental";
 export const BRAND_LOGO = logo.url;

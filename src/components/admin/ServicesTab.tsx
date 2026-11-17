@@ -55,7 +55,7 @@ export function ServicesTab() {
           {requests.data?.map((r) => (
             <li key={r.id} className="rounded-xl border border-border bg-card p-4 shadow-card">
               <div className="flex flex-wrap items-center justify-between gap-2">
-                <p className="font-semibold">{r.service === "wedding" ? `Wedding · ${r.car_choice}` : "Airport transfer"}</p>
+                <p className="font-semibold">{r.service === "wedding" ? r.car_choice ? `Wedding · ${r.car_choice}` : "Wedding car quote" : "Airport transfer"}</p>
                 <span className={cn("rounded-full px-2.5 py-0.5 text-xs font-bold", r.status === "confirmed" ? "bg-success text-success-foreground" : r.status === "quoted" ? "bg-warning text-warning-foreground" : "bg-secondary text-secondary-foreground")}>{r.status}</span>
               </div>
               <p className="mt-1 text-sm text-muted-foreground">{r.request_date} {r.request_time} · {r.pickup_location} → {r.dropoff_location}</p>

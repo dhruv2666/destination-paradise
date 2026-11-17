@@ -12,6 +12,8 @@ import { whatsappUrl } from "@/lib/whatsapp";
 import type { Lang } from "@/lib/seo/site";
 import x5Photo from "@/assets/wedding-bmw-x5.jpg";
 import series7Photo from "@/assets/wedding-bmw-7series.jpg";
+import arrivalPhoto from "@/assets/wedding-arrival.jpg";
+import momentsPhoto from "@/assets/wedding-moments.jpg";
 
 const PLACEHOLDERS: Record<string, string> = { hero: x5Photo, x5: x5Photo, "7series": series7Photo };
 const SLOT_FOR_CAR: Record<(typeof WEDDING_CARS)[number], string> = { "BMW X5": "x5", "BMW 7 Series": "7series" };
@@ -100,6 +102,7 @@ export function WeddingPage({ lang }: { lang: Lang }) {
                     <span className="text-sm font-semibold text-gold">{t.priceNote}</span>
                   </div>
                   <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{t.carBlurbs[car]}</p>
+                  <ul className="mt-3 flex flex-wrap gap-2 text-xs font-semibold">{(fr ? ["Chauffeur inclus", "Rubans et décoration sur demande"] : ["Chauffeur included", "Ribbons & décor on request"]).map((b) => <li key={b} className="rounded-full bg-gold-soft px-2.5 py-1 text-primary">{b}</li>)}</ul>
                   <Button asChild variant="gold" size="sm" className="mt-3"><a href="#service-request">{t.quote}</a></Button>
                 </div>
               </article>
@@ -119,6 +122,22 @@ export function WeddingPage({ lang }: { lang: Lang }) {
             </li>
           ))}
         </ul>
+      </section></Reveal>
+
+      {/* How it works */}
+      <Reveal><section className="mt-10">
+        <h2 className="wedding-heading text-2xl">{fr ? "Comment ça marche" : "How it works"}</h2>
+        <ol className="mt-4 grid gap-3 sm:grid-cols-3">
+          {(fr ? ["Envoyez date, lieux et durée", "Nous répondons avec votre devis sur WhatsApp", "Votre chauffeur arrive, voiture décorée"] : ["Send your date, places and hours", "We reply on WhatsApp with your quote", "Your chauffeur arrives, car decorated"]).map((step, i) => (
+            <li key={step} className="wedding-card flex items-start gap-3 p-4"><span className="grid h-8 w-8 shrink-0 place-items-center rounded-full bg-primary text-sm font-bold text-primary-foreground">{i + 1}</span><span className="text-sm font-medium leading-snug">{step}</span></li>
+          ))}
+        </ol>
+      </section></Reveal>
+
+      {/* Gallery */}
+      <Reveal><section className="mt-10 grid grid-cols-2 gap-3">
+        <img src={arrivalPhoto} alt={fr ? "Arrivée des mariés en voiture décorée" : "Couple arriving in a decorated car"} width={1024} height={768} loading="lazy" decoding="async" className="aspect-[4/3] w-full rounded-lg object-cover" />
+        <img src={momentsPhoto} alt={fr ? "Moment photo avec la voiture de mariage" : "Photo stop with the wedding car"} width={1024} height={768} loading="lazy" decoding="async" className="aspect-[4/3] w-full rounded-lg object-cover" />
       </section></Reveal>
 
       {/* Quote form */}

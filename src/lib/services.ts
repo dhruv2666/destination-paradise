@@ -17,7 +17,7 @@ export const serviceRequestSchema = z.object({
   passengers: z.number().int().positive().max(100).nullable(), luggage: z.number().int().min(0).max(100).nullable(),
   flight_number: z.string().trim().max(80), notes: z.string().trim().max(2000),
 }).superRefine((v, ctx) => {
-  if (v.service === "wedding" && (!v.car_choice || !v.hours)) ctx.addIssue({ code: "custom", message: "Choose a wedding car and number of hours" });
+  if (v.service === "wedding" && !v.hours) ctx.addIssue({ code: "custom", message: "Enter the number of hours" });
   if (v.service === "transfer" && (v.passengers === null || v.luggage === null)) ctx.addIssue({ code: "custom", message: "Enter passengers and luggage" });
   if (Date.parse(`${v.request_date}T${v.request_time}:00+04:00`) < Date.now()) ctx.addIssue({ code: "custom", message: "Choose a future date and time" });
 });
@@ -28,7 +28,7 @@ export function serviceMessage(r: ServiceInput, fr = false) {
     `${fr ? "Date / heure" : "Date / time"}: ${r.request_date} ${r.request_time} (Mauritius UTC+4)`,
     `${fr ? "Départ / cérémonie" : "Pickup / ceremony"}: ${r.pickup_location}`,
     `${fr ? "Destination / réception" : "Drop-off / venue"}: ${r.dropoff_location}`,
-    ...(r.service === "wedding" ? [`${fr ? "Voiture" : "Car"}: ${r.car_choice}`, `${fr ? "Heures" : "Hours"}: ${r.hours}`] : [`${fr ? "Passagers" : "Passengers"}: ${r.passengers}`, `${fr ? "Bagages" : "Luggage"}: ${r.luggage}`, ...(r.flight_number ? [`${fr ? "Vol" : "Flight"}: ${r.flight_number}`] : [])]),
+    ...(r.service === "wedding" ? [`${fr ? "Heures" : "Hours"}: ${r.hours}`] : [`${fr ? "Passagers" : "Passengers"}: ${r.passengers}`, `${fr ? "Bagages" : "Luggage"}: ${r.luggage}`, ...(r.flight_number ? [`${fr ? "Vol" : "Flight"}: ${r.flight_number}`] : [])]),
     `${fr ? "Nom" : "Name"}: ${r.name}`, `${fr ? "Téléphone" : "Phone"}: ${r.phone}`, ...(r.notes ? [`Notes: ${r.notes}`] : []), `${fr ? "Référence" : "Reference"}: ${r.id}`].join("\n");
 }
 export function serviceWhatsapp(r: ServiceInput, fr = false) { return whatsappUrl(BUSINESS_PHONE, serviceMessage(r, fr)); }

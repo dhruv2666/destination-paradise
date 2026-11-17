@@ -5,6 +5,7 @@ import { BRAND_LOGO, BRAND_NAME, BUSINESS_PHONE } from "@/lib/brand";
 import { whatsappUrl } from "@/lib/whatsapp";
 import { LOCATIONS } from "@/lib/seo/locations";
 import type { Lang } from "@/lib/seo/site";
+import { SiteFooterNote } from "@/components/SiteFooterNote";
 
 const T = {
   en: { rental: "Car rental", airport: "Airport pickup", wedding: "Wedding cars", faq: "FAQ", contact: "Contact", book: "Book a car", areas: "Areas we serve", switch: "Français", home: "Home", address: "Address" },
@@ -77,6 +78,7 @@ export function SiteShell({ lang, altPath, crumbs, children }: { lang: Lang; alt
             </ul>
           </div>
         </div>
+        <div className="mx-auto max-w-3xl"><SiteFooterNote /></div>
       </footer>
     </div>
   );

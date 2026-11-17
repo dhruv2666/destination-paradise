@@ -1,11 +1,11 @@
 {
-  "version": 1,
   "asset_id": "3d038910-57fe-402b-94ce-ae9db7e54efe",
-  "project_id": "b404dc99-3b56-49ff-ac53-e87249741055",
-  "url": "/__l5e/assets-v1/3d038910-57fe-402b-94ce-ae9db7e54efe/destination-paradise-logo.png",
-  "r2_key": "a/v1/b404dc99-3b56-49ff-ac53-e87249741055/3d038910-57fe-402b-94ce-ae9db7e54efe/destination-paradise-logo.png",
-  "original_filename": "destination-paradise-logo.png",
-  "size": 20965,
   "content_type": "image/png",
-  "created_at": "2026-11-11T07:33:04Z"
+  "created_at": "2026-11-11T07:33:04Z",
+  "original_filename": "destination-paradise-logo.png",
+  "project_id": "27a0dca2-535a-4ff6-88d8-577d9039cf3d",
+  "r2_key": "a/v1/27a0dca2-535a-4ff6-88d8-577d9039cf3d/3d038910-57fe-402b-94ce-ae9db7e54efe/destination-paradise-logo.png",
+  "size": 20965,
+  "url": "/__l5e/assets-v1/3d038910-57fe-402b-94ce-ae9db7e54efe/destination-paradise-logo.png",
+  "version": 1
 }

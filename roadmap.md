@@ -1,9 +1,9 @@
 # Roadmap
 
-- [ ] Add separate wedding pages, featured vehicles, replaceable images and homepage services
-- [ ] Add wedding and transfer quote forms, secure saved requests and owner status controls
-- [ ] Add mobile WhatsApp access and restrained reduced-motion-safe site animations
-- [ ] Verify public requests, owner read-back/image replacement and English/French mobile layouts
+- [x] Add separate wedding pages, featured vehicles, replaceable images and homepage services
+- [x] Add wedding and transfer quote forms, secure saved requests and owner status controls
+- [x] Add mobile WhatsApp access and restrained reduced-motion-safe site animations
+- [x] Verify public requests and English/French mobile layouts; owner read-back/image replacement pending user's own sign-up (no auth users in database)
 
 - [x] Add secure date-first availability search and locked customer selection
 - [x] Add owner date blocks and per-car booking calendar

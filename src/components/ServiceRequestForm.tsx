@@ -9,7 +9,7 @@ import { mauritiusDate } from "@/lib/holidays";
 import { serviceRequestSchema, serviceWhatsapp, TRANSFER_ROUTES, type ServiceInput } from "@/lib/services";
 import { submitServiceRequest } from "@/lib/services.functions";
 
-export function ServiceRequestForm({service,lang}:{service:"wedding"|"transfer";lang:"en"|"fr"}) {
+export function ServiceRequestForm({service,lang,top=false}:{service:"wedding"|"transfer";lang:"en"|"fr";top?:boolean}) {
  const fr=lang==="fr", wedding=service==="wedding";
  const [pickup,setPickup]=useState(wedding ? "" : "SSR Airport");
  const [dropoff,setDropoff]=useState("");
@@ -18,7 +18,7 @@ export function ServiceRequestForm({service,lang}:{service:"wedding"|"transfer";
  const submit=useServerFn(submitServiceRequest);
  const mutation=useMutation({mutationFn:(data:ServiceInput)=>submit({data})});
  const field=(label:string,key:string,type="text",required=true,extra:Record<string,string|number>={})=><label className="grid min-w-0 gap-1.5 text-sm font-medium">{label}<Input name={key} type={type} required={required} {...extra} /></label>;
- return <section id="service-request" className="scroll-mt-28 border-t border-border py-10">
+ return <section id="service-request" className={top ? "scroll-mt-28 mt-4 rounded-xl border border-border bg-card p-4 shadow-card sm:p-6" : "scroll-mt-28 border-t border-border py-10"}>
   <h2 className={wedding ? "wedding-heading text-3xl" : "text-2xl font-bold"}>{wedding ? (fr ? "Votre arrivée, à votre image" : "Your arrival, your way") : (fr ? "Demander un transfert" : "Request a transfer")}</h2>
   <p className="mt-2 text-muted-foreground">{fr ? "Prix sur demande · Confirmation après devis" : "Price on request · Confirmed after your quote"}</p>
   {!wedding && <div className="my-5 flex flex-wrap gap-2" aria-label={fr ? "Trajets populaires" : "Popular routes"}>{TRANSFER_ROUTES.map(route=><Button key={route} variant="outline" size="sm" onClick={()=>{setPickup("SSR Airport");setDropoff(route);setSaved(null);}}>SSR Airport → {route}</Button>)}</div>}
@@ -27,10 +27,10 @@ export function ServiceRequestForm({service,lang}:{service:"wedding"|"transfer";
    e.preventDefault();setError("");const f=new FormData(e.currentTarget);
    const data={id:crypto.randomUUID(),service,request_date:String(f.get("date")),request_time:String(f.get("time")),name:String(f.get("name")),phone:String(f.get("phone")),pickup_location:pickup,dropoff_location:dropoff,car_choice:null,hours:wedding?Number(f.get("hours")):null,passengers:wedding?null:Number(f.get("passengers")),luggage:wedding?null:Number(f.get("luggage")),flight_number:String(f.get("flight")??""),notes:String(f.get("notes")??"")};
    const parsed=serviceRequestSchema.safeParse(data);if(!parsed.success){setError(fr ? "Vérifiez les champs et choisissez une date et une heure futures." : parsed.error.issues[0]?.message ?? "Check your details");return;}
-   // Reserve the tab during the click so mobile browsers do not block WhatsApp after saving.
-   const tab=window.open("about:blank","_blank"); if(tab) tab.opener=null;
-   try{await mutation.mutateAsync(parsed.data);setSaved(parsed.data);if(tab) tab.location.href=serviceWhatsapp(parsed.data,fr);}
-   catch(err){tab?.close();setError(err instanceof Error ? err.message : "Could not save request");}
+   try{await mutation.mutateAsync(parsed.data);setSaved(parsed.data);
+    // Same-tab navigation is never popup-blocked on phones; WhatsApp opens with the message prefilled.
+    window.location.href=serviceWhatsapp(parsed.data,fr);}
+   catch(err){setError(err instanceof Error ? err.message : "Could not save request");}
   }}>
    {field(fr?"Date":"Date","date","date",true,{min:mauritiusDate()})}
    {field(fr?"Heure (Maurice)":"Time (Mauritius)","time","time")}

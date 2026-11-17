@@ -79,3 +79,8 @@ describe("whatsapp", () => {
     expect(whatsappUrl("+230 5712 3456", "Hello & bye")).toBe("https://wa.me/23057123456?text=Hello%20%26%20bye");
   });
 });
+
+import { describe as d2, it as i2, expect as e2 } from "vitest";
+d2("local Mauritian WhatsApp numbers", () => {
+  i2("adds the 230 country code", () => { e2(whatsappNumber("5922 4353")).toBe("23059224353"); });
+});

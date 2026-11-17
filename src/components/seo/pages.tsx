@@ -65,10 +65,11 @@ export function AirportPage({ lang }: { lang: Lang }) {
   const fr = lang === "fr";
   return (
     <SiteShell lang={lang} altPath={fr ? "/airport-transfers" : "/fr/airport-transfers"} crumbs={[{ name: fr ? "Accueil" : "Home", path: home(lang) }, { name: c.h1, path: `${pre(lang)}/airport-transfers` }]}>
-      <Prose h1={c.h1} intro={c.intro} sections={c.sections} />
+      <h1 className="text-3xl font-bold sm:text-4xl">{c.h1}</h1>
+      <ServiceRequestForm service="transfer" lang={lang} top />
+      <Prose h1="" sections={c.sections} />
       <h2 className="mt-8 text-xl font-bold">{fr ? "Destinations depuis l'aéroport" : "Destinations from the airport"}</h2>
       <LocationList lang={lang} />
-      <ServiceRequestForm service="transfer" lang={lang} />
       <BookCta lang={lang} />
     </SiteShell>
   );

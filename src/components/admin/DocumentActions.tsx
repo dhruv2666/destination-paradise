@@ -55,17 +55,14 @@ export function DocumentActions({ booking, settings }: { booking: BookingWithCar
   }
 
   async function onWhatsApp() {
-    const win = window.open("", "_blank");
     setBusy("wa");
     try {
       const { path } = await ensure();
       const link = await documentLink(path);
       const msg = bookingMessage(settings.whatsapp_template, booking, booking.cars?.name ?? "car", settings.currency, link);
       const url = whatsappUrl(booking.phone, msg);
-      if (win) win.location.href = url;
-      else window.location.href = url;
+      window.location.href = url;
     } catch (e) {
-      win?.close();
       toast.error(`Could not prepare the WhatsApp message: ${(e as Error).message}`);
     } finally {
       setBusy(null);

@@ -13,6 +13,7 @@ import { formatMoney, lowestRate } from "@/lib/booking-math";
 import { DateSearch } from "@/components/DateSearch";
 import { Reveal } from "@/components/Reveal";
 import { SiteFooterNote } from "@/components/SiteFooterNote";
+import { SiteNav } from "@/components/SiteNav";
 import { ServiceBars } from "@/components/ServiceBars";
 
 export function HomePage({ lang, initialCars }: { lang: Lang; initialCars: Car[] }) {
@@ -25,7 +26,7 @@ export function HomePage({ lang, initialCars }: { lang: Lang; initialCars: Car[]
       <header className="border-b border-border bg-card py-3 pr-4">
         <div className="flex w-full items-center justify-between gap-4">
           <img src={brandLogo(s?.logo_url)} alt={fr ? "Logo Destination Paradise Mauritius Car Rental" : "Destination Paradise Mauritius Car Rental logo"} width={144} height={49} loading="eager" decoding="async" className="h-12 w-36 shrink-0 object-contain object-left" />
-          <nav className="flex flex-wrap items-center gap-x-3 text-sm font-semibold"><Link to={fr ? "/fr/car-rental" : "/car-rental"} className="hidden hover:text-primary sm:inline">{fr ? "Location" : "Car rental"}</Link><Link to={fr ? "/fr/airport-transfers" : "/airport-transfers"} className="hidden hover:text-primary sm:inline">{fr ? "Aéroport" : "Airport"}</Link><Link to={fr ? "/fr/mariage" : "/wedding-cars"} className="hidden hover:text-primary sm:inline">{fr ? "Mariage" : "Weddings"}</Link><Link to={fr ? "/fr/faq" : "/faq"} className="hidden hover:text-primary sm:inline">FAQ</Link><Link to={fr ? "/fr/contact" : "/contact"} className="hidden hover:text-primary sm:inline">Contact</Link><a href={fr ? "/" : "/fr"} hrefLang={fr ? "en" : "fr"} className="text-primary">{fr ? "EN" : "FR"}</a></nav>
+          <SiteNav lang={lang} altPath={fr ? "/" : "/fr"} />
         </div>
       </header>
       <section className="relative isolate overflow-hidden px-4 py-12 text-on-photo sm:py-16">

@@ -19,6 +19,8 @@ export function fillTemplate(template: string, values: TemplateValues): string {
 export function whatsappNumber(phone: string): string {
   let digits = phone.replace(/\D/g, "");
   if (digits.startsWith("00")) digits = digits.slice(2);
+  // Local Mauritian numbers (7–8 digits) need the 230 country code for WhatsApp.
+  if (digits.length === 7 || digits.length === 8) digits = `230${digits}`;
   return digits;
 }
 

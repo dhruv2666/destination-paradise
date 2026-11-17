@@ -12,8 +12,6 @@ import { whatsappUrl } from "@/lib/whatsapp";
 import type { Lang } from "@/lib/seo/site";
 import x5Photo from "@/assets/wedding-bmw-x5.jpg";
 import series7Photo from "@/assets/wedding-bmw-7series.jpg";
-import arrivalPhoto from "@/assets/wedding-arrival.jpg";
-import momentsPhoto from "@/assets/wedding-moments.jpg";
 
 const PLACEHOLDERS: Record<string, string> = { hero: x5Photo, x5: x5Photo, "7series": series7Photo };
 const SLOT_FOR_CAR: Record<(typeof WEDDING_CARS)[number], string> = { "BMW X5": "x5", "BMW 7 Series": "7series" };
@@ -132,12 +130,6 @@ export function WeddingPage({ lang }: { lang: Lang }) {
             <li key={step} className="wedding-card flex items-start gap-3 p-4"><span className="grid h-8 w-8 shrink-0 place-items-center rounded-full bg-primary text-sm font-bold text-primary-foreground">{i + 1}</span><span className="text-sm font-medium leading-snug">{step}</span></li>
           ))}
         </ol>
-      </section></Reveal>
-
-      {/* Gallery */}
-      <Reveal><section className="mt-10 grid grid-cols-2 gap-3">
-        <img src={arrivalPhoto} alt={fr ? "Arrivée des mariés en voiture décorée" : "Couple arriving in a decorated car"} width={1024} height={768} loading="lazy" decoding="async" className="aspect-[4/3] w-full rounded-lg object-cover" />
-        <img src={momentsPhoto} alt={fr ? "Moment photo avec la voiture de mariage" : "Photo stop with the wedding car"} width={1024} height={768} loading="lazy" decoding="async" className="aspect-[4/3] w-full rounded-lg object-cover" />
       </section></Reveal>
 
       {/* Quote form */}

@@ -75,13 +75,6 @@ export function ServicesTab() {
         </ul>
       </section>
 
-      <section>
-        <h2 className="font-display text-base font-bold">Wedding car photos</h2>
-        <p className="mt-1 text-sm text-muted-foreground">Replace the placeholder photos shown on the wedding page. JPG, PNG or WebP up to 5 MB.</p>
-        <div className="mt-3 grid gap-4 sm:grid-cols-2">
-          {SLOTS.map(({ slot, label }) => <PhotoSlot key={slot} slot={slot} label={label} current={media.data?.find((m) => m.slot === slot)} onDone={() => qc.invalidateQueries({ queryKey: weddingMediaQuery.queryKey })} />)}
-        </div>
-      </section>
     </div>
   );
 }

@@ -5,6 +5,7 @@ import { BRAND_LOGO, BRAND_NAME, BUSINESS_PHONE } from "@/lib/brand";
 import { whatsappUrl } from "@/lib/whatsapp";
 import { LOCATIONS } from "@/lib/seo/locations";
 import type { Lang } from "@/lib/seo/site";
+import { SiteNav } from "@/components/SiteNav";
 import { SiteFooterNote } from "@/components/SiteFooterNote";
 
 const T = {
@@ -18,33 +19,13 @@ export function SiteShell({ lang, altPath, crumbs, children }: { lang: Lang; alt
   return (
     <div lang={lang} className="min-h-screen bg-background">
       <header className="border-b border-border bg-card py-3 pr-4">
-        <div className="flex w-full flex-wrap items-center justify-between gap-3">
+        <div className="flex w-full items-center justify-between gap-3">
           {fr ? (
             <Link to="/fr"><img src={BRAND_LOGO} alt={`${BRAND_NAME} logo`} width={144} height={49} loading="eager" decoding="async" className="h-12 w-36 object-contain object-left" /></Link>
           ) : (
             <Link to="/"><img src={BRAND_LOGO} alt={`${BRAND_NAME} logo`} width={144} height={49} loading="eager" decoding="async" className="h-12 w-36 object-contain object-left" /></Link>
           )}
-          <nav className="flex flex-wrap items-center gap-x-4 gap-y-1 text-sm font-semibold">
-            {fr ? (
-              <>
-                <Link to="/fr/car-rental" className="hover:text-primary">{t.rental}</Link>
-                <Link to="/fr/airport-transfers" className="hover:text-primary">{t.airport}</Link>
-                <Link to="/fr/mariage" className="hover:text-primary">{t.wedding}</Link>
-                <Link to="/fr/faq" className="hover:text-primary">{t.faq}</Link>
-                <Link to="/fr/contact" className="hover:text-primary">{t.contact}</Link>
-              </>
-            ) : (
-              <>
-                <Link to="/car-rental" className="hover:text-primary">{t.rental}</Link>
-                <Link to="/airport-transfers" className="hover:text-primary">{t.airport}</Link>
-                <Link to="/wedding-cars" className="hover:text-primary">{t.wedding}</Link>
-                <Link to="/faq" className="hover:text-primary">{t.faq}</Link>
-                <Link to="/contact" className="hover:text-primary">{t.contact}</Link>
-              </>
-            )}
-            <a href={altPath} hrefLang={fr ? "en" : "fr"} className="text-primary">{t.switch}</a>
-            <Link to="/book" search={{}} className="rounded-md bg-coral px-3 py-1.5 text-coral-foreground">{t.book}</Link>
-          </nav>
+          <SiteNav lang={lang} altPath={altPath} />
         </div>
       </header>
       {crumbs && (
@@ -87,7 +68,7 @@ export function SiteShell({ lang, altPath, crumbs, children }: { lang: Lang; alt
 export function Prose({ h1, intro, sections }: { h1: string; intro?: string; sections: { h: string; p: string[] }[] }) {
   return (
     <article className="space-y-6">
-      <h1 className="text-3xl font-bold sm:text-4xl">{h1}</h1>
+      {h1 && <h1 className="text-3xl font-bold sm:text-4xl">{h1}</h1>}
       {intro && <p className="text-lg leading-relaxed text-muted-foreground">{intro}</p>}
       {sections.map((s) => (
         <section key={s.h} className="space-y-3">

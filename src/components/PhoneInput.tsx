@@ -10,7 +10,7 @@ const CODES = [
 
 /** Country code picker + number. Calls onChange with "+CODE NUMBER". */
 export function PhoneInput({ id, name, value, onChange, required }: { id?: string; name?: string; value?: string; onChange?: (v: string) => void; required?: boolean }) {
-  const [code, setCode] = useState(() => CODES.find(([c]) => (value ?? "").startsWith(c + " "))?.[0] ?? "+230");
+  const [code, setCode] = useState<string>(() => CODES.find(([c]) => (value ?? "").startsWith(c + " "))?.[0] ?? "+230");
   const [num, setNum] = useState(() => (value ?? "").replace(/^\+\d+\s+/, ""));
   const full = num.trim() ? `${code} ${num.trim()}` : "";
   const update = (c: string, n: string) => { setCode(c); setNum(n); onChange?.(n.trim() ? `${c} ${n.trim()}` : ""); };

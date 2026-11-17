@@ -1,0 +1,10 @@
+ALTER TABLE public.cars ADD COLUMN mileage integer, ADD COLUMN service_due_date date, ADD COLUMN service_due_km integer, ADD COLUMN insurance_expiry date, ADD COLUMN road_tax_expiry date, ADD COLUMN fitness_expiry date, ADD COLUMN fleet_notes text;
+ALTER TABLE public.bookings ADD COLUMN extras jsonb DEFAULT '[]'::jsonb;
+ALTER TABLE public.cars ADD CONSTRAINT cars_fleet_nonnegative CHECK ((mileage IS NULL OR mileage >= 0) AND (service_due_km IS NULL OR service_due_km >= 0));
+ALTER TABLE public.bookings ADD CONSTRAINT bookings_extras_allowed CHECK (extras IS NULL OR (jsonb_typeof(extras) = 'array' AND extras <@ '["Baby seat", "Booster seat", "Additional driver", "GPS"]'::jsonb));
+REVOKE SELECT ON public.cars FROM anon, authenticated;
+GRANT SELECT (id, name, plate, daily_price, photo_url, seats, transmission, active, created_at, price_1_day, price_2_3_days, price_4_15_days, price_16_plus_days, photos, price_ranges, currency) ON public.cars TO anon, authenticated;
+CREATE OR REPLACE FUNCTION public.owner_fleet_cars() RETURNS SETOF public.cars LANGUAGE plpgsql STABLE SECURITY DEFINER SET search_path = public AS $$ BEGIN IF NOT public.has_role(auth.uid(), 'admin'::public.app_role) THEN RAISE EXCEPTION 'Owner access required'; END IF; RETURN QUERY SELECT * FROM public.cars ORDER BY active DESC, name; END $$;
+REVOKE ALL ON FUNCTION public.owner_fleet_cars() FROM PUBLIC, anon;
+GRANT EXECUTE ON FUNCTION public.owner_fleet_cars() TO authenticated;
+GRANT ALL ON public.cars, public.bookings TO service_role;

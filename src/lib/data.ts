@@ -48,17 +48,13 @@ export async function fetchSettings(): Promise<Settings> {
 }
 
 export async function fetchActiveCars(): Promise<Car[]> {
-  const { data, error } = await supabase.from("cars").select("*").eq("active", true).order("name");
+  const { data, error } = await supabase.from("cars").select("id,name,plate,daily_price,photo_url,seats,transmission,active,created_at,price_1_day,price_2_3_days,price_4_15_days,price_16_plus_days,photos,price_ranges,currency").eq("active", true).order("name");
   if (error) throw error;
-  return data;
+  return data.map((car) => ({ ...car, mileage: null, service_due_date: null, service_due_km: null, insurance_expiry: null, road_tax_expiry: null, fitness_expiry: null, fleet_notes: null }));
 }
 
 export async function fetchAllCars(): Promise<Car[]> {
-  const { data, error } = await supabase
-    .from("cars")
-    .select("*")
-    .order("active", { ascending: false })
-    .order("name");
+  const { data, error } = await supabase.rpc("owner_fleet_cars");
   if (error) throw error;
   return data;
 }

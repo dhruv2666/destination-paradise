@@ -15,6 +15,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { fetchCarUnavailable, friendlyError, type Booking, type Car } from "@/lib/data";
 import { PriceRangesList } from "@/components/PriceRanges";
+import { bookingExtras, readExtras } from "@/lib/booking-extras";
 import { bookingDailyPrice, tierDailyPrice, currencyCode, currencyLabel, formatMoney, locationProblem, rangesOverlap, rentalDays } from "@/lib/booking-math";
 
 type Props = {
@@ -53,6 +54,7 @@ export function BookingForm({ mode, cars, currency, termsHtml, initial, defaults
     currency: currencyCode(initial?.currency ?? cars.find((c) => c.id === (initial?.car_id ?? defaults?.car))?.currency ?? currency),
   });
   const [accepted, setAccepted] = useState(false);
+  const [extras, setExtras] = useState(() => readExtras(initial?.extras));
   const [termsOpen, setTermsOpen] = useState(false);
   const [saving, setSaving] = useState(false);
   const set = (k: keyof typeof f) => (v: string) => setF((s) => ({ ...s, [k]: v }));
@@ -105,6 +107,7 @@ export function BookingForm({ mode, cars, currency, termsHtml, initial, defaults
       pickup_at: pickup.toISOString(),
       return_at: ret.toISOString(),
       notes: f.notes.trim(),
+      extras,
     };
     try {
       if (!isAdmin) {
@@ -243,6 +246,18 @@ export function BookingForm({ mode, cars, currency, termsHtml, initial, defaults
           </div>
         </div>
       )}
+
+      <fieldset className="space-y-2">
+        <legend className="mb-2 text-sm font-medium">Optional extras</legend>
+        <div className="grid gap-2 sm:grid-cols-2">
+          {bookingExtras.map((extra, index) => (
+            <Label key={extra} htmlFor={`extra-${index}`} className="flex min-h-11 cursor-pointer items-center gap-3 rounded-md border border-border px-3 py-2 font-normal">
+              <Checkbox id={`extra-${index}`} checked={extras.includes(extra)} onCheckedChange={(checked) => setExtras((current) => checked === true ? [...current.filter((item) => item !== extra), extra] : current.filter((item) => item !== extra))} />
+              {extra}
+            </Label>
+          ))}
+        </div>
+      </fieldset>
 
       <div className={field}>
         <Label htmlFor="notes">Notes</Label>

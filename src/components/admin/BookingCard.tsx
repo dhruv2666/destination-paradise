@@ -13,6 +13,8 @@ import { deleteBookingDocuments, generateDocument } from "@/lib/documents";
 import { DocumentActions } from "./DocumentActions";
 import { BookingDialog } from "./BookingDialog";
 import { StatusBadge } from "./StatusBadge";
+import { Badge } from "@/components/ui/badge";
+import { readExtras } from "@/lib/booking-extras";
 
 export function BookingCard({ booking, settings, cars }: { booking: BookingWithCar; settings: Settings; cars: Car[] }) {
   const qc = useQueryClient();
@@ -89,6 +91,10 @@ export function BookingCard({ booking, settings, cars }: { booking: BookingWithC
         {booking.notes && <Row k="Notes" v={booking.notes} />}
         {booking.rejection_reason && <Row k="Reason" v={booking.rejection_reason} />}
       </dl>
+
+      {readExtras(booking.extras).length > 0 && <div className="mt-3 flex flex-wrap gap-2" aria-label="Requested extras">
+        {readExtras(booking.extras).map((extra) => <Badge key={extra} variant="secondary">{extra}</Badge>)}
+      </div>}
 
       <div className="mt-4 space-y-3 border-t border-border pt-4">
         <div className="flex flex-wrap gap-2">

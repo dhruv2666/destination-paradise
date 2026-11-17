@@ -15,6 +15,13 @@
       "when": 1794382384774,
       "tag": "0001_reset_trial_invoice_counter",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1794892264422,
+      "tag": "0002_fleet_compliance_and_booking_extras",
+      "breakpoints": true
     }
   ]
 }

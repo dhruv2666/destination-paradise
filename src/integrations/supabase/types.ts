@@ -23,6 +23,7 @@ export type Database = {
           deposit: number
           doc_number: number
           email: string
+          extras: Json | null
           full_name: string
           id: string
           id_number: string
@@ -51,6 +52,7 @@ export type Database = {
           deposit?: number
           doc_number?: number
           email?: string
+          extras?: Json | null
           full_name: string
           id?: string
           id_number?: string
@@ -79,6 +81,7 @@ export type Database = {
           deposit?: number
           doc_number?: number
           email?: string
+          extras?: Json | null
           full_name?: string
           id?: string
           id_number?: string
@@ -115,7 +118,11 @@ export type Database = {
           created_at: string
           currency: string
           daily_price: number
+          fitness_expiry: string | null
+          fleet_notes: string | null
           id: string
+          insurance_expiry: string | null
+          mileage: number | null
           name: string
           photo_url: string | null
           photos: Json
@@ -125,7 +132,10 @@ export type Database = {
           price_2_3_days: number | null
           price_4_15_days: number | null
           price_ranges: Json
+          road_tax_expiry: string | null
           seats: number
+          service_due_date: string | null
+          service_due_km: number | null
           transmission: string
         }
         Insert: {
@@ -133,7 +143,11 @@ export type Database = {
           created_at?: string
           currency?: string
           daily_price?: number
+          fitness_expiry?: string | null
+          fleet_notes?: string | null
           id?: string
+          insurance_expiry?: string | null
+          mileage?: number | null
           name: string
           photo_url?: string | null
           photos?: Json
@@ -143,7 +157,10 @@ export type Database = {
           price_2_3_days?: number | null
           price_4_15_days?: number | null
           price_ranges?: Json
+          road_tax_expiry?: string | null
           seats?: number
+          service_due_date?: string | null
+          service_due_km?: number | null
           transmission?: string
         }
         Update: {
@@ -151,7 +168,11 @@ export type Database = {
           created_at?: string
           currency?: string
           daily_price?: number
+          fitness_expiry?: string | null
+          fleet_notes?: string | null
           id?: string
+          insurance_expiry?: string | null
+          mileage?: number | null
           name?: string
           photo_url?: string | null
           photos?: Json
@@ -161,7 +182,10 @@ export type Database = {
           price_2_3_days?: number | null
           price_4_15_days?: number | null
           price_ranges?: Json
+          road_tax_expiry?: string | null
           seats?: number
+          service_due_date?: string | null
+          service_due_km?: number | null
           transmission?: string
         }
         Relationships: []
@@ -272,6 +296,40 @@ export type Database = {
           _user_id: string
         }
         Returns: boolean
+      }
+      owner_fleet_cars: {
+        Args: never
+        Returns: {
+          active: boolean
+          created_at: string
+          currency: string
+          daily_price: number
+          fitness_expiry: string | null
+          fleet_notes: string | null
+          id: string
+          insurance_expiry: string | null
+          mileage: number | null
+          name: string
+          photo_url: string | null
+          photos: Json
+          plate: string
+          price_1_day: number | null
+          price_16_plus_days: number | null
+          price_2_3_days: number | null
+          price_4_15_days: number | null
+          price_ranges: Json
+          road_tax_expiry: string | null
+          seats: number
+          service_due_date: string | null
+          service_due_km: number | null
+          transmission: string
+        }[]
+        SetofOptions: {
+          from: "*"
+          to: "cars"
+          isOneToOne: false
+          isSetofReturn: true
+        }
       }
       owners_add: { Args: { owner_email: string }; Returns: undefined }
       owners_approve: { Args: { target: string }; Returns: undefined }

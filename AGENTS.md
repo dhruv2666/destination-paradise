@@ -50,3 +50,6 @@ use the editor.
 - Invoice numbers are allocated once by the booking column default; the preparation trigger must not advance the same sequence again, so public and owner bookings start at the reset counter without skipped numbers.
 - Public SEO pages share `src/lib/seo/*` content and `src/components/seo/*` shells; English routes have `/fr/...` twins with hreflang, the business JSON-LD lives in the root head, and every route declares `staticData.sitemap` for the router-derived sitemap.
 - English and French home routes render the shared HomePage with a language prop so their layouts, car queries and image delivery cannot drift apart.
+- Fleet data is read through the owner-checked owner_fleet_cars RPC; public car queries explicitly select rental fields because column grants keep internal maintenance notes private.
+- Fleet alert thresholds and schedule resets live in src/lib/fleet.ts; both dashboard and Fleet tab use them to keep Mauritius-date warnings consistent.
+- Booking extras use the shared allowlist in src/lib/booking-extras.ts and are stored without altering rental prices or PDF generation.

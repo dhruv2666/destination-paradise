@@ -5,6 +5,8 @@ import { Button } from "@/components/ui/button";
 import { ArrowDownLeft, ArrowUpRight, Car as CarIcon, Inbox } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { locationLabel } from "@/lib/booking-math";
+import { fleetAlerts, sortedFleet } from "@/lib/fleet";
+import { FleetAlertBadges } from "./FleetTab";
 
 type Props = { bookings: Booking[]; cars: Car[]; go: (tab: string) => void };
 
@@ -31,6 +33,7 @@ export function HomeTab({ bookings, cars, go }: Props) {
   ];
   const statStyles = ["bg-coral-soft", "bg-lagoon-soft", "bg-sunshine-soft", "bg-palm-soft"];
   const statIcons = [Inbox, ArrowUpRight, ArrowDownLeft, CarIcon];
+  const alertCars = sortedFleet(cars, today).filter((car) => fleetAlerts(car, today).length > 0);
 
   return (
     <div className="space-y-4">
@@ -46,6 +49,14 @@ export function HomeTab({ bookings, cars, go }: Props) {
           <p className="font-display text-lg font-bold">{upcomingHoliday.emoji} {upcomingHoliday.name}</p>
         </div>
       ) : null}
+
+      {alertCars.length > 0 && <section className="rounded-lg border border-border bg-card p-4 shadow-card">
+        <h2 className="mb-2 font-semibold">Fleet alerts</h2>
+        <div className="divide-y divide-border">{alertCars.map((car) => <Button key={car.id} variant="ghost" onClick={() => go("fleet")} className="h-auto w-full flex-col items-start gap-2 whitespace-normal rounded-none px-0 py-3 text-left" aria-label={`View fleet alerts for ${car.name}`}>
+          <span className="font-semibold">{car.name}{car.plate && ` · ${car.plate}`}</span>
+          <FleetAlertBadges car={car} />
+        </Button>)}</div>
+      </section>}
 
       <div className="grid grid-cols-2 gap-3">
         {stats.map(([label, value, tab], i) => {

@@ -15,6 +15,7 @@ import { SettingsTab } from "@/components/admin/SettingsTab";
 import { OwnersTab } from "@/components/admin/OwnersTab";
 import { HomeTab } from "@/components/admin/HomeTab";
 import { ExchangeTab } from "@/components/admin/ExchangeTab";
+import { FleetTab } from "@/components/admin/FleetTab";
 import { cn } from "@/lib/utils";
 
 export const Route = createFileRoute("/_authenticated/admin")({
@@ -71,7 +72,7 @@ function Admin() {
     ["calendar", "Calendar", CalendarDays],
     ["bookings", "Bookings", ListChecks],
   ];
-  const more: [string, string, typeof Home][] = [["cars", "Cars", Car], ["settings", "Settings", Settings], ["owners", "Team", Users], ["exchange", "EUR → MUR", ArrowLeftRight]];
+  const more: [string, string, typeof Home][] = [["cars", "Cars", Car], ["fleet", "Fleet", Car], ["settings", "Settings", Settings], ["owners", "Team", Users], ["exchange", "EUR → MUR", ArrowLeftRight]];
   const inMore = more.some(([v]) => v === tab);
 
   return (
@@ -113,6 +114,7 @@ function Admin() {
         {tab === "calendar" && <CalendarTab bookings={bookings.data} />}
         {tab === "bookings" && <BookingsTab bookings={bookings.data} cars={cars.data} settings={s} />}
         {tab === "cars" && <CarsTab cars={cars.data} currency={s.currency} />}
+        {tab === "fleet" && <FleetTab cars={cars.data} />}
         {tab === "settings" && <SettingsTab settings={s} />}
         {tab === "owners" && <OwnersTab />}
         {tab === "exchange" && <ExchangeTab />}

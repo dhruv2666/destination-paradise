@@ -4,6 +4,7 @@ import { useServerFn } from "@tanstack/react-start";
 import { MessageCircle, Check, Loader2 } from "lucide-react";
 import { Button } from "./ui/button";
 import { Input } from "./ui/input";
+import { PhoneInput } from "./PhoneInput";
 import { Textarea } from "./ui/textarea";
 import { mauritiusDate } from "@/lib/holidays";
 import { serviceRequestSchema, serviceWhatsapp, TRANSFER_ROUTES, type ServiceInput } from "@/lib/services";
@@ -38,7 +39,7 @@ export function ServiceRequestForm({service,lang,top=false}:{service:"wedding"|"
    <label className="grid gap-1.5 text-sm font-medium">{wedding?(fr?"Lieu de réception":"Venue"):(fr?"Destination":"Drop-off location")}<Input name="dropoff" required maxLength={300} value={dropoff} onChange={e=>setDropoff(e.target.value)} /></label>
    {wedding ? <>{field(fr?"Nombre d’heures":"Number of hours","hours","number",true,{min:0.5,max:48,step:0.5})}<div className="hidden sm:block" /></> : <>{field(fr?"Passagers":"Passengers","passengers","number",true,{min:1,max:100})}{field(fr?"Bagages":"Luggage","luggage","number",true,{min:0,max:100})}{field(fr?"Numéro de vol (facultatif)":"Flight number (optional)","flight","text",false,{maxLength:80})}</>}
    {field(fr?"Nom":"Name","name","text",true,{minLength:2,maxLength:120})}
-   {field(fr?"Téléphone":"Phone","phone","tel",true,{minLength:5,maxLength:40})}
+   <label className="grid min-w-0 gap-1.5 text-sm font-medium">{fr?"Téléphone (WhatsApp)":"Phone (WhatsApp)"}<PhoneInput name="phone" required /></label>
    {wedding && <label className="grid gap-1.5 text-sm font-medium sm:col-span-2">Notes<Textarea name="notes" maxLength={2000} rows={3} /></label>}
    {error && <p role="alert" className="text-sm text-destructive sm:col-span-2">{error}</p>}
    <Button type="submit" variant={wedding?"gold":"whatsapp"} size="lg" disabled={mutation.isPending} className="h-auto min-h-12 whitespace-normal sm:col-span-2">{mutation.isPending ? <Loader2 className="animate-spin" /> : <MessageCircle />}{mutation.isPending ? (fr?"Enregistrement…":"Saving…") : (fr?"Demander un devis sur WhatsApp":"Request a quote on WhatsApp")}</Button>

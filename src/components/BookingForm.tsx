@@ -10,6 +10,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { Checkbox } from "@/components/ui/checkbox";
+import { PhoneInput } from "@/components/PhoneInput";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
@@ -142,7 +143,7 @@ export function BookingForm({ mode, cars, currency, termsHtml, initial, defaults
         </div>
         <div className={field}>
           <Label htmlFor="phone">WhatsApp number *</Label>
-          <Input id="phone" className="h-11" type="tel" placeholder="+230 5xxx xxxx" value={f.phone} onChange={(e) => set("phone")(e.target.value)} />
+          <PhoneInput id="phone" value={f.phone} onChange={set("phone")} />
         </div>
         <div className={field}>
           <Label htmlFor="email">Email</Label>

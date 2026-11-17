@@ -20,6 +20,7 @@ const buttonVariants = cva(
         coral: "bg-coral text-coral-foreground shadow-sm hover:bg-coral/90 font-semibold",
         coastal: "border border-on-photo/65 bg-on-photo/10 text-on-photo hover:bg-on-photo/20 font-semibold",
         whatsapp: "bg-whatsapp text-whatsapp-foreground shadow hover:bg-whatsapp/90 font-semibold",
+        gold: "bg-gold text-gold-foreground shadow hover:bg-gold/90 font-semibold active:scale-[0.98] transition-transform",
         success: "bg-success text-success-foreground shadow hover:bg-success/90",
       },
       size: {

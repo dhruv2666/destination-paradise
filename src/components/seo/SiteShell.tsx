@@ -7,8 +7,8 @@ import { LOCATIONS } from "@/lib/seo/locations";
 import type { Lang } from "@/lib/seo/site";
 
 const T = {
-  en: { rental: "Car rental", airport: "Airport pickup", faq: "FAQ", contact: "Contact", book: "Book a car", areas: "Areas we serve", switch: "Français", home: "Home", address: "Address" },
-  fr: { rental: "Location", airport: "Aéroport", faq: "FAQ", contact: "Contact", book: "Réserver", areas: "Zones desservies", switch: "English", home: "Accueil", address: "Adresse" },
+  en: { rental: "Car rental", airport: "Airport pickup", wedding: "Wedding cars", faq: "FAQ", contact: "Contact", book: "Book a car", areas: "Areas we serve", switch: "Français", home: "Home", address: "Address" },
+  fr: { rental: "Location", airport: "Aéroport", wedding: "Mariage", faq: "FAQ", contact: "Contact", book: "Réserver", areas: "Zones desservies", switch: "English", home: "Accueil", address: "Adresse" },
 };
 
 export function SiteShell({ lang, altPath, crumbs, children }: { lang: Lang; altPath: string; crumbs?: { name: string; path: string }[]; children: ReactNode }) {
@@ -28,6 +28,7 @@ export function SiteShell({ lang, altPath, crumbs, children }: { lang: Lang; alt
               <>
                 <Link to="/fr/car-rental" className="hover:text-primary">{t.rental}</Link>
                 <Link to="/fr/airport-transfers" className="hover:text-primary">{t.airport}</Link>
+                <Link to="/fr/mariage" className="hover:text-primary">{t.wedding}</Link>
                 <Link to="/fr/faq" className="hover:text-primary">{t.faq}</Link>
                 <Link to="/fr/contact" className="hover:text-primary">{t.contact}</Link>
               </>
@@ -35,6 +36,7 @@ export function SiteShell({ lang, altPath, crumbs, children }: { lang: Lang; alt
               <>
                 <Link to="/car-rental" className="hover:text-primary">{t.rental}</Link>
                 <Link to="/airport-transfers" className="hover:text-primary">{t.airport}</Link>
+                <Link to="/wedding-cars" className="hover:text-primary">{t.wedding}</Link>
                 <Link to="/faq" className="hover:text-primary">{t.faq}</Link>
                 <Link to="/contact" className="hover:text-primary">{t.contact}</Link>
               </>

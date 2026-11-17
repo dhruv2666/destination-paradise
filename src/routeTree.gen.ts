@@ -19,6 +19,7 @@ import { Route as CarRentalRouteImport } from './routes/car-rental'
 import { Route as ContactRouteImport } from './routes/contact'
 import { Route as FaqRouteImport } from './routes/faq'
 import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
+import { Route as WeddingCarsRouteImport } from './routes/wedding-cars'
 import { Route as AuthenticatedAdminRouteImport } from './routes/_authenticated/admin'
 import { Route as CarsSlugRouteImport } from './routes/cars.$slug'
 import { Route as FrIndexRouteImport } from './routes/fr.index'
@@ -26,6 +27,7 @@ import { Route as FrAirportTransfersRouteImport } from './routes/fr.airport-tran
 import { Route as FrCarRentalRouteImport } from './routes/fr.car-rental'
 import { Route as FrContactRouteImport } from './routes/fr.contact'
 import { Route as FrFaqRouteImport } from './routes/fr.faq'
+import { Route as FrMariageRouteImport } from './routes/fr.mariage'
 import { Route as LocationsSlugRouteImport } from './routes/locations.$slug'
 import { Route as FrCarsSlugRouteImport } from './routes/fr.cars.$slug'
 import { Route as FrLocationsSlugRouteImport } from './routes/fr.locations.$slug'
@@ -79,6 +81,11 @@ const SitemapDotxmlRoute = SitemapDotxmlRouteImport.update({
   path: '/sitemap.xml',
   getParentRoute: () => rootRouteImport,
 } as any)
+const WeddingCarsRoute = WeddingCarsRouteImport.update({
+  id: '/wedding-cars',
+  path: '/wedding-cars',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const AuthenticatedAdminRoute = AuthenticatedAdminRouteImport.update({
   id: '/admin',
   path: '/admin',
@@ -114,6 +121,11 @@ const FrFaqRoute = FrFaqRouteImport.update({
   path: '/fr/faq',
   getParentRoute: () => rootRouteImport,
 } as any)
+const FrMariageRoute = FrMariageRouteImport.update({
+  id: '/fr/mariage',
+  path: '/fr/mariage',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const LocationsSlugRoute = LocationsSlugRouteImport.update({
   id: '/locations/$slug',
   path: '/locations/$slug',
@@ -140,12 +152,14 @@ export interface FileRoutesByFullPath {
   '/contact': typeof ContactRoute
   '/faq': typeof FaqRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
+  '/wedding-cars': typeof WeddingCarsRoute
   '/admin': typeof AuthenticatedAdminRoute
   '/cars/$slug': typeof CarsSlugRoute
   '/fr/airport-transfers': typeof FrAirportTransfersRoute
   '/fr/car-rental': typeof FrCarRentalRoute
   '/fr/contact': typeof FrContactRoute
   '/fr/faq': typeof FrFaqRoute
+  '/fr/mariage': typeof FrMariageRoute
   '/locations/$slug': typeof LocationsSlugRoute
   '/fr/': typeof FrIndexRoute
   '/fr/cars/$slug': typeof FrCarsSlugRoute
@@ -161,12 +175,14 @@ export interface FileRoutesByTo {
   '/contact': typeof ContactRoute
   '/faq': typeof FaqRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
+  '/wedding-cars': typeof WeddingCarsRoute
   '/admin': typeof AuthenticatedAdminRoute
   '/cars/$slug': typeof CarsSlugRoute
   '/fr/airport-transfers': typeof FrAirportTransfersRoute
   '/fr/car-rental': typeof FrCarRentalRoute
   '/fr/contact': typeof FrContactRoute
   '/fr/faq': typeof FrFaqRoute
+  '/fr/mariage': typeof FrMariageRoute
   '/locations/$slug': typeof LocationsSlugRoute
   '/fr': typeof FrIndexRoute
   '/fr/cars/$slug': typeof FrCarsSlugRoute
@@ -184,12 +200,14 @@ export interface FileRoutesById {
   '/contact': typeof ContactRoute
   '/faq': typeof FaqRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
+  '/wedding-cars': typeof WeddingCarsRoute
   '/_authenticated/admin': typeof AuthenticatedAdminRoute
   '/cars/$slug': typeof CarsSlugRoute
   '/fr/airport-transfers': typeof FrAirportTransfersRoute
   '/fr/car-rental': typeof FrCarRentalRoute
   '/fr/contact': typeof FrContactRoute
   '/fr/faq': typeof FrFaqRoute
+  '/fr/mariage': typeof FrMariageRoute
   '/locations/$slug': typeof LocationsSlugRoute
   '/fr/': typeof FrIndexRoute
   '/fr/cars/$slug': typeof FrCarsSlugRoute
@@ -207,12 +225,14 @@ export interface FileRouteTypes {
     | '/contact'
     | '/faq'
     | '/sitemap.xml'
+    | '/wedding-cars'
     | '/admin'
     | '/cars/$slug'
     | '/fr/airport-transfers'
     | '/fr/car-rental'
     | '/fr/contact'
     | '/fr/faq'
+    | '/fr/mariage'
     | '/locations/$slug'
     | '/fr/'
     | '/fr/cars/$slug'
@@ -228,12 +248,14 @@ export interface FileRouteTypes {
     | '/contact'
     | '/faq'
     | '/sitemap.xml'
+    | '/wedding-cars'
     | '/admin'
     | '/cars/$slug'
     | '/fr/airport-transfers'
     | '/fr/car-rental'
     | '/fr/contact'
     | '/fr/faq'
+    | '/fr/mariage'
     | '/locations/$slug'
     | '/fr'
     | '/fr/cars/$slug'
@@ -250,12 +272,14 @@ export interface FileRouteTypes {
     | '/contact'
     | '/faq'
     | '/sitemap.xml'
+    | '/wedding-cars'
     | '/_authenticated/admin'
     | '/cars/$slug'
     | '/fr/airport-transfers'
     | '/fr/car-rental'
     | '/fr/contact'
     | '/fr/faq'
+    | '/fr/mariage'
     | '/locations/$slug'
     | '/fr/'
     | '/fr/cars/$slug'
@@ -273,11 +297,13 @@ export interface RootRouteChildren {
   ContactRoute: typeof ContactRoute
   FaqRoute: typeof FaqRoute
   SitemapDotxmlRoute: typeof SitemapDotxmlRoute
+  WeddingCarsRoute: typeof WeddingCarsRoute
   CarsSlugRoute: typeof CarsSlugRoute
   FrAirportTransfersRoute: typeof FrAirportTransfersRoute
   FrCarRentalRoute: typeof FrCarRentalRoute
   FrContactRoute: typeof FrContactRoute
   FrFaqRoute: typeof FrFaqRoute
+  FrMariageRoute: typeof FrMariageRoute
   LocationsSlugRoute: typeof LocationsSlugRoute
   FrIndexRoute: typeof FrIndexRoute
   FrCarsSlugRoute: typeof FrCarsSlugRoute
@@ -356,6 +382,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof SitemapDotxmlRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/wedding-cars': {
+      id: '/wedding-cars'
+      path: '/wedding-cars'
+      fullPath: '/wedding-cars'
+      preLoaderRoute: typeof WeddingCarsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/_authenticated/admin': {
       id: '/_authenticated/admin'
       path: '/admin'
@@ -405,6 +438,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof FrFaqRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/fr/mariage': {
+      id: '/fr/mariage'
+      path: '/fr/mariage'
+      fullPath: '/fr/mariage'
+      preLoaderRoute: typeof FrMariageRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/locations/$slug': {
       id: '/locations/$slug'
       path: '/locations/$slug'
@@ -451,11 +491,13 @@ const rootRouteChildren: RootRouteChildren = {
   ContactRoute: ContactRoute,
   FaqRoute: FaqRoute,
   SitemapDotxmlRoute: SitemapDotxmlRoute,
+  WeddingCarsRoute: WeddingCarsRoute,
   CarsSlugRoute: CarsSlugRoute,
   FrAirportTransfersRoute: FrAirportTransfersRoute,
   FrCarRentalRoute: FrCarRentalRoute,
   FrContactRoute: FrContactRoute,
   FrFaqRoute: FrFaqRoute,
+  FrMariageRoute: FrMariageRoute,
   LocationsSlugRoute: LocationsSlugRoute,
   FrIndexRoute: FrIndexRoute,
   FrCarsSlugRoute: FrCarsSlugRoute,

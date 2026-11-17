@@ -5,12 +5,13 @@ import { LOCATIONS } from "@/lib/seo/locations";
 import { whatsappUrl } from "@/lib/whatsapp";
 import { Link } from "@tanstack/react-router";
 import { useQuery } from "@tanstack/react-query";
-import { ArrowUpRight, Cog, MapPin, MessageCircle, Users } from "lucide-react";
+import { ArrowUpRight, Car as CarIcon, Cog, Heart, MapPin, MessageCircle, Plane, Users } from "lucide-react";
 import { CarImage } from "@/components/CarImage";
 import { Button } from "@/components/ui/button";
 import { fetchActiveCars, fetchPublicSettings, qk, type Car } from "@/lib/data";
 import { formatMoney, lowestRate } from "@/lib/booking-math";
 import { DateSearch } from "@/components/DateSearch";
+import { Reveal } from "@/components/Reveal";
 
 export function HomePage({ lang, initialCars }: { lang: Lang; initialCars: Car[] }) {
   const fr = lang === "fr";
@@ -22,7 +23,7 @@ export function HomePage({ lang, initialCars }: { lang: Lang; initialCars: Car[]
       <header className="border-b border-border bg-card py-3 pr-4">
         <div className="flex w-full items-center justify-between gap-4">
           <img src={brandLogo(s?.logo_url)} alt={fr ? "Logo Destination Paradise Mauritius Car Rental" : "Destination Paradise Mauritius Car Rental logo"} width={144} height={49} loading="eager" decoding="async" className="h-12 w-36 shrink-0 object-contain object-left" />
-          <nav className="flex flex-wrap items-center gap-x-3 text-sm font-semibold"><Link to={fr ? "/fr/car-rental" : "/car-rental"} className="hidden hover:text-primary sm:inline">{fr ? "Location" : "Car rental"}</Link><Link to={fr ? "/fr/airport-transfers" : "/airport-transfers"} className="hidden hover:text-primary sm:inline">{fr ? "Aéroport" : "Airport"}</Link><Link to={fr ? "/fr/faq" : "/faq"} className="hidden hover:text-primary sm:inline">FAQ</Link><Link to={fr ? "/fr/contact" : "/contact"} className="hidden hover:text-primary sm:inline">Contact</Link><a href={fr ? "/" : "/fr"} hrefLang={fr ? "en" : "fr"} className="text-primary">{fr ? "EN" : "FR"}</a></nav>
+          <nav className="flex flex-wrap items-center gap-x-3 text-sm font-semibold"><Link to={fr ? "/fr/car-rental" : "/car-rental"} className="hidden hover:text-primary sm:inline">{fr ? "Location" : "Car rental"}</Link><Link to={fr ? "/fr/airport-transfers" : "/airport-transfers"} className="hidden hover:text-primary sm:inline">{fr ? "Aéroport" : "Airport"}</Link><Link to={fr ? "/fr/mariage" : "/wedding-cars"} className="hidden hover:text-primary sm:inline">{fr ? "Mariage" : "Weddings"}</Link><Link to={fr ? "/fr/faq" : "/faq"} className="hidden hover:text-primary sm:inline">FAQ</Link><Link to={fr ? "/fr/contact" : "/contact"} className="hidden hover:text-primary sm:inline">Contact</Link><a href={fr ? "/" : "/fr"} hrefLang={fr ? "en" : "fr"} className="text-primary">{fr ? "EN" : "FR"}</a></nav>
           <Button asChild variant="ghost" size="sm"><Link to="/auth">{fr ? "Propriétaire" : "Owner"} <ArrowUpRight className="h-4 w-4" /></Link></Button>
         </div>
       </header>
@@ -40,6 +41,19 @@ export function HomePage({ lang, initialCars }: { lang: Lang; initialCars: Car[]
         </div>
       </section>
       <main className="mx-auto max-w-5xl px-4 pb-16 pt-7">
+        <Reveal><section aria-label={fr ? "Nos services" : "Our services"} className="mb-8 grid gap-4 sm:grid-cols-3">
+          {[
+            { icon: CarIcon, href: fr ? "/fr/car-rental" : "/car-rental", title: fr ? "Location de voitures" : "Car Rental", text: fr ? "Choisissez vos dates et réservez en ligne." : "Pick your dates and book online." },
+            { icon: Plane, href: fr ? "/fr/airport-transfers" : "/airport-transfers", title: fr ? "Transferts aéroport" : "Airport Transfers", text: fr ? "Accueil à l'aéroport SSR, trajets dans toute l'île." : "Meet & greet at SSR Airport, island-wide rides." },
+            { icon: Heart, href: fr ? "/fr/mariage" : "/wedding-cars", title: fr ? "Voitures de mariage" : "Wedding Cars", text: fr ? "BMW avec chauffeur, décorées pour votre grand jour." : "Chauffeur-driven BMWs, decorated for your big day." },
+          ].map((svc) => (
+            <Link key={svc.href} to={svc.href} className="group rounded-lg border border-border bg-card p-4 shadow-card transition-all duration-300 hover:-translate-y-0.5 hover:shadow-lg">
+              <svc.icon className="h-6 w-6 text-primary transition-colors group-hover:text-accent" />
+              <h3 className="mt-2 font-semibold">{svc.title}</h3>
+              <p className="mt-1 text-sm text-muted-foreground">{svc.text}</p>
+            </Link>
+          ))}
+        </section></Reveal>
         <div className="mb-5 flex items-center justify-between gap-3"><h2 className="text-2xl font-bold">{fr ? "Nos voitures" : "Our cars"}</h2><span className="flex items-center gap-1.5 text-sm text-primary"><MapPin className="h-4 w-4" />{fr ? "Île Maurice" : "Mauritius"}</span></div>
         <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
           {cars.data?.map((c, i) => (

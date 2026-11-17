@@ -51,6 +51,9 @@
   --color-on-photo: var(--on-photo);
   --color-coral: var(--coral);
   --color-coral-foreground: var(--coral-foreground);
+  --color-gold: var(--gold);
+  --color-gold-foreground: var(--gold-foreground);
+  --color-gold-soft: var(--gold-soft);
   --color-lagoon-soft: var(--lagoon-soft);
   --color-palm-soft: var(--palm-soft);
   --color-sunshine-soft: var(--sunshine-soft);
@@ -123,6 +126,9 @@
   --on-photo: oklch(1 0 0);
   --coral: var(--accent);
   --coral-foreground: var(--accent-foreground);
+  --gold: #b8912f;
+  --gold-foreground: oklch(1 0 0);
+  --gold-soft: #faf5e8;
   --lagoon-soft: #e8ebf5;
   --palm-soft: #eef0f7;
   --sunshine-soft: #fff0e5;
@@ -154,6 +160,50 @@
 
 @utility shadow-card {
   box-shadow: var(--shadow-card);
+}
+
+/* Wedding pages: elegant serif headings with soft gold accents */
+@utility wedding-heading {
+  font-family: "Playfair Display", Georgia, serif;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  color: var(--primary);
+}
+
+@utility wedding-card {
+  border: 1px solid color-mix(in oklab, var(--gold) 35%, var(--border));
+  background: var(--card);
+  border-radius: var(--radius-lg);
+  box-shadow: 0 6px 24px rgb(184 145 47 / 10%);
+}
+
+/* Site-wide motion: reveal on scroll, shrinking sticky header, WhatsApp pulse */
+@media (prefers-reduced-motion: no-preference) {
+  .reveal {
+    opacity: 0;
+    transform: translateY(14px);
+    transition: opacity 500ms ease-out, transform 500ms ease-out;
+  }
+  .reveal.revealed {
+    opacity: 1;
+    transform: none;
+  }
+  .site-scrolled header.site-header {
+    box-shadow: 0 2px 12px rgb(31 42 92 / 12%);
+  }
+  .site-scrolled header.site-header img {
+    height: 2.5rem;
+  }
+  header.site-header img {
+    transition: height 250ms ease-out;
+  }
+  .whatsapp-float {
+    animation: whatsapp-pulse 2.4s ease-in-out infinite;
+  }
+  @keyframes whatsapp-pulse {
+    0%, 100% { box-shadow: 0 0 0 0 rgb(37 128 62 / 45%); }
+    50% { box-shadow: 0 0 0 10px rgb(37 128 62 / 0%); }
+  }
 }
 
 @utility bg-hero {

@@ -1,6 +1,6 @@
 import { CarImage } from "@/components/CarImage";
-import { useMemo, useState } from "react";
-import { useQuery } from "@tanstack/react-query";
+import { useState } from "react";
+import { z } from "zod";
 import { format } from "date-fns";
 import { toast } from "sonner";
 import { Loader2 } from "lucide-react";
@@ -13,10 +13,11 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
-import { fetchCarUnavailable, friendlyError, type Booking, type Car } from "@/lib/data";
+import { friendlyError, type Booking, type Car } from "@/lib/data";
+import { availableCarIds, dateRangeProblem, mauritiusMidnight } from "@/lib/availability";
 import { PriceRangesList } from "@/components/PriceRanges";
 import { bookingExtras, readExtras } from "@/lib/booking-extras";
-import { bookingDailyPrice, tierDailyPrice, currencyCode, currencyLabel, formatMoney, locationProblem, rangesOverlap, rentalDays } from "@/lib/booking-math";
+import { bookingDailyPrice, tierDailyPrice, currencyCode, currencyLabel, formatMoney, locationProblem, rentalDays } from "@/lib/booking-math";
 
 type Props = {
   mode: "public" | "admin";
@@ -26,12 +27,13 @@ type Props = {
   initial?: Partial<Booking> | undefined;
   defaults?: { car?: string | undefined; from?: string | undefined; to?: string | undefined } | undefined;
   onSaved: (b: Booking | null) => void;
+  lockSelection?: boolean;
 };
 
 const toDate = (iso?: string) => (iso ? format(new Date(iso), "yyyy-MM-dd") : "");
 const toTime = (iso?: string) => (iso ? format(new Date(iso), "HH:mm") : "10:00");
 
-export function BookingForm({ mode, cars, currency, termsHtml, initial, defaults, onSaved }: Props) {
+export function BookingForm({ mode, cars, currency, termsHtml, initial, defaults, onSaved, lockSelection = false }: Props) {
   const isAdmin = mode === "admin";
   const editing = Boolean(initial?.id);
   const [f, setF] = useState({
@@ -61,22 +63,11 @@ export function BookingForm({ mode, cars, currency, termsHtml, initial, defaults
 
   const car = cars.find((c) => c.id === f.car_id);
   const selectedCurrency = isAdmin ? f.currency : car?.currency ?? currency;
-  const pickup = f.pickupDate ? new Date(`${f.pickupDate}T${f.pickupTime || "00:00"}`) : null;
-  const ret = f.returnDate ? new Date(`${f.returnDate}T${f.returnTime || "00:00"}`) : null;
+  const pickup = f.pickupDate ? new Date(lockSelection ? mauritiusMidnight(f.pickupDate) : `${f.pickupDate}T${f.pickupTime || "00:00"}`) : null;
+  const ret = f.returnDate ? new Date(lockSelection ? mauritiusMidnight(f.returnDate) : `${f.returnDate}T${f.returnTime || "00:00"}`) : null;
   const days = pickup && ret ? rentalDays(pickup, ret) : 0;
   const pricePerDay = bookingDailyPrice(car ? tierDailyPrice(car, days) : 0, isAdmin && f.price !== "" ? Number(f.price) : null);
   const total = days * pricePerDay;
-
-  const { data: busy = [] } = useQuery({
-    queryKey: ["unavailable", f.car_id],
-    queryFn: () => fetchCarUnavailable(f.car_id),
-    enabled: !!f.car_id && !isAdmin,
-  });
-  const conflict = useMemo(
-    () =>
-      !!pickup && !!ret && busy.some((r) => rangesOverlap(pickup, ret, new Date(r.pickup_at), new Date(r.return_at))),
-    [busy, pickup?.getTime(), ret?.getTime()],
-  );
 
   const onCarChange = (id: string) => {
     setF((s) => ({ ...s, car_id: id, price: "", currency: currencyCode(cars.find((c) => c.id === id)?.currency) }));
@@ -92,7 +83,12 @@ export function BookingForm({ mode, cars, currency, termsHtml, initial, defaults
     const locErr = locationProblem(f.pickup_location, f.location_details);
     if (locErr) return void toast.error(locErr);
     if (!isAdmin && !accepted) return void toast.error("Please accept the Terms and Conditions.");
-    if (conflict) return void toast.error("This car is already booked for those dates.");
+    if (!isAdmin) {
+      const problem = dateRangeProblem(f.pickupDate, f.returnDate);
+      if (problem) return void toast.error(problem);
+    }
+    const details = z.object({ full_name: z.string().trim().min(1).max(100), phone: z.string().trim().min(1).max(40), email: z.string().max(255).refine((v) => !v || z.string().email().safeParse(v).success), id_number: z.string().max(100), licence_number: z.string().max(100), notes: z.string().max(2000), location_details: z.string().max(500) }).safeParse(f);
+    if (!details.success) return void toast.error("Check your contact details and shorten any overly long notes.");
     if (!Number.isFinite(pricePerDay) || pricePerDay < 0 || !Number.isFinite(Number(f.deposit)) || Number(f.deposit) < 0) return void toast.error("Prices and deposit must be valid non-negative amounts.");
     setSaving(true);
     const base = {
@@ -111,6 +107,7 @@ export function BookingForm({ mode, cars, currency, termsHtml, initial, defaults
     };
     try {
       if (!isAdmin) {
+        if (!(await availableCarIds(f.pickupDate, f.returnDate)).includes(f.car_id)) throw new Error("This car is already booked or blocked for those dates. Please search again.");
         const { error } = await supabase.from("bookings").insert(base);
         if (error) throw error;
         onSaved({ ...base, car_name: car?.name ?? "car" } as unknown as Booking);
@@ -163,7 +160,7 @@ export function BookingForm({ mode, cars, currency, termsHtml, initial, defaults
 
       <div className={field}>
         <Label>Car *</Label>
-        <Select value={f.car_id} onValueChange={onCarChange}>
+        <Select value={f.car_id} onValueChange={onCarChange} disabled={lockSelection}>
           <SelectTrigger className="h-11"><SelectValue placeholder="Choose a car" /></SelectTrigger>
           <SelectContent>
             {cars.map((c) => (
@@ -200,17 +197,17 @@ export function BookingForm({ mode, cars, currency, termsHtml, initial, defaults
       <div className="grid min-w-0 grid-cols-1 gap-4 sm:grid-cols-2">
         <div className={field}>
           <Label htmlFor="pd">Pickup date *</Label>
-          <Input id="pd" className="h-11 min-w-0 max-w-full" type="date" value={f.pickupDate} onChange={(e) => set("pickupDate")(e.target.value)} />
+          <Input id="pd" disabled={lockSelection} className="h-11 min-w-0 max-w-full" type="date" value={f.pickupDate} onChange={(e) => set("pickupDate")(e.target.value)} />
         </div>
-        <div className={field}>
+        <div className={lockSelection ? "hidden" : field}>
           <Label htmlFor="pt">Pickup time</Label>
           <Input id="pt" className="h-11 min-w-0 max-w-full" type="time" value={f.pickupTime} onChange={(e) => set("pickupTime")(e.target.value)} />
         </div>
         <div className={field}>
           <Label htmlFor="rd">Return date *</Label>
-          <Input id="rd" className="h-11 min-w-0 max-w-full" type="date" value={f.returnDate} onChange={(e) => set("returnDate")(e.target.value)} />
+          <Input id="rd" disabled={lockSelection} className="h-11 min-w-0 max-w-full" type="date" value={f.returnDate} onChange={(e) => set("returnDate")(e.target.value)} />
         </div>
-        <div className={field}>
+        <div className={lockSelection ? "hidden" : field}>
           <Label htmlFor="rt">Return time</Label>
           <Input id="rt" className="h-11 min-w-0 max-w-full" type="time" value={f.returnTime} onChange={(e) => set("returnTime")(e.target.value)} />
         </div>
@@ -265,9 +262,7 @@ export function BookingForm({ mode, cars, currency, termsHtml, initial, defaults
       </div>
 
       <div className="rounded-xl bg-secondary p-4">
-        {conflict ? (
-          <p className="text-sm font-medium text-destructive">This car is already booked for part of these dates. Please pick other dates or another car.</p>
-        ) : days > 0 && car ? (
+        {days > 0 && car ? (
           <div className="flex flex-wrap items-end justify-between gap-4">
             <div className="text-sm text-muted-foreground">
               <div>Duration: <span className="font-semibold text-foreground">{days} day{days > 1 ? "s" : ""}</span></div>
@@ -294,7 +289,7 @@ export function BookingForm({ mode, cars, currency, termsHtml, initial, defaults
         </div>
       )}
 
-      <Button type="submit" size="lg" className="w-full" disabled={saving || conflict}>
+      <Button type="submit" size="lg" className="w-full" disabled={saving}>
         {saving && <Loader2 className="animate-spin" />}
         {isAdmin ? (editing ? "Save changes" : "Create booking") : "Send booking request"}
       </Button>

@@ -12,6 +12,7 @@ import { formatMoney, lowestRate } from "@/lib/booking-math";
 import { AIRPORT, CAR_RENTAL, FAQS } from "@/lib/seo/pages";
 import { LOCATIONS, type LocationEntry } from "@/lib/seo/locations";
 import { slugify, type Lang } from "@/lib/seo/site";
+import { DateSearch } from "@/components/DateSearch";
 
 export const carsQuery = { queryKey: qk.activeCars, queryFn: fetchActiveCars };
 const home = (lang: Lang) => (lang === "fr" ? "/fr" : "/");
@@ -48,6 +49,7 @@ export function CarRentalPage({ lang }: { lang: Lang }) {
   const fr = lang === "fr";
   return (
     <SiteShell lang={lang} altPath={fr ? "/car-rental" : "/fr/car-rental"} crumbs={[{ name: fr ? "Accueil" : "Home", path: home(lang) }, { name: c.h1, path: `${pre(lang)}/car-rental` }]}>
+      <DateSearch lang={lang} />
       <Prose h1={c.h1} intro={c.intro} sections={c.sections} />
       <h2 className="mt-8 text-xl font-bold">{fr ? "Nos voitures" : "Our cars"}</h2>
       <div className="mt-3"><CarLinks lang={lang} /></div>

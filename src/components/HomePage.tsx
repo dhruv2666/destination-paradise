@@ -10,6 +10,7 @@ import { CarImage } from "@/components/CarImage";
 import { Button } from "@/components/ui/button";
 import { fetchActiveCars, fetchPublicSettings, qk, type Car } from "@/lib/data";
 import { formatMoney, lowestRate } from "@/lib/booking-math";
+import { DateSearch } from "@/components/DateSearch";
 
 export function HomePage({ lang, initialCars }: { lang: Lang; initialCars: Car[] }) {
   const fr = lang === "fr";
@@ -31,9 +32,9 @@ export function HomePage({ lang, initialCars }: { lang: Lang; initialCars: Car[]
         <div className="coastal-content mx-auto max-w-5xl">
           <p className="flex items-center gap-2 text-sm font-semibold"><MapPin className="h-4 w-4" />Grand Baie · {fr ? "Île Maurice" : "Mauritius"}</p>
           <h1 className="mt-5 max-w-xl text-4xl font-bold leading-tight sm:text-5xl">Destination Paradise Mauritius Car Rental</h1>
-          <p className="mt-4 max-w-md text-base leading-relaxed sm:text-lg">{fr ? "Choisissez une voiture et vos dates. Nous confirmons sur WhatsApp avec votre facture." : "Pick a car and dates. We confirm on WhatsApp with your invoice."}</p>
+           <p className="mt-4 max-w-md text-base leading-relaxed sm:text-lg">{fr ? "Choisissez vos dates pour voir les voitures disponibles et le prix total." : "Choose your dates to see available cars and the total price."}</p>
+           <DateSearch lang={lang} />
           <div className="mt-7 flex flex-wrap gap-3">
-            <Button asChild variant="coral" size="lg"><Link to="/book" search={{}}>{fr ? "Réserver une voiture" : "Book a car"} <ArrowUpRight /></Link></Button>
             <Button asChild variant="coastal" size="lg"><a href={whatsappUrl(BUSINESS_PHONE, fr ? "Bonjour Destination Paradise Mauritius Car Rental, je souhaite louer une voiture." : "Hello Destination Paradise Mauritius Car Rental, I would like to rent a car.")} target="_blank" rel="noopener noreferrer"><MessageCircle />WhatsApp</a></Button>
           </div>
         </div>

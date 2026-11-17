@@ -17,6 +17,7 @@ import { currencyLabel, readRanges } from "@/lib/booking-math";
 import { PriceRangesList } from "@/components/PriceRanges";
 import { Trash2 } from "lucide-react";
 import { z } from "zod";
+import { CarSchedule } from "@/components/admin/CarSchedule";
 
 type RangeDraft = { min: string; max: string; price: string };
 const amount = z.coerce.number().finite().nonnegative();
@@ -33,6 +34,7 @@ const carSchema = z.object({
 
 export function CarsTab({ cars, currency }: { cars: Car[]; currency: string }) {
   const [editing, setEditing] = useState<Partial<Car> | null>(null);
+  const [schedule, setSchedule] = useState<Car | null>(null);
   return (
     <div className="space-y-4">
       <Button size="tap" onClick={() => setEditing({ seats: 5, transmission: "Manual", active: true })}>
@@ -51,6 +53,7 @@ export function CarsTab({ cars, currency }: { cars: Car[]; currency: string }) {
                 <p className="text-sm text-muted-foreground">{c.plate} · {c.seats} seats · {c.transmission}</p>
                 <PriceRangesList car={c} currency={c.currency ?? currency} className="-mx-2 mt-2" />
                 {!c.active && <p className="text-xs font-semibold text-destructive">Deactivated</p>}
+                <Button variant="outline" size="sm" className="mt-3" onClick={() => setSchedule(c)}>Block dates / Calendar</Button>
               </div>
               <Button variant="ghost" size="icon" className="h-11 w-11" onClick={() => setEditing(c)} aria-label={`Edit ${c.name}`}><Pencil /></Button>
             </div>
@@ -58,6 +61,7 @@ export function CarsTab({ cars, currency }: { cars: Car[]; currency: string }) {
         ))}
       </div>
       <CarDialog car={editing} onClose={() => setEditing(null)} />
+      {schedule && <CarSchedule car={schedule} onClose={() => setSchedule(null)} />}
     </div>
   );
 }

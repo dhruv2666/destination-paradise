@@ -22,6 +22,20 @@
       "when": 1794892264422,
       "tag": "0002_fleet_compliance_and_booking_extras",
       "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "7",
+      "when": 1794901245040,
+      "tag": "0003_date_first_availability",
+      "breakpoints": true
+    },
+    {
+      "idx": 4,
+      "version": "7",
+      "when": 1794901402612,
+      "tag": "0004_availability_explicit_privileges",
+      "breakpoints": true
     }
   ]
 }

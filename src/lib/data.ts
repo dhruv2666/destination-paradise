@@ -68,12 +68,6 @@ export async function fetchBookings(): Promise<BookingWithCar[]> {
   return data as BookingWithCar[];
 }
 
-export async function fetchCarUnavailable(carId: string) {
-  const { data, error } = await supabase.rpc("car_unavailable", { _car_id: carId });
-  if (error) throw error;
-  return (data ?? []) as { pickup_at: string; return_at: string }[];
-}
-
 export function friendlyError(e: unknown): string {
   const msg = e instanceof Error ? e.message : typeof e === "object" && e && "message" in e ? String((e as { message: unknown }).message) : String(e);
   if (msg.includes("already booked")) return "This car is already booked for those dates.";

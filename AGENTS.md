@@ -53,3 +53,5 @@ use the editor.
 - Fleet data is read through the owner-checked owner_fleet_cars RPC; public car queries explicitly select rental fields because column grants keep internal maintenance notes private.
 - Fleet alert thresholds and schedule resets live in src/lib/fleet.ts; both dashboard and Fleet tab use them to keep Mauritius-date warnings consistent.
 - Booking extras use the shared allowlist in src/lib/booking-extras.ts and are stored without altering rental prices or PDF generation.
+- Public availability uses the ID-only available_car_ids RPC; owner-only date blocks and booking writes lock the car row so approvals and blocks cannot overlap under concurrent writes.
+- Date-only customer searches and locked bookings use midnight in Indian/Mauritius, keeping the displayed period and charged day count identical across browser time zones.

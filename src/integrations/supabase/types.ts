@@ -112,6 +112,41 @@ export type Database = {
           },
         ]
       }
+      car_date_blocks: {
+        Row: {
+          car_id: string
+          created_at: string
+          end_at: string
+          id: string
+          reason: string
+          start_at: string
+        }
+        Insert: {
+          car_id: string
+          created_at?: string
+          end_at: string
+          id?: string
+          reason?: string
+          start_at: string
+        }
+        Update: {
+          car_id?: string
+          created_at?: string
+          end_at?: string
+          id?: string
+          reason?: string
+          start_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "car_date_blocks_car_id_fkey"
+            columns: ["car_id"]
+            isOneToOne: false
+            referencedRelation: "cars"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       cars: {
         Row: {
           active: boolean
@@ -274,6 +309,12 @@ export type Database = {
     }
     Functions: {
       admin_exists: { Args: never; Returns: boolean }
+      available_car_ids: {
+        Args: { requested_from: string; requested_to: string }
+        Returns: {
+          car_id: string
+        }[]
+      }
       cancel_pending_signup_deletion: {
         Args: { target: string }
         Returns: undefined

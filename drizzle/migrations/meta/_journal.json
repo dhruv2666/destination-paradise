@@ -36,6 +36,13 @@
       "when": 1794901402612,
       "tag": "0004_availability_explicit_privileges",
       "breakpoints": true
+    },
+    {
+      "idx": 5,
+      "version": "7",
+      "when": 1794902130241,
+      "tag": "0005_chauffeur_services",
+      "breakpoints": true
     }
   ]
 }

@@ -243,6 +243,63 @@ export type Database = {
         }
         Relationships: []
       }
+      service_requests: {
+        Row: {
+          car_choice: string | null
+          created_at: string
+          dropoff_location: string
+          flight_number: string
+          hours: number | null
+          id: string
+          luggage: number | null
+          name: string
+          notes: string
+          passengers: number | null
+          phone: string
+          pickup_location: string
+          request_date: string
+          request_time: string
+          service: string
+          status: string
+        }
+        Insert: {
+          car_choice?: string | null
+          created_at?: string
+          dropoff_location: string
+          flight_number?: string
+          hours?: number | null
+          id?: string
+          luggage?: number | null
+          name: string
+          notes?: string
+          passengers?: number | null
+          phone: string
+          pickup_location: string
+          request_date: string
+          request_time: string
+          service: string
+          status?: string
+        }
+        Update: {
+          car_choice?: string | null
+          created_at?: string
+          dropoff_location?: string
+          flight_number?: string
+          hours?: number | null
+          id?: string
+          luggage?: number | null
+          name?: string
+          notes?: string
+          passengers?: number | null
+          phone?: string
+          pickup_location?: string
+          request_date?: string
+          request_time?: string
+          service?: string
+          status?: string
+        }
+        Relationships: []
+      }
       settings: {
         Row: {
           address: string
@@ -300,6 +357,27 @@ export type Database = {
           id?: string
           role?: Database["public"]["Enums"]["app_role"]
           user_id?: string
+        }
+        Relationships: []
+      }
+      wedding_media: {
+        Row: {
+          image_url: string
+          placeholder: boolean
+          slot: string
+          thumb_url: string | null
+        }
+        Insert: {
+          image_url: string
+          placeholder?: boolean
+          slot: string
+          thumb_url?: string | null
+        }
+        Update: {
+          image_url?: string
+          placeholder?: boolean
+          slot?: string
+          thumb_url?: string | null
         }
         Relationships: []
       }

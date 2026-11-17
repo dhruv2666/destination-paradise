@@ -1,5 +1,10 @@
 # Roadmap
 
+- [ ] Add separate wedding pages, featured vehicles, replaceable images and homepage services
+- [ ] Add wedding and transfer quote forms, secure saved requests and owner status controls
+- [ ] Add mobile WhatsApp access and restrained reduced-motion-safe site animations
+- [ ] Verify public requests, owner read-back/image replacement and English/French mobile layouts
+
 - [x] Add secure date-first availability search and locked customer selection
 - [x] Add owner date blocks and per-car booking calendar
 - [x] Rename BMW X5 and verify search, booking submission and owner controls; temporary records removed

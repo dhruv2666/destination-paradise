@@ -15,6 +15,7 @@ import { formatMoney, lowestRate } from "@/lib/booking-math";
 import { DateSearch } from "@/components/DateSearch";
 import { Reveal } from "@/components/Reveal";
 import { SiteFooterNote } from "@/components/SiteFooterNote";
+import { HowItWorks } from "@/components/HowItWorks";
 import { SiteNav } from "@/components/SiteNav";
 import { ServiceBars } from "@/components/ServiceBars";
 
@@ -74,7 +75,8 @@ export function HomePage({ lang, initialCars }: { lang: Lang; initialCars: Car[]
         {!!cars.data?.length && (
           <p className="mt-4 flex flex-wrap gap-x-4 gap-y-1 text-sm">{fr ? "Détails des voitures : " : "Car details: "}{cars.data.map((c) => <Link key={c.id} to={fr ? "/fr/cars/$slug" : "/cars/$slug"} params={{ slug: slugify(c.name) }} className="text-primary underline">{c.name}</Link>)}</p>
         )}
-        <section className="mt-10 space-y-3 leading-relaxed">
+        <Reveal><HowItWorks lang={lang} className="mt-14" /></Reveal>
+        <section className="mt-12 space-y-3 leading-relaxed">
           <h2 className="text-xl font-bold">{fr ? "Location de voitures locale sur la côte nord-ouest" : "Local car hire on the northwest coast"}</h2>
           <p>{fr ? "Destination Paradise Mauritius Car Rental est située sur Royal road à Grand Baie, à l’île Maurice. Sélectionnez une voiture ci-dessus pour ouvrir le formulaire avec cette voiture déjà sélectionnée, choisissez vos dates et votre lieu de prise en charge — l’aéroport international SSR ou un autre lieu de votre choix — puis envoyez votre demande. Nous vérifions la disponibilité, approuvons la réservation et vous envoyons votre facture sur WhatsApp." : "Destination Paradise Mauritius Car Rental is based on Royal road in Grand Baie, Mauritius. Tap any car above to open the booking form with that car already selected, choose your dates and where to collect it — SSR International Airport or another place you name — and send your request. We check availability, approve the booking and send your invoice on WhatsApp."}</p>
           <p>{fr ? "À Maurice, on roule à gauche et l’autoroute relie l’aéroport à Port-Louis et au nord. Découvrez comment fonctionne la location, consultez les détails de la prise en charge à l’aéroport ou parcourez les destinations ci-dessous pour trouver des idées de trajets." : "Mauritius drives on the left, and the motorway links the airport with Port Louis and the north. Read how renting works, see airport pickup details, or browse the areas below for ideas on where to drive."}</p>

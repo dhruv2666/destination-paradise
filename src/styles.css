@@ -197,12 +197,33 @@
   header.site-header img {
     transition: height 250ms ease-out;
   }
+  /* Two expanding rings behind the button plus a small nudge every few seconds. */
   .whatsapp-float {
-    animation: whatsapp-pulse 2.4s ease-in-out infinite;
+    animation: whatsapp-nudge 6s ease-in-out infinite;
   }
-  @keyframes whatsapp-pulse {
-    0%, 100% { box-shadow: 0 0 0 0 rgb(37 128 62 / 45%); }
-    50% { box-shadow: 0 0 0 10px rgb(37 128 62 / 0%); }
+  .whatsapp-ripple::before,
+  .whatsapp-ripple::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: 9999px;
+    background: rgb(37 211 102 / 45%);
+    z-index: 0;
+    pointer-events: none;
+    animation: whatsapp-ripple 2s ease-out infinite;
+  }
+  .whatsapp-ripple::after {
+    animation-delay: 1s;
+  }
+  @keyframes whatsapp-ripple {
+    0% { transform: scale(1); opacity: 0.9; }
+    100% { transform: scale(1.9); opacity: 0; }
+  }
+  @keyframes whatsapp-nudge {
+    0%, 86%, 100% { transform: scale(1) rotate(0); }
+    89% { transform: scale(1.1) rotate(-10deg); }
+    92% { transform: scale(1.1) rotate(10deg); }
+    95% { transform: scale(1.05) rotate(-6deg); }
   }
 }
 

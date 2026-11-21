@@ -15,6 +15,7 @@ import { BookingDialog } from "./BookingDialog";
 import { StatusBadge } from "./StatusBadge";
 import { Badge } from "@/components/ui/badge";
 import { readExtras } from "@/lib/booking-extras";
+import { IdDocumentsPanel } from "./IdDocumentsPanel";
 
 export function BookingCard({ booking, settings, cars }: { booking: BookingWithCar; settings: Settings; cars: Car[] }) {
   const qc = useQueryClient();
@@ -120,6 +121,7 @@ export function BookingCard({ booking, settings, cars }: { booking: BookingWithC
             <Trash2 /> Delete
           </Button>
         </div>
+        <IdDocumentsPanel bookingId={booking.id} />
         <DocumentActions booking={booking} settings={settings} />
         {booking.pdf_generated_at && (
           <p className="text-xs text-muted-foreground">Document last generated {format(new Date(booking.pdf_generated_at), "d MMM yyyy, HH:mm")}</p>

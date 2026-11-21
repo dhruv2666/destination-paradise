@@ -73,10 +73,13 @@ async function defaultLogo(source: string): Promise<string | null> {
   }
 }
 
-/** Remove the stored PDFs of bookings being deleted. Missing files are ignored. */
+/** Remove the stored PDFs and ID documents of bookings being deleted. Missing files are ignored. */
 export async function deleteBookingDocuments(ids: string[]): Promise<void> {
   if (ids.length === 0) return;
   await supabase.storage.from("documents").remove(ids.map((id) => docPath({ id })));
+  // Also remove any identity documents the customer uploaded.
+  const { deleteIdDocumentsForBookings } = await import("./id-documents");
+  await deleteIdDocumentsForBookings(ids);
 }
 
 export async function documentLink(path: string): Promise<string> {

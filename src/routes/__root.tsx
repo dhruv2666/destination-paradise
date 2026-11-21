@@ -4,6 +4,7 @@ import {
   Link,
   createRootRouteWithContext,
   useRouter,
+  useRouterState,
   HeadContent,
   Scripts,
   type ErrorComponentProps,
@@ -88,6 +89,13 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { name: "theme-color", content: "#1F2A5C" },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
+      // Preview picture when a link is shared on WhatsApp, Facebook, etc.
+      { property: "og:site_name", content: "Destination Paradise Mauritius Car Rental" },
+      { property: "og:image", content: "https://destinationparadiseltd.com/og-image.jpg" },
+      { property: "og:image:width", content: "1200" },
+      { property: "og:image:height", content: "630" },
+      { property: "og:image:alt", content: "Turquoise lagoon and palm-lined beach in Mauritius" },
+      { name: "twitter:image", content: "https://destinationparadiseltd.com/og-image.jpg" },
     ],
     links: [
       { rel: "preconnect", href: "https://fonts.googleapis.com" },
@@ -106,8 +114,11 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
 });
 
 function RootShell({ children }: { children: ReactNode }) {
+  // French pages live under /fr, so browsers and search engines know their language.
+  const pathname = useRouterState({ select: (s) => s.location.pathname });
+  const lang = pathname === "/fr" || pathname.startsWith("/fr/") ? "fr" : "en";
   return (
-    <html lang="en">
+    <html lang={lang}>
       <head>
         <HeadContent />
       </head>

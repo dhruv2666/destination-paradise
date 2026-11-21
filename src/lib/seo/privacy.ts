@@ -42,6 +42,7 @@ export const PRIVACY: Record<"en" | "fr", Privacy> = {
         "With the Police or other authorities when the law requires it, for example to transfer a traffic fine to the driver.",
         "With our insurer if there is an accident or damage claim.",
         "With the companies that run our website and booking system: Cloudflare (website hosting) and Supabase (database and file storage). They process data on our behalf and cannot use it for their own purposes.",
+        "With Google, which supplies the fonts our pages use (your browser downloads them directly; Google receives your IP address but we do not use Google advertising or tracking).",
         "With WhatsApp (Meta) when you choose to message us there.",
       ]},
       { h: "How long we keep it", p: [
@@ -94,6 +95,7 @@ export const PRIVACY: Record<"en" | "fr", Privacy> = {
         "Avec la Police ou d'autres autorités lorsque la loi l'exige, par exemple pour transférer une amende au conducteur.",
         "Avec notre assureur en cas d'accident ou de sinistre.",
         "Avec les sociétés qui font fonctionner notre site et notre système de réservation : Cloudflare (hébergement du site) et Supabase (base de données et stockage des fichiers). Elles traitent les données pour notre compte et ne peuvent pas les utiliser à leurs propres fins.",
+        "Avec Google, qui fournit les polices de caractères de nos pages (votre navigateur les télécharge directement ; Google reçoit votre adresse IP, mais nous n'utilisons ni la publicité ni le suivi de Google).",
         "Avec WhatsApp (Meta) lorsque vous choisissez de nous écrire par ce moyen.",
       ]},
       { h: "Durée de conservation", p: [

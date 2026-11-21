@@ -41,19 +41,30 @@ type Block = { kind: "h" | "p" | "li"; text: string; level?: number };
 export function htmlToBlocks(html: string): Block[] {
   if (!html) return [];
   const doc = new DOMParser().parseFromString(`<div>${html}</div>`, "text/html");
+  doc.querySelectorAll("br").forEach((br) => br.replaceWith("\n"));
   const blocks: Block[] = [];
   const clean = (s: string) => s.replace(/\s+/g, " ").trim();
+  const push = (raw: string, forceLevel?: number) => {
+    for (const line of raw.split("\n")) {
+      const t = clean(line);
+      if (!t) continue;
+      if (/^(ENGLISH|FRAN[ÇC]AIS)$/i.test(t)) blocks.push({ kind: "h", text: t, level: 1 });
+      else if (/^(CLAUSE|ARTICLE)\s+\d/i.test(t)) blocks.push({ kind: "h", text: t, level: 3 });
+      else if (/^(TERMS AND CONDITIONS|CONDITIONS DE LOCATION)/i.test(t)) blocks.push({ kind: "h", text: t, level: 2 });
+      else if (forceLevel) blocks.push({ kind: "h", text: t, level: forceLevel });
+      else if (/^\((?:[ivx]+|[a-z])\)\s/i.test(t)) blocks.push({ kind: "li", text: t });
+      else blocks.push({ kind: "p", text: t });
+    }
+  };
   const walk = (el: Element) => {
     for (const node of Array.from(el.children)) {
       const tag = node.tagName.toLowerCase();
-      if (/^h[1-6]$/.test(tag)) blocks.push({ kind: "h", text: clean(node.textContent ?? ""), level: Number(tag[1]) });
-      else if (tag === "p") {
-        const t = clean(node.textContent ?? "");
-        if (t) blocks.push({ kind: "p", text: t });
-      } else if (tag === "ul" || tag === "ol") {
+      if (/^h[1-6]$/.test(tag)) push(node.textContent ?? "", Number(tag[1]) <= 2 ? 2 : 3);
+      else if (tag === "p") push(node.textContent ?? "");
+      else if (tag === "ul" || tag === "ol") {
         Array.from(node.children).forEach((li, i) => {
           const t = clean(li.textContent ?? "");
-          if (t) blocks.push({ kind: "li", text: tag === "ol" ? `${i + 1}. ${t}` : t });
+          if (t) blocks.push({ kind: "li", text: tag === "ol" && !/^\(/.test(t) ? `${i + 1}. ${t}` : t });
         });
       } else walk(node);
     }
@@ -254,25 +265,30 @@ export function buildBookingPdf(company: PdfCompany, b: PdfBooking): Blob {
     pdf.text(`${docNo}  -  Terms and Conditions`, M, 11);
     for (const blk of blocks) {
       if (blk.kind === "h") {
-        const size = blk.level && blk.level <= 2 ? 13 : 10.5;
+        const lvl = blk.level ?? 3;
+        if (lvl === 1 && ty > 30) {
+          pdf.addPage();
+          ty = 18;
+        }
+        const size = lvl === 1 ? 13 : lvl === 2 ? 11 : 10;
         pdf.setFont("helvetica", "bold");
         pdf.setFontSize(size);
         const lines = pdf.splitTextToSize(blk.text, maxW);
-        ensure(lines.length * 5.5 + 4);
-        ty += 2;
-        pdf.setTextColor(...(size > 12 ? BRAND : INK));
+        ensure(lines.length * size * 0.45 + 10);
+        ty += lvl === 3 ? 4 : 3;
+        pdf.setTextColor(...(lvl === 1 ? BRAND : INK));
         pdf.text(lines, M, ty);
         ty += lines.length * (size * 0.45) + 2;
       } else {
         pdf.setFont("helvetica", "normal");
         pdf.setFontSize(9);
         pdf.setTextColor(...INK);
-        const indent = blk.kind === "li" ? 5 : 0;
+        const indent = blk.kind === "li" ? 6 : 0;
         const lines = pdf.splitTextToSize(blk.text, maxW - indent);
         ensure(lines.length * 4.3 + 2);
-        if (blk.kind === "li") pdf.text("-", M + 1, ty);
+        if (blk.kind === "li" && !/^\(/.test(blk.text) && !/^\d+\./.test(blk.text)) pdf.text("-", M + 1, ty);
         pdf.text(lines, M + indent, ty);
-        ty += lines.length * 4.3 + 1.6;
+        ty += lines.length * 4.3 + (blk.kind === "li" ? 0.8 : 2);
       }
     }
   }

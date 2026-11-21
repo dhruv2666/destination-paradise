@@ -1,12 +1,7 @@
 import { format } from "date-fns";
 import { supabase } from "@/integrations/supabase/client";
-<<<<<<< HEAD
-import { buildBookingPdf } from "./pdf";
 import { docNumberLabel, formatMoney, locationLabel } from "./booking-math";
 import { readExtras } from "./booking-extras";
-=======
-import { docNumberLabel, formatMoney } from "./booking-math";
->>>>>>> f935b0124c66dfb67f39083a69adb4b2a2a4a520
 import { fillTemplate } from "./whatsapp";
 import type { Booking, Car, Settings } from "./data";
 import { brandLogo } from "./brand";

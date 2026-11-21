@@ -97,7 +97,7 @@ export function HomePage({ lang, initialCars }: { lang: Lang; initialCars: Car[]
           </div>
         </section>
       </main>
-      <footer className="border-t border-border bg-card px-4 py-6 text-sm"><div className="mx-auto max-w-5xl"><p className="text-muted-foreground">Royal road, Grand baie , Port Louis, Mauritius · {BUSINESS_PHONE} · ravishnarrainen@gmail.com</p><SiteFooterNote /></div></footer>
+      <footer className="border-t border-border bg-card px-4 py-6 text-sm"><div className="mx-auto max-w-5xl"><p className="text-muted-foreground">Royal road, Grand baie , Port Louis, Mauritius · {BUSINESS_PHONE} · ravishnarrainen@gmail.com</p><p className="mt-2 flex flex-wrap gap-x-4 gap-y-1">{fr ? <Link to="/fr/privacy" className="text-primary">Politique de confidentialité</Link> : <Link to="/privacy" className="text-primary">Privacy Policy</Link>}{fr ? <Link to="/fr/contact" className="text-primary">Contact</Link> : <Link to="/contact" className="text-primary">Contact</Link>}</p><SiteFooterNote /></div></footer>
     </div>
   );
 }

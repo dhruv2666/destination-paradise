@@ -14,6 +14,47 @@ export type Database = {
   }
   public: {
     Tables: {
+      booking_id_documents: {
+        Row: {
+          booking_id: string
+          content_type: string
+          id: string
+          kind: string
+          name: string
+          path: string
+          size_bytes: number
+          uploaded_at: string
+        }
+        Insert: {
+          booking_id: string
+          content_type?: string
+          id?: string
+          kind: string
+          name?: string
+          path: string
+          size_bytes?: number
+          uploaded_at?: string
+        }
+        Update: {
+          booking_id?: string
+          content_type?: string
+          id?: string
+          kind?: string
+          name?: string
+          path?: string
+          size_bytes?: number
+          uploaded_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "booking_id_documents_booking_id_fkey"
+            columns: ["booking_id"]
+            isOneToOne: false
+            referencedRelation: "bookings"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       bookings: {
         Row: {
           car_id: string

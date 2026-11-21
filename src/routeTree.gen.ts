@@ -18,6 +18,7 @@ import { Route as BookingReceivedRouteImport } from './routes/booking-received'
 import { Route as CarRentalRouteImport } from './routes/car-rental'
 import { Route as ContactRouteImport } from './routes/contact'
 import { Route as FaqRouteImport } from './routes/faq'
+import { Route as PrivacyRouteImport } from './routes/privacy'
 import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
 import { Route as WeddingCarsRouteImport } from './routes/wedding-cars'
 import { Route as AuthenticatedAdminRouteImport } from './routes/_authenticated/admin'
@@ -28,6 +29,7 @@ import { Route as FrCarRentalRouteImport } from './routes/fr.car-rental'
 import { Route as FrContactRouteImport } from './routes/fr.contact'
 import { Route as FrFaqRouteImport } from './routes/fr.faq'
 import { Route as FrMariageRouteImport } from './routes/fr.mariage'
+import { Route as FrPrivacyRouteImport } from './routes/fr.privacy'
 import { Route as LocationsSlugRouteImport } from './routes/locations.$slug'
 import { Route as FrCarsSlugRouteImport } from './routes/fr.cars.$slug'
 import { Route as FrLocationsSlugRouteImport } from './routes/fr.locations.$slug'
@@ -74,6 +76,11 @@ const ContactRoute = ContactRouteImport.update({
 const FaqRoute = FaqRouteImport.update({
   id: '/faq',
   path: '/faq',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PrivacyRoute = PrivacyRouteImport.update({
+  id: '/privacy',
+  path: '/privacy',
   getParentRoute: () => rootRouteImport,
 } as any)
 const SitemapDotxmlRoute = SitemapDotxmlRouteImport.update({
@@ -126,6 +133,11 @@ const FrMariageRoute = FrMariageRouteImport.update({
   path: '/fr/mariage',
   getParentRoute: () => rootRouteImport,
 } as any)
+const FrPrivacyRoute = FrPrivacyRouteImport.update({
+  id: '/fr/privacy',
+  path: '/fr/privacy',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const LocationsSlugRoute = LocationsSlugRouteImport.update({
   id: '/locations/$slug',
   path: '/locations/$slug',
@@ -151,6 +163,7 @@ export interface FileRoutesByFullPath {
   '/car-rental': typeof CarRentalRoute
   '/contact': typeof ContactRoute
   '/faq': typeof FaqRoute
+  '/privacy': typeof PrivacyRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/wedding-cars': typeof WeddingCarsRoute
   '/admin': typeof AuthenticatedAdminRoute
@@ -160,6 +173,7 @@ export interface FileRoutesByFullPath {
   '/fr/contact': typeof FrContactRoute
   '/fr/faq': typeof FrFaqRoute
   '/fr/mariage': typeof FrMariageRoute
+  '/fr/privacy': typeof FrPrivacyRoute
   '/locations/$slug': typeof LocationsSlugRoute
   '/fr/': typeof FrIndexRoute
   '/fr/cars/$slug': typeof FrCarsSlugRoute
@@ -174,6 +188,7 @@ export interface FileRoutesByTo {
   '/car-rental': typeof CarRentalRoute
   '/contact': typeof ContactRoute
   '/faq': typeof FaqRoute
+  '/privacy': typeof PrivacyRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/wedding-cars': typeof WeddingCarsRoute
   '/admin': typeof AuthenticatedAdminRoute
@@ -183,6 +198,7 @@ export interface FileRoutesByTo {
   '/fr/contact': typeof FrContactRoute
   '/fr/faq': typeof FrFaqRoute
   '/fr/mariage': typeof FrMariageRoute
+  '/fr/privacy': typeof FrPrivacyRoute
   '/locations/$slug': typeof LocationsSlugRoute
   '/fr': typeof FrIndexRoute
   '/fr/cars/$slug': typeof FrCarsSlugRoute
@@ -199,6 +215,7 @@ export interface FileRoutesById {
   '/car-rental': typeof CarRentalRoute
   '/contact': typeof ContactRoute
   '/faq': typeof FaqRoute
+  '/privacy': typeof PrivacyRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/wedding-cars': typeof WeddingCarsRoute
   '/_authenticated/admin': typeof AuthenticatedAdminRoute
@@ -208,6 +225,7 @@ export interface FileRoutesById {
   '/fr/contact': typeof FrContactRoute
   '/fr/faq': typeof FrFaqRoute
   '/fr/mariage': typeof FrMariageRoute
+  '/fr/privacy': typeof FrPrivacyRoute
   '/locations/$slug': typeof LocationsSlugRoute
   '/fr/': typeof FrIndexRoute
   '/fr/cars/$slug': typeof FrCarsSlugRoute
@@ -224,6 +242,7 @@ export interface FileRouteTypes {
     | '/car-rental'
     | '/contact'
     | '/faq'
+    | '/privacy'
     | '/sitemap.xml'
     | '/wedding-cars'
     | '/admin'
@@ -233,6 +252,7 @@ export interface FileRouteTypes {
     | '/fr/contact'
     | '/fr/faq'
     | '/fr/mariage'
+    | '/fr/privacy'
     | '/locations/$slug'
     | '/fr/'
     | '/fr/cars/$slug'
@@ -247,6 +267,7 @@ export interface FileRouteTypes {
     | '/car-rental'
     | '/contact'
     | '/faq'
+    | '/privacy'
     | '/sitemap.xml'
     | '/wedding-cars'
     | '/admin'
@@ -256,6 +277,7 @@ export interface FileRouteTypes {
     | '/fr/contact'
     | '/fr/faq'
     | '/fr/mariage'
+    | '/fr/privacy'
     | '/locations/$slug'
     | '/fr'
     | '/fr/cars/$slug'
@@ -271,6 +293,7 @@ export interface FileRouteTypes {
     | '/car-rental'
     | '/contact'
     | '/faq'
+    | '/privacy'
     | '/sitemap.xml'
     | '/wedding-cars'
     | '/_authenticated/admin'
@@ -280,6 +303,7 @@ export interface FileRouteTypes {
     | '/fr/contact'
     | '/fr/faq'
     | '/fr/mariage'
+    | '/fr/privacy'
     | '/locations/$slug'
     | '/fr/'
     | '/fr/cars/$slug'
@@ -296,6 +320,7 @@ export interface RootRouteChildren {
   CarRentalRoute: typeof CarRentalRoute
   ContactRoute: typeof ContactRoute
   FaqRoute: typeof FaqRoute
+  PrivacyRoute: typeof PrivacyRoute
   SitemapDotxmlRoute: typeof SitemapDotxmlRoute
   WeddingCarsRoute: typeof WeddingCarsRoute
   CarsSlugRoute: typeof CarsSlugRoute
@@ -304,6 +329,7 @@ export interface RootRouteChildren {
   FrContactRoute: typeof FrContactRoute
   FrFaqRoute: typeof FrFaqRoute
   FrMariageRoute: typeof FrMariageRoute
+  FrPrivacyRoute: typeof FrPrivacyRoute
   LocationsSlugRoute: typeof LocationsSlugRoute
   FrIndexRoute: typeof FrIndexRoute
   FrCarsSlugRoute: typeof FrCarsSlugRoute
@@ -373,6 +399,13 @@ declare module '@tanstack/react-router' {
       path: '/faq'
       fullPath: '/faq'
       preLoaderRoute: typeof FaqRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/privacy': {
+      id: '/privacy'
+      path: '/privacy'
+      fullPath: '/privacy'
+      preLoaderRoute: typeof PrivacyRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/sitemap.xml': {
@@ -445,6 +478,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof FrMariageRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/fr/privacy': {
+      id: '/fr/privacy'
+      path: '/fr/privacy'
+      fullPath: '/fr/privacy'
+      preLoaderRoute: typeof FrPrivacyRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/locations/$slug': {
       id: '/locations/$slug'
       path: '/locations/$slug'
@@ -490,6 +530,7 @@ const rootRouteChildren: RootRouteChildren = {
   CarRentalRoute: CarRentalRoute,
   ContactRoute: ContactRoute,
   FaqRoute: FaqRoute,
+  PrivacyRoute: PrivacyRoute,
   SitemapDotxmlRoute: SitemapDotxmlRoute,
   WeddingCarsRoute: WeddingCarsRoute,
   CarsSlugRoute: CarsSlugRoute,
@@ -498,6 +539,7 @@ const rootRouteChildren: RootRouteChildren = {
   FrContactRoute: FrContactRoute,
   FrFaqRoute: FrFaqRoute,
   FrMariageRoute: FrMariageRoute,
+  FrPrivacyRoute: FrPrivacyRoute,
   LocationsSlugRoute: LocationsSlugRoute,
   FrIndexRoute: FrIndexRoute,
   FrCarsSlugRoute: FrCarsSlugRoute,

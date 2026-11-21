@@ -1,6 +1,7 @@
 import { createFileRoute, notFound } from "@tanstack/react-router";
 import { useQuery } from "@tanstack/react-query";
-import { CarPage, carsQuery, findCar } from "@/components/seo/pages";
+import { CarPage } from "@/components/seo/pages";
+import { carsQuery, findCar } from "@/lib/seo/queries";
 import { currencyCode } from "@/lib/booking-math";
 import { seoHead, slugify, SITE_URL } from "@/lib/seo/site";
 

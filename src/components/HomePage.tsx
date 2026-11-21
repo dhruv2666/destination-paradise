@@ -1,5 +1,7 @@
 import { brandLogo, BUSINESS_PHONE } from "@/lib/brand";
 import coast from "@/assets/mauritius-coast.webp";
+import coastSmall from "@/assets/mauritius-coast-800.webp";
+import coastMedium from "@/assets/mauritius-coast-1200.webp";
 import { slugify, type Lang } from "@/lib/seo/site";
 import { LOCATIONS } from "@/lib/seo/locations";
 import { whatsappUrl } from "@/lib/whatsapp";
@@ -30,7 +32,7 @@ export function HomePage({ lang, initialCars }: { lang: Lang; initialCars: Car[]
         </div>
       </header>
       <section className="relative isolate overflow-hidden px-4 py-12 text-on-photo sm:py-16">
-        <img src={coast} alt={fr ? "Lagon turquoise et plage bordée de palmiers à l’île Maurice" : "Turquoise lagoon and palm-lined beach in Mauritius"} width={1920} height={1024} loading="eager" fetchPriority="high" decoding="async" className="absolute inset-0 -z-20 h-full w-full object-cover object-center" />
+        <img sizes="100vw" srcSet={`${coastSmall} 800w, ${coastMedium} 1200w, ${coast} 1600w`} src={coast} alt={fr ? "Lagon turquoise et plage bordée de palmiers à l’île Maurice" : "Turquoise lagoon and palm-lined beach in Mauritius"} width={1600} height={853} loading="eager" fetchPriority="high" decoding="async" className="absolute inset-0 -z-20 h-full w-full object-cover object-center" />
         <div className="coastal-shade absolute inset-0 -z-10" />
         <div className="coastal-content mx-auto max-w-5xl">
           <p className="flex items-center gap-2 text-sm font-semibold"><MapPin className="h-4 w-4" />Grand Baie · {fr ? "Île Maurice" : "Mauritius"}</p>

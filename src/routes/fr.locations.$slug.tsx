@@ -1,5 +1,6 @@
 import { createFileRoute, notFound } from "@tanstack/react-router";
-import { LocationPage, carsQuery } from "@/components/seo/pages";
+import { LocationPage } from "@/components/seo/pages";
+import { carsQuery } from "@/lib/seo/queries";
 import { findLocation } from "@/lib/seo/locations";
 import { seoHead } from "@/lib/seo/site";
 

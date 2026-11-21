@@ -27,6 +27,7 @@ export async function generateDocument(
     ...booking,
     car_name: car?.name ?? "Car",
     car_plate: car?.plate ?? "",
+    terms_html: settings.terms_html || booking.terms_html || "",
   });
   const path = docPath(booking);
   const { error } = await supabase.storage

@@ -269,9 +269,11 @@ export function BookingForm({ mode, cars, currency, termsHtml, initial, defaults
               <div>Duration: <span className="font-semibold text-foreground">{days} day{days > 1 ? "s" : ""}</span></div>
               <div>Daily rate: <span className="font-semibold text-foreground">{formatMoney(pricePerDay, selectedCurrency)} / day</span></div>
               <div>{days} × {formatMoney(pricePerDay, selectedCurrency)}</div>
+              <div>Rental (excl. VAT): {formatMoney(total - Math.round(total * 0.15 * 100) / 100, selectedCurrency)}</div>
+              <div>VAT (15%, included): {formatMoney(Math.round(total * 0.15 * 100) / 100, selectedCurrency)}</div>
               {isAdmin && Number(f.deposit) > 0 && <div>+ deposit {formatMoney(Number(f.deposit), selectedCurrency)}</div>}
             </div>
-            <div className="text-right"><div className="text-xs text-muted-foreground">Total</div><div className="font-display text-2xl font-bold">{formatMoney(total, selectedCurrency)}</div></div>
+            <div className="text-right"><div className="text-xs text-muted-foreground">Total (VAT included)</div><div className="font-display text-2xl font-bold">{formatMoney(total, selectedCurrency)}</div></div>
           </div>
         ) : (
           <p className="text-sm text-muted-foreground">Choose a car and dates to see the total.</p>

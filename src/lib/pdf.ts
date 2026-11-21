@@ -195,6 +195,10 @@ export function buildBookingPdf(company: PdfCompany, b: PdfBooking): Blob {
     pdf.text(value, W - M - 3, y, { align: "right" });
     y += bold ? 8 : 6;
   };
+  const vat = Math.round(Number(b.total_price) * 0.15 * 100) / 100;
+  const net = Number(b.total_price) - vat;
+  totalRow("Rental (excl. VAT)", money(net));
+  totalRow("VAT (15%, included in price)", money(vat));
   totalRow("Rental total", money(b.total_price));
   if (Number(b.deposit) > 0) {
     totalRow("Security deposit (refundable)", money(b.deposit));

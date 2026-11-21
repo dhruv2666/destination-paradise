@@ -1,21 +1,22 @@
 import { Link } from "@tanstack/react-router";
 import { useQuery } from "@tanstack/react-query";
-import { MessageCircle, Phone, MapPin, Users, Cog } from "lucide-react";
+import { MessageCircle, Phone, MapPin, Users, Cog, Plane, FileText, ShieldCheck, ArrowRight } from "lucide-react";
 import { SiteShell, Prose } from "./SiteShell";
 import { CarImage } from "@/components/CarImage";
 import { PriceRangesList } from "@/components/PriceRanges";
 import { Button } from "@/components/ui/button";
 import { BUSINESS_PHONE } from "@/lib/brand";
 import { whatsappUrl } from "@/lib/whatsapp";
-import { fetchActiveCars, qk, type Car } from "@/lib/data";
+import { type Car } from "@/lib/data";
+import { carsQuery } from "@/lib/seo/queries";
 import { formatMoney, lowestRate } from "@/lib/booking-math";
 import { AIRPORT, CAR_RENTAL, FAQS } from "@/lib/seo/pages";
 import { LOCATIONS, type LocationEntry } from "@/lib/seo/locations";
 import { slugify, type Lang } from "@/lib/seo/site";
 import { DateSearch } from "@/components/DateSearch";
 import { ServiceRequestForm } from "@/components/ServiceRequestForm";
+import { Reveal } from "@/components/Reveal";
 
-export const carsQuery = { queryKey: qk.activeCars, queryFn: fetchActiveCars };
 const home = (lang: Lang) => (lang === "fr" ? "/fr" : "/");
 const pre = (lang: Lang) => (lang === "fr" ? "/fr" : "");
 
@@ -48,15 +49,112 @@ function BookCta({ lang }: { lang: Lang }) {
 export function CarRentalPage({ lang }: { lang: Lang }) {
   const c = CAR_RENTAL[lang];
   const fr = lang === "fr";
+  const [intro, ...details] = c.sections;
+  const perks = fr
+    ? [{ icon: Plane, text: "Prise en charge à l'aéroport SSR" }, { icon: ShieldCheck, text: "Aucun paiement en ligne" }, { icon: FileText, text: "Facture envoyée sur WhatsApp" }]
+    : [{ icon: Plane, text: "Pickup at SSR airport" }, { icon: ShieldCheck, text: "Nothing charged online" }, { icon: FileText, text: "Invoice sent on WhatsApp" }];
   return (
-    <SiteShell lang={lang} altPath={fr ? "/car-rental" : "/fr/car-rental"} crumbs={[{ name: fr ? "Accueil" : "Home", path: home(lang) }, { name: c.h1, path: `${pre(lang)}/car-rental` }]}>
-      <DateSearch lang={lang} />
-      <Prose h1={c.h1} intro={c.intro} sections={c.sections} />
-      <h2 className="mt-8 text-xl font-bold">{fr ? "Nos voitures" : "Our cars"}</h2>
-      <div className="mt-3"><CarLinks lang={lang} /></div>
-      <p className="mt-6">{fr ? "Vous arrivez en avion ? " : "Arriving by plane? "}{fr ? <Link to="/fr/airport-transfers" className="text-primary underline">Prise en charge à l'aéroport</Link> : <Link to="/airport-transfers" className="text-primary underline">See how airport pickup works</Link>}.</p>
-      <BookCta lang={lang} />
+    <SiteShell wide lang={lang} altPath={fr ? "/car-rental" : "/fr/car-rental"} crumbs={[{ name: fr ? "Accueil" : "Home", path: home(lang) }, { name: c.h1, path: `${pre(lang)}/car-rental` }]}>
+      {/* Hero */}
+      <section className="rounded-2xl border border-border bg-card p-6 shadow-card sm:p-10">
+        <p className="flex items-center gap-1.5 text-sm font-semibold text-primary"><MapPin className="h-4 w-4" />Grand Baie, {fr ? "Île Maurice" : "Mauritius"}</p>
+        <h1 className="mt-3 max-w-2xl text-3xl font-bold tracking-tight sm:text-5xl">{c.h1}</h1>
+        <p className="mt-4 max-w-2xl text-lg leading-relaxed text-muted-foreground">{c.intro}</p>
+        <DateSearch lang={lang} />
+        <ul className="mt-6 flex flex-wrap gap-x-6 gap-y-3 border-t border-border pt-6 text-sm">
+          {perks.map(({ icon: Icon, text }) => (
+            <li key={text} className="flex items-center gap-2"><span className="flex h-8 w-8 items-center justify-center rounded-full bg-secondary text-primary"><Icon className="h-4 w-4" /></span>{text}</li>
+          ))}
+        </ul>
+      </section>
+
+      {/* Fleet */}
+      <Reveal>
+        <section id="fleet" className="mt-14 scroll-mt-6 sm:mt-20" aria-labelledby="fleet-heading">
+          <div className="flex flex-wrap items-end justify-between gap-3">
+            <div>
+              <h2 id="fleet-heading" className="text-2xl font-bold tracking-tight sm:text-3xl">{fr ? "Notre flotte" : "Our fleet"}</h2>
+              <p className="mt-2 text-muted-foreground">{fr ? "Choisissez votre voiture : le formulaire s'ouvre avec la voiture déjà sélectionnée." : "Pick a car and the booking form opens with it already selected."}</p>
+            </div>
+          </div>
+          <FleetGrid lang={lang} />
+        </section>
+      </Reveal>
+
+      {/* How it works */}
+      <Reveal>
+        <section className="mt-14 sm:mt-20" aria-labelledby="how-heading">
+          <h2 id="how-heading" className="text-2xl font-bold tracking-tight sm:text-3xl">{intro?.h ?? (fr ? "Comment ça marche" : "How renting works")}</h2>
+          {intro && <div className="mt-4 max-w-3xl space-y-4 leading-relaxed">{intro.p.map((p, i) => <p key={i}>{p}</p>)}</div>}
+          <div className="mt-8 grid gap-5 md:grid-cols-2">
+            {details.map((s, i) => (
+              <article key={s.h} className={`rounded-xl border border-border bg-card p-6 shadow-card ${details.length % 2 === 1 && i === details.length - 1 ? "md:col-span-2" : ""}`}>
+                <h3 className="text-lg font-bold">{s.h}</h3>
+                <div className="mt-3 space-y-3 leading-relaxed text-muted-foreground">{s.p.map((p, i) => <p key={i}>{p}</p>)}</div>
+              </article>
+            ))}
+          </div>
+        </section>
+      </Reveal>
+
+      <div className="mt-12 flex flex-col gap-4 rounded-2xl bg-secondary p-6 sm:flex-row sm:items-center sm:justify-between sm:p-8">
+        <div>
+          <p className="text-lg font-bold">{fr ? "Prêt à partir ?" : "Ready to go?"}</p>
+          <p className="mt-1 text-sm text-muted-foreground">{fr ? "Vous arrivez en avion ? " : "Arriving by plane? "}{fr ? <Link to="/fr/airport-transfers" className="text-primary underline">Prise en charge à l'aéroport</Link> : <Link to="/airport-transfers" className="text-primary underline">See how airport pickup works</Link>}.</p>
+        </div>
+        <div className="flex flex-wrap gap-3">
+          <Button asChild variant="coral" size="lg"><Link to="/book" search={{}}>{fr ? "Réserver une voiture" : "Book a car"}</Link></Button>
+          <Button asChild variant="outline" size="lg"><a href={whatsappUrl(BUSINESS_PHONE, fr ? "Bonjour Destination Paradise Mauritius Car Rental, je souhaite louer une voiture." : "Hello Destination Paradise Mauritius Car Rental, I would like to rent a car.")} target="_blank" rel="noopener noreferrer"><MessageCircle />WhatsApp</a></Button>
+        </div>
+      </div>
     </SiteShell>
+  );
+}
+
+/** Photo grid of every active car, each with a Book now button. */
+function FleetGrid({ lang }: { lang: Lang }) {
+  const fr = lang === "fr";
+  const cars = useQuery(carsQuery);
+  return (
+    <div className="mt-6 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+      {cars.data?.map((car) => {
+        const slug = slugify(car.name);
+        const from = lowestRate(car) < car.daily_price;
+        const auto = car.transmission.toLowerCase().startsWith("auto");
+        return (
+          <article key={car.id} className="group flex flex-col overflow-hidden rounded-xl border border-border bg-card shadow-card transition-all duration-300 hover:-translate-y-1 hover:shadow-lg">
+            <div className="aspect-[16/10] overflow-hidden bg-secondary"><CarImage car={car} size="thumb" className="h-full w-full" /></div>
+            <div className="flex flex-1 flex-col p-5">
+              <h3 className="text-lg font-semibold">
+                {fr ? <Link to="/fr/cars/$slug" params={{ slug }} className="hover:text-primary">{car.name}</Link>
+                  : <Link to="/cars/$slug" params={{ slug }} className="hover:text-primary">{car.name}</Link>}
+              </h3>
+              <p className="mt-2 flex gap-4 text-sm text-muted-foreground">
+                <span className="flex items-center gap-1"><Users className="h-4 w-4" />{car.seats} {fr ? "places" : "seats"}</span>
+                <span className="flex items-center gap-1"><Cog className="h-4 w-4" />{fr ? (auto ? "Automatique" : "Manuelle") : car.transmission}</span>
+              </p>
+              <div className="mt-auto flex items-end justify-between gap-3 pt-5">
+                <p className="leading-tight">
+                  <span className="block text-xs text-muted-foreground">{from ? (fr ? "À partir de" : "From") : (fr ? "Prix" : "Price")}</span>
+                  <span className="text-xl font-bold text-primary">{formatMoney(lowestRate(car), car.currency)}</span>
+                  <span className="text-sm text-muted-foreground">{fr ? " / jour" : " / day"}</span>
+                </p>
+                <Button asChild variant="coral"><Link to="/book" search={{ car: car.id }} aria-label={`${fr ? "Réserver" : "Book"} ${car.name}`}>{fr ? "Réserver" : "Book now"}<ArrowRight /></Link></Button>
+              </div>
+            </div>
+          </article>
+        );
+      })}
+      {cars.isLoading && [0, 1, 2].map((i) => (
+        <div key={i} className="overflow-hidden rounded-xl border border-border bg-card shadow-card">
+          <div className="aspect-[16/10] animate-pulse bg-secondary" />
+          <div className="space-y-3 p-5"><div className="h-5 w-2/3 animate-pulse rounded bg-secondary" /><div className="h-4 w-1/3 animate-pulse rounded bg-secondary" /><div className="h-9 w-full animate-pulse rounded bg-secondary" /></div>
+        </div>
+      ))}
+      {!cars.isLoading && !cars.data?.length && (
+        <p className="col-span-full rounded-xl border border-dashed border-border py-10 text-center text-muted-foreground">{fr ? "Nos voitures seront bientôt disponibles. Contactez-nous sur WhatsApp pour réserver." : "Our cars will be listed here soon. Message us on WhatsApp to book."}</p>
+      )}
+    </div>
   );
 }
 
@@ -221,6 +319,3 @@ export function CarPage({ lang, car }: { lang: Lang; car: Car }) {
   );
 }
 
-export function findCar(cars: Car[], slug: string) {
-  return cars.find((c) => slugify(c.name) === slug);
-}

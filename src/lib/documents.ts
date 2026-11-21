@@ -1,8 +1,12 @@
 import { format } from "date-fns";
 import { supabase } from "@/integrations/supabase/client";
+<<<<<<< HEAD
 import { buildBookingPdf } from "./pdf";
 import { docNumberLabel, formatMoney, locationLabel } from "./booking-math";
 import { readExtras } from "./booking-extras";
+=======
+import { docNumberLabel, formatMoney } from "./booking-math";
+>>>>>>> f935b0124c66dfb67f39083a69adb4b2a2a4a520
 import { fillTemplate } from "./whatsapp";
 import type { Booking, Car, Settings } from "./data";
 import { brandLogo } from "./brand";
@@ -23,7 +27,12 @@ export async function generateDocument(
   car: Pick<Car, "name" | "plate"> | null,
   settings: Settings,
 ): Promise<Blob> {
-  const logo = await defaultLogo(brandLogo(settings.logo_url));
+  // Load the PDF library only when a document is actually generated,
+  // so it isn't part of the admin dashboard's initial download.
+  const [{ buildBookingPdf }, logo] = await Promise.all([
+    import("./pdf"),
+    defaultLogo(brandLogo(settings.logo_url)),
+  ]);
   const blob = buildBookingPdf({ ...settings, logo_url: logo }, {
     ...booking,
     car_name: car?.name ?? "Car",

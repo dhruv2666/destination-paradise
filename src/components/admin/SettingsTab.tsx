@@ -1,5 +1,5 @@
 import { brandLogo } from "@/lib/brand";
-import { useState } from "react";
+import { lazy, Suspense, useState } from "react";
 import { toast } from "sonner";
 import { Loader2 } from "lucide-react";
 import { useQueryClient } from "@tanstack/react-query";
@@ -8,10 +8,12 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
-import { RichTextEditor } from "@/components/RichTextEditor";
 import { qk, type Settings } from "@/lib/data";
 import { fileToResizedDataUrl } from "@/lib/image";
 import { TEMPLATE_PLACEHOLDERS, fillTemplate } from "@/lib/whatsapp";
+
+// The rich-text editor is large, so it loads only when the Settings tab is opened.
+const RichTextEditor = lazy(() => import("@/components/RichTextEditor").then((m) => ({ default: m.RichTextEditor })));
 
 export function SettingsTab({ settings }: { settings: Settings }) {
   const qc = useQueryClient();
@@ -78,7 +80,9 @@ export function SettingsTab({ settings }: { settings: Settings }) {
 
       <Section title="Terms and Conditions">
         <p className="text-sm text-muted-foreground">Printed in full on every document. Each booking keeps the version in force when it was made, so editing here never changes older documents.</p>
-        <RichTextEditor value={f.terms_html} onChange={(html) => setF((s) => ({ ...s, terms_html: html }))} />
+        <Suspense fallback={<div className="flex h-40 items-center justify-center rounded-md border text-sm text-muted-foreground"><Loader2 className="mr-2 h-4 w-4 animate-spin" />Loading editor…</div>}>
+          <RichTextEditor value={f.terms_html} onChange={(html) => setF((s) => ({ ...s, terms_html: html }))} />
+        </Suspense>
       </Section>
 
       <div className="sticky bottom-[calc(57px+env(safe-area-inset-bottom))] z-20 border-t border-border bg-card/95 p-3 backdrop-blur">

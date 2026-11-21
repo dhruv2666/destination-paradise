@@ -13,7 +13,8 @@ const T = {
   fr: { rental: "Location", airport: "Aéroport", wedding: "Mariage", faq: "FAQ", contact: "Contact", book: "Réserver", areas: "Zones desservies", switch: "English", home: "Accueil", address: "Adresse" },
 };
 
-export function SiteShell({ lang, altPath, crumbs, children }: { lang: Lang; altPath: string; crumbs?: { name: string; path: string }[]; children: ReactNode }) {
+export function SiteShell({ lang, altPath, crumbs, wide = false, children }: { lang: Lang; altPath: string; crumbs?: { name: string; path: string }[]; wide?: boolean; children: ReactNode }) {
+  const width = wide ? "max-w-6xl" : "max-w-3xl";
   const t = T[lang];
   const fr = lang === "fr";
   return (
@@ -29,15 +30,15 @@ export function SiteShell({ lang, altPath, crumbs, children }: { lang: Lang; alt
         </div>
       </header>
       {crumbs && (
-        <nav aria-label="Breadcrumb" className="mx-auto max-w-3xl px-4 pt-4 text-sm text-muted-foreground">
+        <nav aria-label="Breadcrumb" className={`mx-auto ${width} px-4 pt-4 text-sm text-muted-foreground`}>
           {crumbs.map((c, i) => (
             <span key={c.path}>{i > 0 && " / "}{i === crumbs.length - 1 ? <span>{c.name}</span> : <a href={c.path} className="hover:text-primary">{c.name}</a>}</span>
           ))}
         </nav>
       )}
-      <main className="mx-auto max-w-3xl px-4 pb-12 pt-6">{children}</main>
+      <main className={`mx-auto ${width} px-4 pb-12 pt-6`}>{children}</main>
       <footer className="border-t border-border bg-card px-4 py-8 text-sm">
-        <div className="mx-auto grid max-w-3xl gap-6 sm:grid-cols-2">
+        <div className={`mx-auto grid ${width} gap-6 sm:grid-cols-2`}>
           <div>
             <p className="font-semibold">{BRAND_NAME}</p>
             <p className="mt-1 text-muted-foreground">Royal road, Grand baie , Port Louis, Mauritius</p>
@@ -59,7 +60,7 @@ export function SiteShell({ lang, altPath, crumbs, children }: { lang: Lang; alt
             </ul>
           </div>
         </div>
-        <div className="mx-auto max-w-3xl"><SiteFooterNote /></div>
+        <div className={`mx-auto ${width}`}><SiteFooterNote /></div>
       </footer>
     </div>
   );

@@ -10,10 +10,20 @@ import { WEDDING_CARS } from "@/lib/services";
 import { BUSINESS_PHONE } from "@/lib/brand";
 import { whatsappUrl } from "@/lib/whatsapp";
 import type { Lang } from "@/lib/seo/site";
-import x5Photo from "@/assets/wedding-bmw-x5.jpg";
-import series7Photo from "@/assets/wedding-bmw-7series.jpg";
+import x5Photo from "@/assets/wedding-bmw-x5-1536.webp";
+import x5PhotoSmall from "@/assets/wedding-bmw-x5-768.webp";
+import x5PhotoMedium from "@/assets/wedding-bmw-x5-1152.webp";
+import series7Photo from "@/assets/wedding-bmw-7series-1536.webp";
+import series7PhotoSmall from "@/assets/wedding-bmw-7series-768.webp";
+import series7PhotoMedium from "@/assets/wedding-bmw-7series-1152.webp";
 
 const PLACEHOLDERS: Record<string, string> = { hero: x5Photo, x5: x5Photo, "7series": series7Photo };
+// Responsive versions of the built-in photos, so phones download the smaller file.
+const PLACEHOLDER_SRCSET: Record<string, string> = {
+  hero: `${x5PhotoSmall} 768w, ${x5PhotoMedium} 1152w, ${x5Photo} 1536w`,
+  x5: `${x5PhotoSmall} 768w, ${x5PhotoMedium} 1152w, ${x5Photo} 1536w`,
+  "7series": `${series7PhotoSmall} 768w, ${series7PhotoMedium} 1152w, ${series7Photo} 1536w`,
+};
 const SLOT_FOR_CAR: Record<(typeof WEDDING_CARS)[number], string> = { "BMW X5": "x5", "BMW 7 Series": "7series" };
 
 const T = {
@@ -63,6 +73,8 @@ export function WeddingPage({ lang }: { lang: Lang }) {
     const row = media.data?.find((m) => m.slot === slot && !m.placeholder && m.image_url);
     return row?.image_url || PLACEHOLDERS[slot];
   };
+  // Only the built-in photos have smaller versions; owner-uploaded photos are used as-is.
+  const srcSetFor = (slot: string) => (photoFor(slot) === PLACEHOLDERS[slot] ? PLACEHOLDER_SRCSET[slot] : undefined);
   const hero = photoFor("hero");
   const wa = whatsappUrl(BUSINESS_PHONE, fr ? "Bonjour Destination Paradise, je souhaite un devis pour une voiture de mariage." : "Hello Destination Paradise, I would like a quote for a wedding car.");
 
@@ -70,7 +82,7 @@ export function WeddingPage({ lang }: { lang: Lang }) {
     <SiteShell lang={lang} altPath={fr ? "/wedding-cars" : "/fr/mariage"} crumbs={[{ name: fr ? "Accueil" : "Home", path: fr ? "/fr" : "/" }, { name: t.h1, path: fr ? "/fr/mariage" : "/wedding-cars" }]}>
       {/* Hero */}
       <section className="relative isolate -mx-4 -mt-6 overflow-hidden text-on-photo">
-        <img src={hero} alt={fr ? "BMW X5 blanc décoré pour un mariage au bord du lagon à l'île Maurice" : "White BMW X5 decorated for a wedding by the lagoon in Mauritius"} width={1536} height={1024} loading="eager" fetchPriority="high" decoding="async" className="absolute inset-0 -z-20 h-full w-full object-cover object-center" />
+        <img sizes="100vw" srcSet={srcSetFor("hero")} src={hero} alt={fr ? "BMW X5 blanc décoré pour un mariage au bord du lagon à l'île Maurice" : "White BMW X5 decorated for a wedding by the lagoon in Mauritius"} width={1536} height={1024} loading="eager" fetchPriority="high" decoding="async" className="absolute inset-0 -z-20 h-full w-full object-cover object-center" />
         <div className="coastal-shade absolute inset-0 -z-10" />
         <div className="coastal-content px-4 py-16 sm:py-24">
           <p className="flex items-center gap-2 text-sm font-semibold"><Sparkles className="h-4 w-4" />{t.tagline}</p>
@@ -92,7 +104,7 @@ export function WeddingPage({ lang }: { lang: Lang }) {
             return (
               <article key={car} className="wedding-card group overflow-hidden transition-all duration-300 hover:-translate-y-1 hover:shadow-lg">
                 <div className="aspect-[3/2] overflow-hidden bg-secondary">
-                  <img src={photoFor(slot)} alt={fr ? `${car} décorée pour un mariage` : `${car} decorated for a wedding`} width={1536} height={1024} loading="lazy" decoding="async" className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105" />
+                  <img sizes="(min-width: 640px) 50vw, 100vw" srcSet={srcSetFor(slot)} src={photoFor(slot)} alt={fr ? `${car} décorée pour un mariage` : `${car} decorated for a wedding`} width={1536} height={1024} loading="lazy" decoding="async" className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105" />
                 </div>
                 <div className="p-4">
                   <div className="flex flex-wrap items-baseline justify-between gap-x-3 gap-y-1">

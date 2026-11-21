@@ -1,5 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { CarRentalPage, carsQuery } from "@/components/seo/pages";
+import { CarRentalPage } from "@/components/seo/pages";
+import { carsQuery } from "@/lib/seo/queries";
 import { CAR_RENTAL } from "@/lib/seo/pages";
 import { seoHead } from "@/lib/seo/site";
 

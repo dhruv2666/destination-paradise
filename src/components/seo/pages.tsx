@@ -1,6 +1,6 @@
 import { Link } from "@tanstack/react-router";
 import { useQuery } from "@tanstack/react-query";
-import { MessageCircle, Phone, MapPin, Users, Cog, Plane, FileText, ShieldCheck, ArrowRight } from "lucide-react";
+import { MessageCircle, Phone, MapPin, Users, Cog, Plane, FileText, ShieldCheck, ArrowRight, Mail, Clock } from "lucide-react";
 import { SiteShell, Prose } from "./SiteShell";
 import { CarImage } from "@/components/CarImage";
 import { PriceRangesList } from "@/components/PriceRanges";
@@ -16,6 +16,7 @@ import { slugify, type Lang } from "@/lib/seo/site";
 import { DateSearch } from "@/components/DateSearch";
 import { ServiceRequestForm } from "@/components/ServiceRequestForm";
 import { Reveal } from "@/components/Reveal";
+import { HowItWorks } from "@/components/HowItWorks";
 
 const home = (lang: Lang) => (lang === "fr" ? "/fr" : "/");
 const pre = (lang: Lang) => (lang === "fr" ? "/fr" : "");
@@ -81,10 +82,12 @@ export function CarRentalPage({ lang }: { lang: Lang }) {
         </section>
       </Reveal>
 
-      {/* How it works */}
+      <Reveal><HowItWorks lang={lang} className="mt-14 sm:mt-20" /></Reveal>
+
+      {/* The details */}
       <Reveal>
         <section className="mt-14 sm:mt-20" aria-labelledby="how-heading">
-          <h2 id="how-heading" className="text-2xl font-bold tracking-tight sm:text-3xl">{intro?.h ?? (fr ? "Comment ça marche" : "How renting works")}</h2>
+          <h2 id="how-heading" className="text-2xl font-bold tracking-tight sm:text-3xl">{fr ? "Bon à savoir avant de louer" : "Good to know before you rent"}</h2>
           {intro && <div className="mt-4 max-w-3xl space-y-4 leading-relaxed">{intro.p.map((p, i) => <p key={i}>{p}</p>)}</div>}
           <div className="mt-8 grid gap-5 md:grid-cols-2">
             {details.map((s, i) => (
@@ -209,49 +212,63 @@ export function FaqPage({ lang }: { lang: Lang }) {
 
 export function ContactPage({ lang }: { lang: Lang }) {
   const fr = lang === "fr";
-  const h1 = fr ? "Contact" : "Contact us";
-  const wa = whatsappUrl(BUSINESS_PHONE, "Hello Destination Paradise Mauritius Car Rental, I would like to rent a car.");
+  const h1 = fr ? "Contactez-nous" : "Contact us";
+  const wa = whatsappUrl(BUSINESS_PHONE, fr ? "Bonjour Destination Paradise Mauritius Car Rental, je souhaite louer une voiture." : "Hello Destination Paradise Mauritius Car Rental, I would like to rent a car.");
+  const maps = "https://www.google.com/maps/search/?api=1&query=Royal+Road+Grand+Baie+Mauritius";
+  const channels = [
+    { icon: MessageCircle, title: "WhatsApp", note: fr ? "Réponse la plus rapide" : "Fastest reply", value: BUSINESS_PHONE, href: wa, cta: fr ? "Écrire sur WhatsApp" : "Message us", variant: "whatsapp" as const, external: true },
+    { icon: Phone, title: fr ? "Téléphone" : "Phone", note: fr ? "Appelez-nous directement" : "Call us directly", value: BUSINESS_PHONE, href: `tel:${BUSINESS_PHONE.replace(/\s/g, "")}`, cta: fr ? "Appeler" : "Call now", variant: "outline" as const, external: false },
+    { icon: Mail, title: "E-mail", note: fr ? "Pour les demandes détaillées" : "For detailed requests", value: "ravishnarrainen@gmail.com", href: "mailto:ravishnarrainen@gmail.com", cta: fr ? "Envoyer un e-mail" : "Send an email", variant: "outline" as const, external: false },
+  ];
   return (
-    <SiteShell lang={lang} altPath={fr ? "/contact" : "/fr/contact"} crumbs={[{ name: fr ? "Accueil" : "Home", path: home(lang) }, { name: h1, path: `${pre(lang)}/contact` }]}>
-      <h1 className="text-3xl font-bold sm:text-4xl">{h1}</h1>
-      <p className="mt-3 text-lg text-muted-foreground">{fr
-        ? "Destination Paradise Mauritius Car Rental est une agence de location de voitures familiale installée sur la côte nord-ouest de l'île Maurice. Pour réserver, poser une question sur une voiture ou organiser une remise à l'aéroport, contactez-nous directement : nous répondons nous-mêmes, sans centre d'appels."
-        : "Destination Paradise Mauritius Car Rental is a local car hire business on the northwest coast of Mauritius. To book, ask about a car or arrange an airport pickup, contact us directly: you talk to us, not to a call centre."}</p>
-      <div className="mt-6 grid gap-4 sm:grid-cols-2">
-        <div className="rounded-lg border border-border bg-card p-4">
-          <h2 className="font-bold">{fr ? "Adresse" : "Address"}</h2>
-          <address className="mt-1 not-italic">Royal road, Grand baie<br />Port Louis<br />Mauritius</address>
-        </div>
-        <div className="rounded-lg border border-border bg-card p-4">
-          <h2 className="font-bold">{fr ? "Téléphone et WhatsApp" : "Phone and WhatsApp"}</h2>
-          <p className="mt-1"><a href={`tel:${BUSINESS_PHONE.replace(/\s/g, "")}`} className="inline-flex items-center gap-1 text-primary"><Phone className="h-4 w-4" />{BUSINESS_PHONE}</a></p>
-          <p><a href="mailto:ravishnarrainen@gmail.com" className="text-primary">ravishnarrainen@gmail.com</a></p>
-          <p><a href={wa} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1 text-primary"><MessageCircle className="h-4 w-4" />WhatsApp</a></p>
-        </div>
-        <div className="rounded-lg border border-border bg-card p-4 sm:col-span-2">
-          <h2 className="font-bold">{fr ? "Horaires" : "Opening hours"}</h2>
-          <p className="mt-1">{fr ? "Nos horaires d'ouverture seront bientôt publiés ici. En attendant, écrivez-nous sur WhatsApp : nous répondons dès que possible." : "Our opening hours will be published here shortly. In the meantime, send us a WhatsApp message and we will reply as soon as we can."}</p>
-        </div>
-      </div>
-      <section className="mt-8 space-y-3">
-        <h2 className="text-xl font-bold">{fr ? "Nous trouver" : "Finding us"}</h2>
-        <p className="leading-relaxed">{fr
-          ? "Notre adresse : Royal road, Grand baie , Port Louis, Mauritius. Contactez-nous pour convenir du lieu de remise de votre voiture."
-          : "Our address is Royal road, Grand baie , Port Louis, Mauritius. Contact us to agree where to collect your car."}</p>
-        <p className="leading-relaxed">{fr
-          ? "La plupart de nos clients ne passent pas à l'agence : nous remettons la voiture à l'aéroport international SSR ou à l'endroit convenu lors de la réservation. Indiquez simplement votre lieu de prise en charge dans le formulaire et nous confirmons l'heure et le lieu sur WhatsApp avec votre facture."
-          : "Most customers never need to visit us: we hand over the car at SSR International Airport or at the place agreed when you book. Just choose your pickup point in the booking form and we confirm the time and place on WhatsApp along with your invoice."}</p>
-        <p className="leading-relaxed">{fr
-          ? "Pour une réponse rapide, précisez vos dates, la voiture souhaitée et votre lieu de séjour. Si vous arrivez en avion, ajoutez votre numéro de vol."
-          : "For a quick answer, include your dates, the car you are interested in and where you are staying. If you are flying in, add your flight number."}</p>
-        <p className="leading-relaxed">{fr
-          ? "Après votre réservation en ligne, un message WhatsApp pré-rempli vous est proposé pour nous prévenir : il contient la voiture, la date et l'heure de prise en charge, afin que nous puissions préparer le véhicule sans attendre."
-          : "After you book online, you are offered a ready-made WhatsApp message to let us know: it includes the car, the pickup date and time, so we can get the car ready without delay."}</p>
+    <SiteShell wide lang={lang} altPath={fr ? "/contact" : "/fr/contact"} crumbs={[{ name: fr ? "Accueil" : "Home", path: home(lang) }, { name: h1, path: `${pre(lang)}/contact` }]}>
+      <section className="rounded-2xl border border-border bg-card p-6 shadow-card sm:p-10">
+        <p className="flex items-center gap-1.5 text-sm font-semibold text-primary"><MapPin className="h-4 w-4" />Grand Baie, {fr ? "Île Maurice" : "Mauritius"}</p>
+        <h1 className="mt-3 text-3xl font-bold tracking-tight sm:text-5xl">{h1}</h1>
+        <p className="mt-4 max-w-2xl text-lg leading-relaxed text-muted-foreground">{fr
+          ? "Pour réserver, poser une question sur une voiture ou organiser une remise à l'aéroport, contactez-nous directement : vous parlez avec nous, pas avec un centre d'appels."
+          : "To book, ask about a car or arrange an airport pickup, contact us directly: you talk to us, not to a call centre."}</p>
       </section>
-      <p className="mt-6 flex flex-wrap gap-4">
-        {fr ? <Link to="/fr/faq" className="text-primary underline">Questions fréquentes</Link> : <Link to="/faq" className="text-primary underline">Frequently asked questions</Link>}
-        {fr ? <Link to="/fr/airport-transfers" className="text-primary underline">Prise en charge à l'aéroport</Link> : <Link to="/airport-transfers" className="text-primary underline">Airport pickup</Link>}
-      </p>
+
+      <div className="mt-8 grid gap-5 md:grid-cols-3">
+        {channels.map(({ icon: Icon, title, note, value, href, cta, variant, external }) => (
+          <article key={title} className="flex flex-col rounded-xl border border-border bg-card p-6 shadow-card">
+            <span className="flex h-11 w-11 items-center justify-center rounded-full bg-secondary text-primary"><Icon className="h-5 w-5" /></span>
+            <h2 className="mt-4 text-lg font-bold">{title}</h2>
+            <p className="text-sm text-muted-foreground">{note}</p>
+            <p className="mt-2 break-all font-medium">{value}</p>
+            <Button asChild variant={variant} className="mt-5 w-full"><a href={href} {...(external ? { target: "_blank", rel: "noopener noreferrer" } : {})}>{cta}</a></Button>
+          </article>
+        ))}
+      </div>
+
+      <div className="mt-8 grid gap-5 md:grid-cols-2">
+        <article className="rounded-xl border border-border bg-card p-6 shadow-card">
+          <h2 className="flex items-center gap-2 text-lg font-bold"><MapPin className="h-5 w-5 text-primary" />{fr ? "Adresse" : "Address"}</h2>
+          <address className="mt-3 not-italic leading-relaxed">Royal road, Grand Baie<br />Mauritius</address>
+          <Button asChild variant="outline" className="mt-5"><a href={maps} target="_blank" rel="noopener noreferrer"><MapPin />{fr ? "Ouvrir dans Google Maps" : "Open in Google Maps"}</a></Button>
+        </article>
+        <article className="rounded-xl border border-border bg-card p-6 shadow-card">
+          <h2 className="flex items-center gap-2 text-lg font-bold"><Clock className="h-5 w-5 text-primary" />{fr ? "Horaires" : "Opening hours"}</h2>
+          <p className="mt-3 leading-relaxed">{fr ? "Nos horaires d'ouverture seront bientôt publiés ici. En attendant, écrivez-nous sur WhatsApp : nous répondons dès que possible." : "Our opening hours will be published here shortly. In the meantime, send us a WhatsApp message and we will reply as soon as we can."}</p>
+        </article>
+      </div>
+
+      <Reveal>
+        <section className="mt-14 max-w-3xl space-y-4 leading-relaxed">
+          <h2 className="text-2xl font-bold tracking-tight">{fr ? "Récupérer votre voiture" : "Getting your car"}</h2>
+          <p>{fr
+            ? "La plupart de nos clients ne passent pas à l'agence : nous remettons la voiture à l'aéroport international SSR ou à l'endroit convenu lors de la réservation. Indiquez simplement votre lieu de prise en charge dans le formulaire et nous confirmons l'heure et le lieu sur WhatsApp avec votre facture."
+            : "Most customers never need to visit us: we hand over the car at SSR International Airport or at the place agreed when you book. Just choose your pickup point in the booking form and we confirm the time and place on WhatsApp along with your invoice."}</p>
+          <p>{fr
+            ? "Pour une réponse rapide, précisez vos dates, la voiture souhaitée et votre lieu de séjour. Si vous arrivez en avion, ajoutez votre numéro de vol."
+            : "For a quick answer, include your dates, the car you are interested in and where you are staying. If you are flying in, add your flight number."}</p>
+          <p className="flex flex-wrap gap-4 pt-2">
+            {fr ? <Link to="/fr/faq" className="text-primary underline">Questions fréquentes</Link> : <Link to="/faq" className="text-primary underline">Frequently asked questions</Link>}
+            {fr ? <Link to="/fr/airport-transfers" className="text-primary underline">Prise en charge à l'aéroport</Link> : <Link to="/airport-transfers" className="text-primary underline">Airport pickup</Link>}
+          </p>
+        </section>
+      </Reveal>
       <BookCta lang={lang} />
     </SiteShell>
   );

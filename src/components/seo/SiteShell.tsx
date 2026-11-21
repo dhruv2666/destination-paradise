@@ -60,7 +60,14 @@ export function SiteShell({ lang, altPath, crumbs, wide = false, children }: { l
             </ul>
           </div>
         </div>
-        <div className={`mx-auto ${width}`}><SiteFooterNote /></div>
+        <div className={`mx-auto ${width}`}>
+          <p className="mt-6 flex flex-wrap gap-x-4 gap-y-1">
+            {fr ? <Link to="/fr/privacy" className="text-primary">Politique de confidentialité</Link> : <Link to="/privacy" className="text-primary">Privacy Policy</Link>}
+            {fr ? <Link to="/fr/faq" className="text-primary">FAQ</Link> : <Link to="/faq" className="text-primary">FAQ</Link>}
+            {fr ? <Link to="/fr/contact" className="text-primary">Contact</Link> : <Link to="/contact" className="text-primary">Contact</Link>}
+          </p>
+          <SiteFooterNote />
+        </div>
       </footer>
     </div>
   );

@@ -17,6 +17,8 @@ import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { friendlyError, type Booking, type Car } from "@/lib/data";
 import { availableCarIds, dateRangeProblem, mauritiusMidnight } from "@/lib/availability";
 import { PriceRangesList } from "@/components/PriceRanges";
+import { IdDocumentsUpload, type IdDocFiles } from "@/components/IdDocumentsUpload";
+import { uploadIdDocuments } from "@/lib/id-documents";
 import { bookingExtras, readExtras } from "@/lib/booking-extras";
 import { bookingDailyPrice, tierDailyPrice, currencyCode, currencyLabel, formatMoney, locationProblem, rentalDays } from "@/lib/booking-math";
 
@@ -63,6 +65,7 @@ export function BookingForm({ mode, cars, currency, termsHtml, initial, defaults
   const [accepted, setAccepted] = useState(false);
   const [extras, setExtras] = useState(() => readExtras(initial?.extras));
   const [termsOpen, setTermsOpen] = useState(false);
+  const [idDocs, setIdDocs] = useState<IdDocFiles>({});
   const [saving, setSaving] = useState(false);
   const set = (k: keyof typeof f) => (v: string) => setF((s) => ({ ...s, [k]: v }));
 
@@ -118,8 +121,14 @@ export function BookingForm({ mode, cars, currency, termsHtml, initial, defaults
     try {
       if (!isAdmin) {
         if (!(await availableCarIds(f.pickupDate, f.returnDate)).includes(f.car_id)) throw new Error("This car is already booked or blocked for those dates. Please search again.");
-        const { error } = await supabase.from("bookings").insert(base);
+        // The id is chosen here so optional ID documents can be attached to this booking.
+        const id = crypto.randomUUID();
+        const { error } = await supabase.from("bookings").insert({ ...base, id });
         if (error) throw error;
+        if (Object.keys(idDocs).length > 0) {
+          try { await uploadIdDocuments(id, idDocs); }
+          catch { toast.warning("Your booking was sent, but the documents didn't upload. Please send them to us on WhatsApp or bring the originals."); }
+        }
         onSaved({ ...base, car_name: car?.name ?? "car" } as unknown as Booking);
       } else {
         const adminFields = {
@@ -326,6 +335,8 @@ export function BookingForm({ mode, cars, currency, termsHtml, initial, defaults
           <p className="text-sm text-muted-foreground">Choose a car and dates to see the total.</p>
         )}
       </div>
+
+      {!isAdmin && <IdDocumentsUpload value={idDocs} onChange={setIdDocs} />}
 
       {!isAdmin && (
         <div className="flex items-start gap-3">

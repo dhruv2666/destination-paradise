@@ -28,5 +28,17 @@ export function SiteMotion() {
     return () => { observer.disconnect(); mutations.disconnect(); window.removeEventListener("scroll", scroll); };
   }, [pathname]);
   const fr = pathname.startsWith("/fr");
-  return <>{!pathname.startsWith("/admin") && <Button asChild variant="whatsapp" size="icon" className="whatsapp-float fixed bottom-5 right-4 z-40 h-12 w-12 rounded-full sm:hidden" aria-label="WhatsApp"><a href={whatsappUrl(BUSINESS_PHONE, fr ? "Bonjour, je souhaite un devis pour vos services." : "Hello, I would like to enquire about your services.")} target="_blank" rel="noopener noreferrer"><MessageCircle /></a></Button>}</>;
+  if (pathname.startsWith("/admin") || pathname.startsWith("/auth")) return null;
+  const label = fr ? "Écrivez-nous sur WhatsApp" : "Chat with us on WhatsApp";
+  return (
+    // On phones the booking form needs the whole screen, so the button only shows there on larger screens.
+    <div className={`group fixed bottom-5 right-4 z-40 items-center gap-3 sm:bottom-6 sm:right-6 ${pathname.startsWith("/book") ? "hidden sm:flex" : "flex"}`}>
+      <span className="pointer-events-none hidden rounded-full bg-card px-3 py-1.5 text-sm font-medium shadow-card opacity-0 transition-opacity duration-200 group-hover:opacity-100 sm:block">{label}</span>
+      <span className="whatsapp-ripple relative flex">
+        <Button asChild variant="whatsapp" size="icon" className="whatsapp-float relative z-[1] h-14 w-14 rounded-full shadow-lg [&_svg]:size-7" aria-label={label}>
+          <a href={whatsappUrl(BUSINESS_PHONE, fr ? "Bonjour, je souhaite un devis pour vos services." : "Hello, I would like to enquire about your services.")} target="_blank" rel="noopener noreferrer"><MessageCircle /></a>
+        </Button>
+      </span>
+    </div>
+  );
 }

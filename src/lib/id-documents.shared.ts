@@ -14,7 +14,8 @@ export const ID_DOC_KEEP_DAYS_UNUSED = 30;
 
 export const ID_DOC_KINDS = ["licence_front", "licence_back", "id_passport", "other"] as const;
 export type IdDocKind = (typeof ID_DOC_KINDS)[number];
-export const REQUIRED_ID_DOCS: IdDocKind[] = ["licence_front", "licence_back"];
+/** Uploading is always optional: customers can show the originals at pickup instead. */
+export const REQUIRED_ID_DOCS: IdDocKind[] = [];
 
 export const ID_DOC_LABELS: Record<"en" | "fr", Record<IdDocKind, string>> = {
   en: { licence_front: "Driving licence — front", licence_back: "Driving licence — back", id_passport: "NIC / passport", other: "Other document" },

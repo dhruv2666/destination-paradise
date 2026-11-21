@@ -23,7 +23,7 @@ export const PRIVACY: Record<"en" | "fr", Privacy> = {
       { h: "What we collect", p: ["When you send a booking request or a service request, we collect:"], list: [
         "Your name, phone number and email address.",
         "Your ID card or passport number and your driving licence number.",
-        "Copies of your driving licence (front and back) and, if you choose, your NIC or passport, when you upload them with your booking.",
+        "If you choose to upload them with your booking: copies of your driving licence (front and back), your NIC or passport, or another document. Uploading is optional.",
         "Your booking details: car, dates and times, pickup and return place, extras, notes and prices.",
         "Messages you send us on WhatsApp, by phone or by email.",
       ]},
@@ -34,9 +34,9 @@ export const PRIVACY: Record<"en" | "fr", Privacy> = {
         "Keep accounting and tax records as required by Mauritian law.",
       ]},
       { h: "Your identity documents", p: [
-        "Uploading copies of your driving licence lets us check it before handover so pickup is quicker. The files are stored in a private, encrypted storage area. Only the owners of Destination Paradise can open them, after signing in to our booking system. They are never public, never shared for marketing and never sold.",
+        "Uploading your documents is optional. You do not need an account: you simply attach them to your booking request. Doing so lets us check your licence before handover so pickup is quicker. The files are stored in a private, encrypted storage area. Only the owners of Destination Paradise can open them, after signing in to our booking system. They are never public, never shared for marketing and never sold.",
         `We delete the copies automatically ${ID_DOC_KEEP_DAYS} days after the car is returned. This period lets us handle fines or damage claims that arrive after the rental. If your booking is rejected or cancelled, the copies are deleted after ${ID_DOC_KEEP_DAYS_UNUSED} days. You can ask us to delete them earlier, unless we need them for an open fine or claim.`,
-        "You must always bring the original documents to the handover. If you prefer not to upload anything, contact us on WhatsApp and we will check the originals at pickup instead.",
+        "Whether you upload them or not, please bring the original documents to the handover. If you don't upload anything, we simply check the originals at pickup.",
       ]},
       { h: "Who we share it with", p: ["We do not sell your data or use it for advertising. We only share it when needed:"], list: [
         "With the Police or other authorities when the law requires it, for example to transfer a traffic fine to the driver.",
@@ -75,7 +75,7 @@ export const PRIVACY: Record<"en" | "fr", Privacy> = {
       { h: "Ce que nous collectons", p: ["Lorsque vous envoyez une demande de réservation ou de service, nous collectons :"], list: [
         "Votre nom, numéro de téléphone et adresse e-mail.",
         "Votre numéro de carte d'identité ou de passeport et votre numéro de permis de conduire.",
-        "Une copie de votre permis de conduire (recto et verso) et, si vous le souhaitez, de votre NIC ou passeport, lorsque vous les téléchargez avec votre réservation.",
+        "Si vous choisissez de les télécharger avec votre réservation : une copie de votre permis de conduire (recto et verso), de votre NIC ou passeport, ou d'un autre document. Le téléchargement est facultatif.",
         "Les détails de la réservation : voiture, dates et heures, lieux de prise en charge et de retour, options, notes et prix.",
         "Les messages que vous nous envoyez sur WhatsApp, par téléphone ou par e-mail.",
       ]},
@@ -86,9 +86,9 @@ export const PRIVACY: Record<"en" | "fr", Privacy> = {
         "Tenir la comptabilité et les registres fiscaux exigés par la loi mauricienne.",
       ]},
       { h: "Vos pièces d'identité", p: [
-        "Le téléchargement de votre permis nous permet de le vérifier avant la remise des clés, pour une prise en charge plus rapide. Les fichiers sont conservés dans un espace de stockage privé et chiffré. Seuls les gérants de Destination Paradise peuvent les ouvrir, après connexion à notre système de réservation. Ils ne sont jamais publics, jamais utilisés pour du marketing et jamais vendus.",
+        "Le téléchargement de vos documents est facultatif et ne nécessite aucun compte : vous les joignez simplement à votre demande de réservation. Cela nous permet de vérifier votre permis avant la remise des clés, pour une prise en charge plus rapide. Les fichiers sont conservés dans un espace de stockage privé et chiffré. Seuls les gérants de Destination Paradise peuvent les ouvrir, après connexion à notre système de réservation. Ils ne sont jamais publics, jamais utilisés pour du marketing et jamais vendus.",
         `Les copies sont supprimées automatiquement ${ID_DOC_KEEP_DAYS} jours après le retour de la voiture, afin de pouvoir traiter les amendes ou réclamations qui arrivent après la location. Si la réservation est refusée ou annulée, elles sont supprimées après ${ID_DOC_KEEP_DAYS_UNUSED} jours. Vous pouvez demander leur suppression plus tôt, sauf si une amende ou une réclamation est en cours.`,
-        "Vous devez toujours présenter les documents originaux à la remise des clés. Si vous préférez ne rien télécharger, contactez-nous sur WhatsApp et nous vérifierons les originaux sur place.",
+        "Que vous les téléchargiez ou non, merci d'apporter les documents originaux à la remise des clés. Si vous ne téléchargez rien, nous vérifions simplement les originaux sur place.",
       ]},
       { h: "Avec qui nous les partageons", p: ["Nous ne vendons pas vos données et ne les utilisons pas pour de la publicité. Nous ne les partageons que si nécessaire :"], list: [
         "Avec la Police ou d'autres autorités lorsque la loi l'exige, par exemple pour transférer une amende au conducteur.",

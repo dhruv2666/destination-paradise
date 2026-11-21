@@ -50,6 +50,8 @@ export function BookingForm({ mode, cars, currency, termsHtml, initial, defaults
     returnTime: toTime(initial?.return_at),
     pickup_location: initial?.pickup_location ?? "",
     location_details: initial?.location_details ?? "",
+    return_location: initial?.return_location ?? "",
+    return_location_details: initial?.return_location_details ?? "",
     notes: initial?.notes ?? "",
     price: initial?.price_per_day != null ? String(initial.price_per_day) : "",
     deposit: initial?.deposit != null ? String(initial.deposit) : "0",
@@ -94,6 +96,8 @@ export function BookingForm({ mode, cars, currency, termsHtml, initial, defaults
     const details = z.object({ full_name: z.string().trim().min(1).max(100), phone: z.string().trim().min(1).max(40), email: z.string().max(255).refine((v) => !v || z.string().email().safeParse(v).success), id_number: z.string().max(100), licence_number: z.string().max(100), notes: z.string().max(2000), location_details: z.string().max(500) }).safeParse(f);
     if (!details.success) return void toast.error("Check your contact details and shorten any overly long notes.");
     if (!Number.isFinite(pricePerDay) || pricePerDay < 0 || !Number.isFinite(Number(f.deposit)) || Number(f.deposit) < 0) return void toast.error("Prices and deposit must be valid non-negative amounts.");
+    if (!isAdmin && f.return_location !== "airport" && f.return_location !== "other") return void toast.error("Please choose where you want to return the car.");
+    if (f.return_location === "other" && !f.return_location_details.trim()) return void toast.error("Please say where the car will be returned.");
     setSaving(true);
     const base = {
       full_name: f.full_name.trim(),
@@ -104,6 +108,8 @@ export function BookingForm({ mode, cars, currency, termsHtml, initial, defaults
       car_id: f.car_id,
       pickup_location: f.pickup_location,
       location_details: f.pickup_location === "other" ? f.location_details.trim() : null,
+      return_location: f.return_location || null,
+      return_location_details: f.return_location === "other" ? f.return_location_details.trim() : null,
       pickup_at: pickup.toISOString(),
       return_at: ret.toISOString(),
       notes: f.notes.trim(),
@@ -258,6 +264,26 @@ export function BookingForm({ mode, cars, currency, termsHtml, initial, defaults
           </div>
         </div>
       )}
+
+      <div className={field}>
+        <Label>Return location{isAdmin ? "" : " *"}</Label>
+        <RadioGroup value={f.return_location} onValueChange={set("return_location")} className="grid gap-2 sm:grid-cols-2">
+          <Label htmlFor="ret-airport" className="flex h-11 cursor-pointer items-center gap-3 rounded-md border px-3 font-normal">
+            <RadioGroupItem id="ret-airport" value="airport" /> SSR International Airport
+          </Label>
+          <Label htmlFor="ret-other" className="flex h-11 cursor-pointer items-center gap-3 rounded-md border px-3 font-normal">
+            <RadioGroupItem id="ret-other" value="other" /> Other
+          </Label>
+        </RadioGroup>
+        {f.return_location === "other" && (
+          <Input
+            className="h-11"
+            placeholder="Hotel, address or meeting point"
+            value={f.return_location_details}
+            onChange={(e) => set("return_location_details")(e.target.value)}
+          />
+        )}
+      </div>
 
       <fieldset className="space-y-2">
         <legend className="mb-2 text-sm font-medium">Optional extras</legend>

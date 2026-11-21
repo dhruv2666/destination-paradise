@@ -1,7 +1,8 @@
 import { format } from "date-fns";
 import { supabase } from "@/integrations/supabase/client";
 import { buildBookingPdf } from "./pdf";
-import { docNumberLabel, formatMoney } from "./booking-math";
+import { docNumberLabel, formatMoney, locationLabel } from "./booking-math";
+import { readExtras } from "./booking-extras";
 import { fillTemplate } from "./whatsapp";
 import type { Booking, Car, Settings } from "./data";
 import { brandLogo } from "./brand";
@@ -111,6 +112,9 @@ export function bookingMessage(
     from: d(b.pickup_at),
     to: d(b.return_at),
     total: formatMoney(b.total_price, b.currency ?? currency),
+    pickup_location: locationLabel(b.pickup_location, b.location_details),
+    return_location: locationLabel(b.return_location, b.return_location_details),
+    extras: readExtras(b.extras).join(", ") || "None",
     link,
   });
 }

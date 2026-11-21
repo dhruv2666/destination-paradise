@@ -34,6 +34,8 @@ export type Database = {
           pdf_path: string | null
           extra_charge: number
           extra_charge_label: string | null
+          return_location: string | null
+          return_location_details: string | null
           phone: string
           pickup_at: string
           pickup_location: string | null
@@ -65,6 +67,8 @@ export type Database = {
           pdf_path?: string | null
           extra_charge?: number
           extra_charge_label?: string | null
+          return_location?: string | null
+          return_location_details?: string | null
           phone: string
           pickup_at: string
           pickup_location?: string | null
@@ -96,6 +100,8 @@ export type Database = {
           pdf_path?: string | null
           extra_charge?: number
           extra_charge_label?: string | null
+          return_location?: string | null
+          return_location_details?: string | null
           phone?: string
           pickup_at?: string
           pickup_location?: string | null

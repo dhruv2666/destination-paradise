@@ -304,7 +304,7 @@ export function BookingForm({ mode, cars, currency, termsHtml, initial, defaults
 
       {!isAdmin && (
         <div className="rounded-xl border border-amber-300 bg-amber-50 p-3 text-sm text-amber-900">
-          <span className="font-semibold">Please note:</span> Airport pick-up and drop-off, pick-up or drop-off outside office hours, and any optional add-ons (such as child seats) carry additional charges. These are not included in the total shown below. Our team will confirm the exact amount with you before your booking is finalised.
+          <span className="font-semibold">Please note:</span> Airport pick-up or drop-off, or other locations, may carry additional charges. Optional add-ons (such as child seats) also carry additional charges. These are not included in the total shown below. Our team will confirm the exact amount with you before your booking is finalised.
         </div>
       )}
 

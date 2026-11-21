@@ -39,7 +39,7 @@ describe("fleet alert rules", () => {
 });
 describe("booking extras", () => {
   it("supports exactly the four requested add-ons", () => {
-    expect(readExtras(["GPS", "Baby seat", "Booster seat", "Additional driver", "unknown", "GPS"])).toEqual(["Baby seat", "Booster seat", "Additional driver", "GPS"]);
+    expect(readExtras(["Full insurance", "Baby seat", "Portable WiFi", "Additional driver", "unknown", "Full insurance"])).toEqual(["Baby seat", "Portable WiFi", "Additional driver", "Full insurance"]);
     expect(readExtras(null)).toEqual([]);
   });
 });

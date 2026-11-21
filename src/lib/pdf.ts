@@ -109,12 +109,22 @@ export function buildBookingPdf(company: PdfCompany, b: PdfBooking): Blob {
   pdf.setFont("helvetica", "bold");
   pdf.setFontSize(9);
   const nameWidth = W - M - 65 - nameX;
-  pdf.text(pdf.splitTextToSize(company.company_name || "Destination Paradise Mauritius Car Rental", nameWidth), nameX, 17);
+  pdf.text(pdf.splitTextToSize("Destination Paradise (MTIUS) LTD", nameWidth), nameX, 17);
   pdf.setFont("helvetica", "normal");
   pdf.setFontSize(7);
   pdf.setTextColor(...MUTED);
   const contact = [company.address, company.phone, company.company_email].filter(Boolean);
-  pdf.text(pdf.splitTextToSize(contact.join("  |  "), nameWidth), nameX, 25);
+  const contactLines: string[] = pdf.splitTextToSize(contact.join("  |  "), nameWidth);
+  pdf.text(contactLines, nameX, 25);
+  let hy = 25 + contactLines.length * 3;
+  const legal = ["VAT 27531225 / BRN : C17148379"];
+  hy += 1;
+  for (const row of legal) {
+    const wrapped: string[] = pdf.splitTextToSize(row, nameWidth);
+    pdf.text(wrapped, nameX, hy);
+    hy += wrapped.length * 3.1;
+  }
+  const hdrLine = Math.max(36, hy + 2);
 
   // Document title (right)
   pdf.setTextColor(...BRAND);
@@ -130,7 +140,7 @@ export function buildBookingPdf(company: PdfCompany, b: PdfBooking): Blob {
   pdf.text(`Issued ${format(new Date(), "d MMM yyyy")}`, W - M, 29, { align: "right" });
 
   pdf.setDrawColor(...LINE);
-  pdf.line(M, 36, W - M, 36);
+  pdf.line(M, hdrLine, W - M, hdrLine);
 
   // Two info columns
   const colW = (W - 2 * M - 8) / 2;
@@ -162,7 +172,7 @@ export function buildBookingPdf(company: PdfCompany, b: PdfBooking): Blob {
       ["Licence no.", b.licence_number],
     ],
     M,
-    44,
+    hdrLine + 8,
   );
   const y2 = section(
     "Vehicle & rental",
@@ -175,7 +185,7 @@ export function buildBookingPdf(company: PdfCompany, b: PdfBooking): Blob {
       ["Duration", `${b.days} day${b.days === 1 ? "" : "s"}`],
     ],
     M + colW + 8,
-    44,
+    hdrLine + 8,
   );
   let y = Math.max(y1, y2) + 6;
 

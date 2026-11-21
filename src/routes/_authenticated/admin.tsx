@@ -16,6 +16,7 @@ import { OwnersTab } from "@/components/admin/OwnersTab";
 import { HomeTab } from "@/components/admin/HomeTab";
 import { ExchangeTab } from "@/components/admin/ExchangeTab";
 import { FleetTab } from "@/components/admin/FleetTab";
+import { ScheduleTab } from "@/components/admin/ScheduleTab";
 import { ServicesTab } from "@/components/admin/ServicesTab";
 import { cn } from "@/lib/utils";
 
@@ -73,7 +74,7 @@ function Admin() {
     ["calendar", "Calendar", CalendarDays],
     ["bookings", "Bookings", ListChecks],
   ];
-  const more: [string, string, typeof Home][] = [["cars", "Cars", Car], ["fleet", "Fleet", Car], ["services", "Services", CalendarDays], ["settings", "Settings", Settings], ["owners", "Team", Users], ["exchange", "EUR → MUR", ArrowLeftRight]];
+  const more: [string, string, typeof Home][] = [["cars", "Cars", Car], ["fleet", "Fleet", Car], ["schedule", "Schedule", CalendarDays], ["services", "Services", CalendarDays], ["settings", "Settings", Settings], ["owners", "Team", Users], ["exchange", "EUR → MUR", ArrowLeftRight]];
   const inMore = more.some(([v]) => v === tab);
 
   return (
@@ -116,6 +117,7 @@ function Admin() {
         {tab === "bookings" && <BookingsTab bookings={bookings.data} cars={cars.data} settings={s} />}
         {tab === "cars" && <CarsTab cars={cars.data} currency={s.currency} />}
         {tab === "fleet" && <FleetTab cars={cars.data} />}
+        {tab === "schedule" && <ScheduleTab cars={cars.data} bookings={bookings.data} />}
         {tab === "services" && <ServicesTab />}
         {tab === "settings" && <SettingsTab settings={s} />}
         {tab === "owners" && <OwnersTab />}

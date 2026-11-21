@@ -1,6 +1,6 @@
 import { BRAND_LOGO, BRAND_NAME, BUSINESS_PHONE } from "@/lib/brand";
 
-export const SITE_URL = "https://id-preview--b404dc99-3b56-49ff-ac53-e87249741055.lovable.app";
+export const SITE_URL = "http://destinationparadiseltd.com";
 export type Lang = "en" | "fr";
 export const ADDRESS = {
   street: "Royal road",

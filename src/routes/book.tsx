@@ -80,8 +80,8 @@ function BookPage() {
               termsHtml={settings.data.terms_html}
               defaults={params}
               onSaved={(b) => {
-                const r = b as unknown as { car_name?: string; pickup_at?: string; pickup_location?: string | null; location_details?: string | null } | null;
-                navigate({ to: "/booking-received", search: { car: r?.car_name, at: r?.pickup_at, loc: r ? locationLabel(r.pickup_location ?? null, r.location_details ?? null) : undefined } });
+                const r = b as unknown as { car_name?: string; pickup_at?: string; return_at?: string; pickup_location?: string | null; location_details?: string | null; return_location?: string | null; return_location_details?: string | null; extras?: string[] } | null;
+                navigate({ to: "/booking-received", search: { car: r?.car_name, at: r?.pickup_at, loc: r ? locationLabel(r.pickup_location ?? null, r.location_details ?? null) : undefined, rat: r?.return_at, rloc: r?.return_location ? locationLabel(r.return_location, r.return_location_details ?? null) : undefined, opts: (r?.extras ?? []).join(", ") || undefined } });
               }}
             />
             </>

@@ -1,10 +1,11 @@
 import { addDays, format, isSameDay } from "date-fns";
 import { locationLabel } from "@/lib/booking-math";
+import { readExtras } from "@/lib/booking-extras";
 
-export type CalEvent = { kind: "pickup" | "return"; at: Date; bookingId: string; car: string; client: string; phone: string; location: string };
+export type CalEvent = { kind: "pickup" | "return"; at: Date; bookingId: string; car: string; client: string; phone: string; location: string; extras: string[] };
 export type DayStat = { date: Date; key: string; pickups: CalEvent[]; returns: CalEvent[]; load: number };
 
-type B = { id: string; status: string; pickup_at: string; return_at: string; full_name: string; phone: string; pickup_location?: string | null; location_details?: string | null; cars: { name: string } | null };
+type B = { id: string; status: string; pickup_at: string; return_at: string; full_name: string; phone: string; pickup_location?: string | null; location_details?: string | null; return_location?: string | null; return_location_details?: string | null; extras?: unknown; cars: { name: string } | null };
 
 export function dayStats(bookings: B[], days: Date[]): DayStat[] {
   const active = bookings.filter((b) => b.status === "approved");
@@ -12,11 +13,13 @@ export function dayStats(bookings: B[], days: Date[]): DayStat[] {
     const pickups: CalEvent[] = [];
     const returns: CalEvent[] = [];
     for (const b of active) {
-      const base = { bookingId: b.id, car: b.cars?.name ?? "Car", client: b.full_name, phone: b.phone, location: locationLabel(b.pickup_location ?? null, b.location_details ?? null) };
+      const base = { bookingId: b.id, car: b.cars?.name ?? "Car", client: b.full_name, phone: b.phone, extras: readExtras(b.extras) as string[] };
+      const pickLoc = locationLabel(b.pickup_location ?? null, b.location_details ?? null);
+      const retLoc = locationLabel(b.return_location ?? null, b.return_location_details ?? null);
       const p = new Date(b.pickup_at);
       const r = new Date(b.return_at);
-      if (isSameDay(p, date)) pickups.push({ ...base, kind: "pickup", at: p });
-      if (isSameDay(r, date)) returns.push({ ...base, kind: "return", at: r });
+      if (isSameDay(p, date)) pickups.push({ ...base, location: pickLoc, kind: "pickup", at: p });
+      if (isSameDay(r, date)) returns.push({ ...base, location: retLoc, kind: "return", at: r });
     }
     return { date, key: format(date, "yyyy-MM-dd"), pickups, returns, load: pickups.length + returns.length };
   });

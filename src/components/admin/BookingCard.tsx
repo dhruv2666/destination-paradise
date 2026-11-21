@@ -85,6 +85,7 @@ export function BookingCard({ booking, settings, cars }: { booking: BookingWithC
         <Row k="Pickup" v={fmt(booking.pickup_at)} />
         <Row k="Return" v={fmt(booking.return_at)} />
         <Row k="Pickup point" v={locationLabel(booking.pickup_location, booking.location_details)} />
+        <Row k="Return point" v={locationLabel(booking.return_location, booking.return_location_details)} />
         {booking.email && <Row k="Email" v={booking.email} />}
         {booking.id_number && <Row k="ID / passport" v={booking.id_number} />}
         {booking.licence_number && <Row k="Licence" v={booking.licence_number} />}

@@ -5,12 +5,15 @@ export type TemplateValues = {
   to: string;
   total: string;
   link: string;
+  pickup_location?: string;
+  return_location?: string;
+  extras?: string;
 };
 
-export const TEMPLATE_PLACEHOLDERS = ["{name}", "{car}", "{from}", "{to}", "{total}", "{link}"];
+export const TEMPLATE_PLACEHOLDERS = ["{name}", "{car}", "{from}", "{to}", "{pickup_location}", "{return_location}", "{extras}", "{total}", "{link}"];
 
 export function fillTemplate(template: string, values: TemplateValues): string {
-  return template.replace(/\{(name|car|from|to|total|link)\}/g, (_, key: keyof TemplateValues) =>
+  return template.replace(/\{(name|car|from|to|total|link|pickup_location|return_location|extras)\}/g, (_, key: keyof TemplateValues) =>
     values[key] ?? "",
   );
 }

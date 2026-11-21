@@ -136,7 +136,9 @@ export function CalendarTab({ bookings }: { bookings: BookingWithCar[] }) {
                 </span>
                 <div className="min-w-0 flex-1">
                   <div className="font-semibold">{format(e.at, "HH:mm")} · {e.car}</div>
-                  <div className="text-sm text-muted-foreground">{e.client} · {e.kind === "pickup" ? `Pick up: ${e.location} · ` : ""}<a href={`tel:${e.phone}`} className="text-primary">{e.phone}</a></div>
+                  <div className="text-sm text-muted-foreground">{e.client} · <a href={`tel:${e.phone}`} className="text-primary">{e.phone}</a></div>
+                  <div className="text-sm text-muted-foreground">{e.kind === "pickup" ? "Pick up" : "Drop off"}: {e.location}</div>
+                  {e.extras.length > 0 && <div className="text-sm font-medium">Options: {e.extras.join(", ")}</div>}
                 </div>
               </li>
             ))}

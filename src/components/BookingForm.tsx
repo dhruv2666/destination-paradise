@@ -53,6 +53,8 @@ export function BookingForm({ mode, cars, currency, termsHtml, initial, defaults
     notes: initial?.notes ?? "",
     price: initial?.price_per_day != null ? String(initial.price_per_day) : "",
     deposit: initial?.deposit != null ? String(initial.deposit) : "0",
+    extra: initial?.extra_charge ? String(initial.extra_charge) : "",
+    extraLabel: initial?.extra_charge_label ?? "",
     status: initial?.status ?? "approved",
     currency: currencyCode(initial?.currency ?? cars.find((c) => c.id === (initial?.car_id ?? defaults?.car))?.currency ?? currency),
   });
@@ -68,7 +70,8 @@ export function BookingForm({ mode, cars, currency, termsHtml, initial, defaults
   const ret = f.returnDate ? new Date(lockSelection ? mauritiusMidnight(f.returnDate) : `${f.returnDate}T${f.returnTime || "00:00"}`) : null;
   const days = pickup && ret ? rentalDays(pickup, ret) : 0;
   const pricePerDay = bookingDailyPrice(car ? tierDailyPrice(car, days) : 0, isAdmin && f.price !== "" ? Number(f.price) : null);
-  const total = days * pricePerDay;
+  const extraCharge = isAdmin ? Math.max(0, Number(f.extra) || 0) : 0;
+  const total = days * pricePerDay + extraCharge;
 
   const onCarChange = (id: string) => {
     setF((s) => ({ ...s, car_id: id, price: "", currency: currencyCode(cars.find((c) => c.id === id)?.currency) }));
@@ -117,6 +120,9 @@ export function BookingForm({ mode, cars, currency, termsHtml, initial, defaults
           currency: f.currency,
           price_per_day: pricePerDay,
           deposit: Number(f.deposit || 0),
+          extra_charge: extraCharge,
+          extra_charge_label: f.extraLabel.trim() || null,
+          total_price: total,
           status: f.status,
         };
         const q = editing
@@ -231,6 +237,14 @@ export function BookingForm({ mode, cars, currency, termsHtml, initial, defaults
             <Label htmlFor="deposit">Deposit ({currencyLabel(selectedCurrency)})</Label>
             <Input id="deposit" className="h-11" inputMode="decimal" value={f.deposit} onChange={(e) => set("deposit")(e.target.value)} />
           </div>
+          <div className={field}>
+            <Label htmlFor="extra">Extra charge ({currencyLabel(selectedCurrency)})</Label>
+            <Input id="extra" className="h-11" inputMode="decimal" value={f.extra} onChange={(e) => set("extra")(e.target.value)} />
+          </div>
+          <div className={`${field} col-span-2`}>
+            <Label htmlFor="extra-label">Extra charge description</Label>
+            <Input id="extra-label" className="h-11" maxLength={60} placeholder="e.g. Airport pick-up + child seat" value={f.extraLabel} onChange={(e) => set("extraLabel")(e.target.value)} />
+          </div>
           <div className={`${field} col-span-2 sm:col-span-1`}>
             <Label>Status</Label>
             <Select value={f.status} onValueChange={set("status")}>
@@ -262,6 +276,12 @@ export function BookingForm({ mode, cars, currency, termsHtml, initial, defaults
         <Textarea id="notes" rows={3} value={f.notes} onChange={(e) => set("notes")(e.target.value)} />
       </div>
 
+      {!isAdmin && (
+        <div className="rounded-xl border border-amber-300 bg-amber-50 p-3 text-sm text-amber-900">
+          <span className="font-semibold">Please note:</span> Airport pick-up and drop-off, pick-up or drop-off outside office hours, and any optional add-ons (such as child seats) carry additional charges. These are not included in the total shown below. Our team will confirm the exact amount with you before your booking is finalised.
+        </div>
+      )}
+
       <div className="rounded-xl bg-secondary p-4">
         {days > 0 && car ? (
           <div className="flex flex-wrap items-end justify-between gap-4">
@@ -269,6 +289,7 @@ export function BookingForm({ mode, cars, currency, termsHtml, initial, defaults
               <div>Duration: <span className="font-semibold text-foreground">{days} day{days > 1 ? "s" : ""}</span></div>
               <div>Daily rate: <span className="font-semibold text-foreground">{formatMoney(pricePerDay, selectedCurrency)} / day</span></div>
               <div>{days} × {formatMoney(pricePerDay, selectedCurrency)}</div>
+              {extraCharge > 0 && <div>+ {f.extraLabel.trim() || "Extra charge"}: {formatMoney(extraCharge, selectedCurrency)}</div>}
               <div>Rental (excl. VAT): {formatMoney(total - Math.round(total * 0.15 * 100) / 100, selectedCurrency)}</div>
               <div>VAT (15%, included): {formatMoney(Math.round(total * 0.15 * 100) / 100, selectedCurrency)}</div>
               {isAdmin && Number(f.deposit) > 0 && <div>+ deposit {formatMoney(Number(f.deposit), selectedCurrency)}</div>}

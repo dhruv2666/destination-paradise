@@ -28,6 +28,8 @@ export type PdfBooking = {
   price_per_day: number;
   total_price: number;
   deposit: number;
+  extra_charge?: number | null;
+  extra_charge_label?: string | null;
   notes: string;
   terms_html: string | null;
   created_at: string;
@@ -192,7 +194,13 @@ export function buildBookingPdf(company: PdfCompany, b: PdfBooking): Blob {
   pdf.text(`Car rental - ${b.car_name}`, M + 3, y);
   pdf.text(String(b.days), 120, y, { align: "right" });
   pdf.text(money(b.price_per_day), 155, y, { align: "right" });
-  pdf.text(money(b.total_price), W - M - 3, y, { align: "right" });
+  const extraAmt = Number(b.extra_charge ?? 0);
+  pdf.text(money(Number(b.total_price) - extraAmt), W - M - 3, y, { align: "right" });
+  if (extraAmt > 0) {
+    y += 6;
+    pdf.text(b.extra_charge_label?.trim() || "Extra charge", M + 3, y);
+    pdf.text(money(extraAmt), W - M - 3, y, { align: "right" });
+  }
   y += 5;
   pdf.line(M, y, W - M, y);
   y += 7;

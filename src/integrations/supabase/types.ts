@@ -32,6 +32,8 @@ export type Database = {
           notes: string
           pdf_generated_at: string | null
           pdf_path: string | null
+          extra_charge: number
+          extra_charge_label: string | null
           phone: string
           pickup_at: string
           pickup_location: string | null
@@ -61,6 +63,8 @@ export type Database = {
           notes?: string
           pdf_generated_at?: string | null
           pdf_path?: string | null
+          extra_charge?: number
+          extra_charge_label?: string | null
           phone: string
           pickup_at: string
           pickup_location?: string | null
@@ -90,6 +94,8 @@ export type Database = {
           notes?: string
           pdf_generated_at?: string | null
           pdf_path?: string | null
+          extra_charge?: number
+          extra_charge_label?: string | null
           phone?: string
           pickup_at?: string
           pickup_location?: string | null

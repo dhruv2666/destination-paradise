@@ -71,8 +71,8 @@ export function BookingForm({ mode, cars, currency, termsHtml, initial, defaults
 
   const car = cars.find((c) => c.id === f.car_id);
   const selectedCurrency = isAdmin ? f.currency : car?.currency ?? currency;
-  const pickup = f.pickupDate ? new Date(lockSelection ? mauritiusMidnight(f.pickupDate) : `${f.pickupDate}T${f.pickupTime || "00:00"}`) : null;
-  const ret = f.returnDate ? new Date(lockSelection ? mauritiusMidnight(f.returnDate) : `${f.returnDate}T${f.returnTime || "00:00"}`) : null;
+  const pickup = f.pickupDate ? new Date(lockSelection ? (f.pickupTime ? `${f.pickupDate}T${f.pickupTime}:00+04:00` : mauritiusMidnight(f.pickupDate)) : `${f.pickupDate}T${f.pickupTime || "00:00"}`) : null;
+  const ret = f.returnDate ? new Date(lockSelection ? (f.returnTime ? `${f.returnDate}T${f.returnTime}:00+04:00` : mauritiusMidnight(f.returnDate)) : `${f.returnDate}T${f.returnTime || "00:00"}`) : null;
   const days = pickup && ret ? rentalDays(pickup, ret) : 0;
   const pricePerDay = bookingDailyPrice(car ? tierDailyPrice(car, days) : 0, isAdmin && f.price !== "" ? Number(f.price) : null);
   const extraCharge = isAdmin ? Math.max(0, Number(f.extra) || 0) : 0;
@@ -101,6 +101,7 @@ export function BookingForm({ mode, cars, currency, termsHtml, initial, defaults
     if (!Number.isFinite(pricePerDay) || pricePerDay < 0 || !Number.isFinite(Number(f.deposit)) || Number(f.deposit) < 0) return void toast.error("Prices and deposit must be valid non-negative amounts.");
     if (!isAdmin && f.return_location !== "airport" && f.return_location !== "other") return void toast.error("Please choose where you want to return the car.");
     if (f.return_location === "other" && !f.return_location_details.trim()) return void toast.error("Please say where the car will be returned.");
+    if (!isAdmin && (!f.pickupTime || !f.returnTime)) return void toast.error("Please choose your pickup and return times.");
     setSaving(true);
     const base = {
       full_name: f.full_name.trim(),
@@ -221,7 +222,7 @@ export function BookingForm({ mode, cars, currency, termsHtml, initial, defaults
           <Label htmlFor="pd">Pickup date *</Label>
           <Input id="pd" disabled={lockSelection} className="h-11 min-w-0 max-w-full" type="date" value={f.pickupDate} onChange={(e) => set("pickupDate")(e.target.value)} />
         </div>
-        <div className={lockSelection ? "hidden" : field}>
+        <div className={field}>
           <Label htmlFor="pt">Pickup time</Label>
           <Input id="pt" className="h-11 min-w-0 max-w-full" type="time" value={f.pickupTime} onChange={(e) => set("pickupTime")(e.target.value)} />
         </div>
@@ -229,7 +230,7 @@ export function BookingForm({ mode, cars, currency, termsHtml, initial, defaults
           <Label htmlFor="rd">Return date *</Label>
           <Input id="rd" disabled={lockSelection} className="h-11 min-w-0 max-w-full" type="date" value={f.returnDate} onChange={(e) => set("returnDate")(e.target.value)} />
         </div>
-        <div className={lockSelection ? "hidden" : field}>
+        <div className={field}>
           <Label htmlFor="rt">Return time</Label>
           <Input id="rt" className="h-11 min-w-0 max-w-full" type="time" value={f.returnTime} onChange={(e) => set("returnTime")(e.target.value)} />
         </div>
